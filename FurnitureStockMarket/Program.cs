@@ -19,7 +19,8 @@ namespace FurnitureStockMarket
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
             builder.Services
-                .AddIdentity<ApplicationUser,ApplicationRole>()
+                .AddDefaultIdentity<ApplicationUser>()
+                .AddRoles<ApplicationRole>()
                 .AddEntityFrameworkStores<FurnitureStockMarkerDbContext>();
 
             builder.Services.AddControllersWithViews();
