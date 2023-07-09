@@ -64,5 +64,21 @@
 
             return this.View(model);
         }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> Register(string? returnUrl = "/")
+        {
+            var model = new RegisterViewModel();
+
+            return this.View(model);
+        }
+
+        //[HttpPost]
+        //[AllowAnonymous]
+        //public async Task<IActionResult> Register(RegisterViewModel model)
+        //{
+            
+        //}
     }
 }

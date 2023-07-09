@@ -11,10 +11,4 @@
     <ProjectReference Include="..\FurnitureStockMarket.Database\FurnitureStockMarket.Database.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Contracts\" />
-    <Folder Include="Models\" />
-    <Folder Include="Service\" />
-  </ItemGroup>
-
 </Project>

@@ -38,7 +38,7 @@
         public string ConfirmPassword { get; set; } = null!;
 
         [Required]
-        [StringLength(ShippingAddressMaxLength,MinimumLength =ShippingAddressMinLength)]
+        [StringLength(ShippingAddressMaxLength, MinimumLength = ShippingAddressMinLength)]
         public string ShippingAddress { get; set; } = null!;
 
         [Required]
