@@ -21,6 +21,9 @@
 
             public const int PhoneNumberMinLength = 7;
             public const int PhoneNumberMaxLength = 15;
+
+            public const int ShippingAddressMinLength = 5;
+            public const int ShippingAddressMaxLength = 100;
         }
 
         public static class Product
