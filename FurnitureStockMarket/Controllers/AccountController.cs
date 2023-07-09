@@ -2,6 +2,9 @@
 {
     using FurnitureStockMarker.Database.Models.Account;
     using FurnitureStockMarket.Controllers.BaseControllers;
+    using FurnitureStockMarket.Core.Contracts;
+    using FurnitureStockMarket.Core.Models.StatusModels;
+    using FurnitureStockMarket.Core.Models.TransferModels;
     using FurnitureStockMarket.Models;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
@@ -11,12 +14,16 @@
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly SignInManager<ApplicationUser> signInManager;
+        private readonly IAccountService accountService;
 
-        public AccountController(UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager)
+        public AccountController(
+            UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager,
+            IAccountService accountService)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
+            this.accountService = accountService;
         }
 
         [HttpGet]
@@ -78,7 +85,14 @@
         //[AllowAnonymous]
         //public async Task<IActionResult> Register(RegisterViewModel model)
         //{
-            
+        //    var transfer = new RegisterUserTransferModel()
+        //    {
+        //        Username = model.Username,
+        //        Email = model.Email,
+        //        Password = model.Password
+        //    };
+
+        //    StatusUserModel userStatus= await this.accountService
         //}
     }
 }
