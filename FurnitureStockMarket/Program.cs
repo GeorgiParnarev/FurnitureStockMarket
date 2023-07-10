@@ -1,8 +1,7 @@
-using FurnitureStockMarker.Database;
-using FurnitureStockMarker.Database.Models.Account;
+using FurnitureStockMarket.Database;
+using FurnitureStockMarket.Database.Models.Account;
 using FurnitureStockMarket.Core.Contracts;
 using FurnitureStockMarket.Core.Service;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace FurnitureStockMarket
@@ -15,7 +14,7 @@ namespace FurnitureStockMarket
 
             // Add services to the container.
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-            builder.Services.AddDbContext<FurnitureStockMarkerDbContext>(options =>
+            builder.Services.AddDbContext<FurnitureStockMarketDbContext>(options =>
                 options.UseSqlServer(connectionString));
 
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
@@ -23,7 +22,7 @@ namespace FurnitureStockMarket
             builder.Services
                 .AddDefaultIdentity<ApplicationUser>()
                 .AddRoles<ApplicationRole>()
-                .AddEntityFrameworkStores<FurnitureStockMarkerDbContext>();
+                .AddEntityFrameworkStores<FurnitureStockMarketDbContext>();
 
             builder.Services.AddControllersWithViews();
 

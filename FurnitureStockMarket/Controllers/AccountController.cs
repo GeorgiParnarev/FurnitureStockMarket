@@ -1,6 +1,6 @@
 ﻿namespace FurnitureStockMarket.Controllers
 {
-    using FurnitureStockMarker.Database.Models.Account;
+    using FurnitureStockMarket.Database.Models.Account;
     using FurnitureStockMarket.Controllers.BaseControllers;
     using FurnitureStockMarket.Core.Contracts;
     using FurnitureStockMarket.Core.Models.StatusModels;

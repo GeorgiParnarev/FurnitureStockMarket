@@ -1,6 +1,6 @@
-﻿namespace FurnitureStockMarker.Database.Models
+﻿namespace FurnitureStockMarket.Database.Models
 {
-    using FurnitureStockMarker.Database.Models.Account;
+    using Models.Account;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using static Common.EntityValidationConstants.Customer;
@@ -18,7 +18,7 @@
 
         [Required]
         [ForeignKey(nameof(User))]
-        public Guid ApllicationUserId { get; set; }
+        public Guid ApplicationUserId { get; set; }
 
         public virtual ApplicationUser User { get; set; } = null!;
 

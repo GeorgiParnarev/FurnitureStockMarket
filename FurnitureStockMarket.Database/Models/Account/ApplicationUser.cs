@@ -1,4 +1,4 @@
-﻿namespace FurnitureStockMarker.Database.Models.Account
+﻿namespace FurnitureStockMarket.Database.Models.Account
 {
     using Microsoft.AspNetCore.Identity;
     using System.ComponentModel.DataAnnotations;

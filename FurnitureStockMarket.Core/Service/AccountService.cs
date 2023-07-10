@@ -1,6 +1,6 @@
 ﻿namespace FurnitureStockMarket.Core.Service
 {
-    using FurnitureStockMarker.Database.Models.Account;
+    using FurnitureStockMarket.Database.Models.Account;
     using FurnitureStockMarket.Core.Contracts;
     using FurnitureStockMarket.Core.Models.StatusModels;
     using FurnitureStockMarket.Core.Models.TransferModels;

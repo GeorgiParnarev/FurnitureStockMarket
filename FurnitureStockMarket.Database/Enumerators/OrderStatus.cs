@@ -1,4 +1,4 @@
-﻿namespace FurnitureStockMarker.Database.Enumerators
+﻿namespace FurnitureStockMarket.Database.Enumerators
 {
     public enum OrderStatus
     {

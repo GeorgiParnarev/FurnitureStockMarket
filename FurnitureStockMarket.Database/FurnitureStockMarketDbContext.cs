@@ -1,13 +1,13 @@
-﻿namespace FurnitureStockMarker.Database
+﻿namespace FurnitureStockMarket.Database
 {
-    using FurnitureStockMarker.Database.Models;
-    using FurnitureStockMarker.Database.Models.Account;
+    using Models;
+    using Models.Account;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
 
-    public class FurnitureStockMarkerDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, Guid>
+    public class FurnitureStockMarketDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, Guid>
     {
-        public FurnitureStockMarkerDbContext(DbContextOptions<FurnitureStockMarkerDbContext> options)
+        public FurnitureStockMarketDbContext(DbContextOptions<FurnitureStockMarketDbContext> options)
         : base(options)
         {
         }

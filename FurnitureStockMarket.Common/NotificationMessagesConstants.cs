@@ -1,4 +1,4 @@
-﻿namespace FurnitureStockMarker.Common
+﻿namespace FurnitureStockMarket.Common
 {
     public static class NotificationMessagesConstants
     {

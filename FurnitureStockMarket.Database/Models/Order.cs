@@ -1,6 +1,6 @@
-﻿namespace FurnitureStockMarker.Database.Models
+﻿namespace FurnitureStockMarket.Database.Models
 {
-    using FurnitureStockMarker.Database.Enumerators;
+    using Enumerators;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
