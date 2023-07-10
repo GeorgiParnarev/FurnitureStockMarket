@@ -1,6 +1,6 @@
 ﻿namespace FurnitureStockMarker.Common
 {
-    public class EntityValidationConstants
+    public static class EntityValidationConstants
     {
         public static class Customer
         {

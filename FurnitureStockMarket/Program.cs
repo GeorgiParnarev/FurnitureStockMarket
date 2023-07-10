@@ -1,5 +1,7 @@
 using FurnitureStockMarker.Database;
 using FurnitureStockMarker.Database.Models.Account;
+using FurnitureStockMarket.Core.Contracts;
+using FurnitureStockMarket.Core.Service;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -24,6 +26,8 @@ namespace FurnitureStockMarket
                 .AddEntityFrameworkStores<FurnitureStockMarkerDbContext>();
 
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddScoped<IAccountService, AccountService>();
 
             var app = builder.Build();
 

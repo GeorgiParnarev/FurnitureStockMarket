@@ -81,18 +81,39 @@
             return this.View(model);
         }
 
-        //[HttpPost]
-        //[AllowAnonymous]
-        //public async Task<IActionResult> Register(RegisterViewModel model)
-        //{
-        //    var transfer = new RegisterUserTransferModel()
-        //    {
-        //        Username = model.Username,
-        //        Email = model.Email,
-        //        Password = model.Password
-        //    };
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> Register(RegisterViewModel model)
+        {
+            var transfer = new RegisterUserTransferModel()
+            {
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                Username = model.Username,
+                Email = model.Email,
+                PhoneNumber = model.PhoneNumber,
+                Password = model.Password
+            };
 
-        //    StatusUserModel userStatus= await this.accountService
-        //}
+            StatusUserModel userStatus = await this.accountService.RegisterUserAsync(transfer);
+
+            if (userStatus.Success)
+            {
+
+            }
+            else
+            {
+
+            }
+
+            return this.RedirectToAction("Index", "Home");
+        }
+
+        public async Task<IActionResult> Logout()
+        {
+            await this.signInManager.SignOutAsync();
+
+            return this.RedirectToAction("Index", "Home");
+        }
     }
 }
