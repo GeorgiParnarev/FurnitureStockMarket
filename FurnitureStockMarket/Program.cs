@@ -1,11 +1,12 @@
-using FurnitureStockMarket.Database;
-using FurnitureStockMarket.Database.Models.Account;
-using FurnitureStockMarket.Core.Contracts;
-using FurnitureStockMarket.Core.Service;
-using Microsoft.EntityFrameworkCore;
-
 namespace FurnitureStockMarket
 {
+    using FurnitureStockMarket.Database;
+    using FurnitureStockMarket.Database.Models.Account;
+    using FurnitureStockMarket.Core.Contracts;
+    using FurnitureStockMarket.Core.Service;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.AspNetCore.Identity;
+
     public class Program
     {
         public static void Main(string[] args)
@@ -18,6 +19,16 @@ namespace FurnitureStockMarket
                 options.UseSqlServer(connectionString));
 
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+
+            builder.Services.Configure<IdentityOptions>(options =>
+            {
+                options.SignIn.RequireConfirmedAccount = false;
+                options.Password.RequireDigit = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequiredLength = 5;
+            });
 
             builder.Services
                 .AddDefaultIdentity<ApplicationUser>()

@@ -6,14 +6,33 @@
     using FurnitureStockMarket.Core.Models.TransferModels;
     using Microsoft.AspNetCore.Identity;
     using System.Threading.Tasks;
+    using FurnitureStockMarket.Database.Models;
+    using FurnitureStockMarket.Database;
 
     public class AccountService : IAccountService
     {
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly FurnitureStockMarketDbContext dbContext;
 
-        public AccountService(UserManager<ApplicationUser> userManager)
+        public AccountService(
+            UserManager<ApplicationUser> userManager,
+            FurnitureStockMarketDbContext dbContext)
         {
             this.userManager = userManager;
+            this.dbContext = dbContext;
+        }
+
+        public async Task AddCustomerAsync(AddCustomerModel customer)
+        {
+            var newCustomer = new Customer()
+            {
+                ApplicationUserId = customer.ApplicationUserId,
+                ShippingAddress = customer.ShippingAddress,
+                BillingAddress = customer.BillingAddress
+            };
+
+            await this.dbContext.Customers.AddAsync(newCustomer);
+            await this.dbContext.SaveChangesAsync();
         }
 
         public async Task<StatusUserModel> RegisterUserAsync(RegisterUserTransferModel model)
@@ -51,7 +70,8 @@
 
             var createStatus = await this.userManager.CreateAsync(newUser, model.Password);
 
-            result.Success = true;
+            result.Success = createStatus.Succeeded;
+            result.Errors = createStatus.Errors;
 
             return result;
         }

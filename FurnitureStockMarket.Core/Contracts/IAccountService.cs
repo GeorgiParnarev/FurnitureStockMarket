@@ -6,5 +6,7 @@
     public interface IAccountService
     {
         public Task<StatusUserModel> RegisterUserAsync(RegisterUserTransferModel model);
+
+        public Task AddCustomerAsync(AddCustomerModel customer);
     }
 }

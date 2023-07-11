@@ -9,6 +9,7 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using FurnitureStockMarket.Core.Models;
 
     public class AccountController : BaseController
     {
@@ -97,9 +98,26 @@
 
             StatusUserModel userStatus = await this.accountService.RegisterUserAsync(transfer);
 
+            if (!userStatus.Success)
+            {
+                ModelState.AddModelError(string.Empty, string.Join(", ", userStatus.Errors.Select(e => e.Description).ToList()));
+                return this.View(model);
+            }
+
+            var user = await this.userManager.FindByNameAsync(model.Username);
+
+            var result = await this.signInManager.PasswordSignInAsync(user, model.Password, false, false);
+
+            AddCustomerModel customerModel = new AddCustomerModel()
+            {
+                ApplicationUserId = user.Id,
+                ShippingAddress = model.ShippingAddress,
+                BillingAddress = model.BillingAddress
+            };
+
             if (userStatus.Success)
             {
-
+                await this.accountService.AddCustomerAsync(customerModel);
             }
             else
             {

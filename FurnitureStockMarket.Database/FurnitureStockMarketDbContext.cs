@@ -23,11 +23,15 @@
                 .HasPrecision(18, 2);
             base.OnModelCreating(builder);
         }
+
         public DbSet<Category> Categories { get; set; } = null!;
 
         public DbSet<Customer> Customers { get; set; } = null!;
+
         public DbSet<Order> Orders { get; set; } = null!;
+
         public DbSet<Product> Products { get; set; } = null!;
+
         public DbSet<Review> Reviews { get; set; } = null!;
 
         public DbSet<SubCategory> SubCategories { get; set; } = null!;
