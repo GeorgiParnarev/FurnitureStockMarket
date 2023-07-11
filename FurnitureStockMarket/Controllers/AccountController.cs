@@ -31,10 +31,7 @@
         [AllowAnonymous]
         public IActionResult Login(string returnUrl = "/")
         {
-            var model = new LoginViewModel()
-            {
-                ReturnUrl = returnUrl
-            };
+            var model = new LoginViewModel();
 
             if (User?.Identity?.IsAuthenticated ?? false)
             {
@@ -53,19 +50,11 @@
                 return this.View(model);
             }
 
-            var user = await this.userManager.FindByNameAsync(model.Username);
+            var user = await this.userManager.FindByEmailAsync(model.Email);
 
             if (!(user is null))
             {
                 var result = await this.signInManager.PasswordSignInAsync(user, model.Password, false, false);
-
-                if (result.Succeeded)
-                {
-                    if (!(model.ReturnUrl is null))
-                    {
-                        return this.Redirect(model.ReturnUrl);
-                    }
-                }
 
                 return this.RedirectToAction("Index", "Home");
             }

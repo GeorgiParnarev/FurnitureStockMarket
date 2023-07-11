@@ -4,8 +4,8 @@
 
     public class LoginViewModel
     {
-        [Required]
-        public string Username { get; set; } = null!;
+        //[Required]
+        //public string Username { get; set; } = null!;
 
         [Required]
         [EmailAddress]
@@ -14,8 +14,5 @@
         [Required]
         [DataType(DataType.Password)]
         public string Password { get; set; } = null!;
-
-        [UIHint("hidden")]
-        public string ReturnUrl { get; set; } = null!;
     }
 }
