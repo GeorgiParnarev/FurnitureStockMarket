@@ -1,15 +1,15 @@
 ﻿namespace FurnitureStockMarket.Controllers
 {
-    using FurnitureStockMarket.Database.Models.Account;
     using FurnitureStockMarket.Controllers.BaseControllers;
     using FurnitureStockMarket.Core.Contracts;
     using FurnitureStockMarket.Core.Models.StatusModels;
     using FurnitureStockMarket.Core.Models.TransferModels;
+    using FurnitureStockMarket.Database.Models.Account;
     using FurnitureStockMarket.Models;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
-    using FurnitureStockMarket.Core.Models;
+    using static FurnitureStockMarket.Common.NotificationMessagesConstants;
 
     public class AccountController : BaseController
     {
@@ -90,6 +90,7 @@
             if (!userStatus.Success)
             {
                 ModelState.AddModelError(string.Empty, string.Join(", ", userStatus.Errors.Select(e => e.Description).ToList()));
+
                 return this.View(model);
             }
 
@@ -107,10 +108,12 @@
             if (userStatus.Success)
             {
                 await this.accountService.AddCustomerAsync(customerModel);
+
+                this.TempData[SuccessMessage] = UserRegistrationSuccess;
             }
             else
             {
-
+                
             }
 
             return this.RedirectToAction("Index", "Home");

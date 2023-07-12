@@ -6,5 +6,7 @@
         public const string WarningMessage = "WarningMessage";
         public const string InformationMessage = "InformationMessage";
         public const string SuccessMessage = "SuccessMessage";
+
+        public const string UserRegistrationSuccess = "Successfully registered user!";
     }
 }
