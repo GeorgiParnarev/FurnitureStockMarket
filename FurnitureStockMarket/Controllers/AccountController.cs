@@ -51,7 +51,12 @@
                 return this.View(model);
             }
 
-            var user = await this.userManager.FindByEmailAsync(model.Email);
+            var user = await this.userManager.FindByEmailAsync(model.EmailOrUsername);
+
+            if (user is null)
+            {
+                user = await this.userManager.FindByNameAsync(model.EmailOrUsername);
+            }
 
             if (!(user is null))
             {
