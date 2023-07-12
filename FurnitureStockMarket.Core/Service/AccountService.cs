@@ -61,8 +61,8 @@
 
             var newUser = new ApplicationUser()
             {
-                FirstName = model.Username,
-                LastName = model.Email,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
                 UserName = model.Username,
                 Email = model.Email,
                 PhoneNumber = model.PhoneNumber
