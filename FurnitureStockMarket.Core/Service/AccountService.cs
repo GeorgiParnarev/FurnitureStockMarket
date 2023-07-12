@@ -9,6 +9,8 @@
     using FurnitureStockMarket.Database.Models;
     using FurnitureStockMarket.Database;
 
+    using static FurnitureStockMarket.Common.NotificationMessagesConstants;
+
     public class AccountService : IAccountService
     {
         private readonly UserManager<ApplicationUser> userManager;
@@ -40,14 +42,14 @@
             StatusUserModel result = new StatusUserModel()
             {
                 Success = false,
-                Description = "User registration fail" //add constant
+                Description = UserRegistrationFail
             };
 
             var user = await this.userManager.FindByNameAsync(model.Username);
 
             if (!(user is null))
             {
-                result.Description = "Username already exists"; //add constant
+                result.Description = UsernameAlreadyExists;
                 return result;
             }
 
@@ -55,7 +57,7 @@
 
             if (!(user is null))
             {
-                result.Description = "Email already exists"; //add constant
+                result.Description = EmailAlreadyExists;
                 return result;
             }
 

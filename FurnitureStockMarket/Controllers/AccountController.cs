@@ -9,6 +9,7 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+
     using static FurnitureStockMarket.Common.NotificationMessagesConstants;
 
     public class AccountController : BaseController
@@ -113,7 +114,8 @@
             }
             else
             {
-                
+                this.TempData[ErrorMessage] = userStatus.Description;
+                ModelState.AddModelError(string.Empty, userStatus.Description);
             }
 
             return this.RedirectToAction("Index", "Home");
