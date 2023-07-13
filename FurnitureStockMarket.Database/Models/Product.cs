@@ -7,6 +7,11 @@
 
     public class Product
     {
+        public Product()
+        {
+            this.Reviews = new List<Review>();
+        }
+
         [Key]
         public int Id { get; set; }
 
@@ -18,7 +23,7 @@
         [MaxLength(DescriptionMaxLength)]
         public string Description { get; set; } = null!;
 
-        [Required]        
+        [Required]
         public decimal Price { get; set; }
 
         [Required]
@@ -27,6 +32,11 @@
 
         [Required]
         public virtual Category Category { get; set; } = null!;
+
+        [ForeignKey(nameof(Order))]
+        public Guid? OrderId { get; set; }
+
+        public virtual Order? Order { get; set; }
 
         [Required]
         [MaxLength(BrandMaxLength)]
@@ -38,5 +48,7 @@
         [Required]
         [MaxLength(ImageURLMaxLength)]
         public string ImageURL { get; set; } = null!;
+
+        public IEnumerable<Review> Reviews { get; set; }
     }
 }

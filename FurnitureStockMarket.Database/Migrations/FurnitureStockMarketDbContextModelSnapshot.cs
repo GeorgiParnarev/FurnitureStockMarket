@@ -441,11 +441,13 @@ namespace FurnitureStockMarket.Database.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FurnitureStockMarket.Database.Models.Order", null)
+                    b.HasOne("FurnitureStockMarket.Database.Models.Order", "Order")
                         .WithMany("OrderedProducts")
                         .HasForeignKey("OrderId");
 
                     b.Navigation("Category");
+
+                    b.Navigation("Order");
                 });
 
             modelBuilder.Entity("FurnitureStockMarket.Database.Models.Review", b =>
@@ -457,7 +459,7 @@ namespace FurnitureStockMarket.Database.Migrations
                         .IsRequired();
 
                     b.HasOne("FurnitureStockMarket.Database.Models.Product", "Product")
-                        .WithMany()
+                        .WithMany("Reviews")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -548,6 +550,11 @@ namespace FurnitureStockMarket.Database.Migrations
             modelBuilder.Entity("FurnitureStockMarket.Database.Models.Order", b =>
                 {
                     b.Navigation("OrderedProducts");
+                });
+
+            modelBuilder.Entity("FurnitureStockMarket.Database.Models.Product", b =>
+                {
+                    b.Navigation("Reviews");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,4 +1,4 @@
-﻿namespace FurnitureStockMarket.Models
+﻿namespace FurnitureStockMarket.Models.Account
 {
     using System.ComponentModel.DataAnnotations;
 

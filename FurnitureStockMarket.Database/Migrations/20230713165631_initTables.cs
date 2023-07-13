@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FurnitureStockMarket.Database.Migrations
 {
-    public partial class InitTables : Migration
+    public partial class initTables : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -241,10 +241,10 @@ namespace FurnitureStockMarket.Database.Migrations
                     Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: false),
+                    OrderId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     Brand = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
-                    ImageURL = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    OrderId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    ImageURL = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false)
                 },
                 constraints: table =>
                 {

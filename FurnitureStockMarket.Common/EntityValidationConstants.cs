@@ -40,8 +40,8 @@
             public const int BrandMinLength = 2;
             public const int BrandMaxLength = 50;
 
-            public const int QuantityMinValue = 1;
-            public const int QuantityMaxValue = int.MaxValue;
+            public const string QuantityMinValue = "0";
+            public const string QuantityMaxValue = "2147483647";
 
             public const int ImageURLMinLength = 6;
             public const int ImageURLMaxLength = 255;

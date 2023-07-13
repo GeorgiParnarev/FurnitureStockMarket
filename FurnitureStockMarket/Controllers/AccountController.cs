@@ -5,7 +5,7 @@
     using FurnitureStockMarket.Core.Models.StatusModels;
     using FurnitureStockMarket.Core.Models.TransferModels;
     using FurnitureStockMarket.Database.Models.Account;
-    using FurnitureStockMarket.Models;
+    using FurnitureStockMarket.Models.Account;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
