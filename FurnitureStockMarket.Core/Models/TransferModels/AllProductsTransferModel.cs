@@ -1,13 +1,11 @@
-﻿namespace FurnitureStockMarket.Models.Product
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace FurnitureStockMarket.Core.Models.TransferModels
 {
-    using System.ComponentModel.DataAnnotations;
-
-    using static FurnitureStockMarket.Common.EntityValidationConstants.Product;
-
-    public class AllProductsViewModel
+    public class AllProductsTransferModel
     {
         public int Id { get; set; }
-        
+
         public string Name { get; set; } = null!;
 
         public decimal Price { get; set; }

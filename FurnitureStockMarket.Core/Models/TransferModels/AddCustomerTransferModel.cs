@@ -1,6 +1,6 @@
 ﻿namespace FurnitureStockMarket.Core.Models.TransferModels
 {
-    public class AddCustomerModel
+    public class AddCustomerTransferModel
     {
         public string ShippingAddress { get; set; } = null!;
 

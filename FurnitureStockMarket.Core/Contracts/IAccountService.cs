@@ -7,6 +7,6 @@
     {
         public Task<StatusUserModel> RegisterUserAsync(RegisterUserTransferModel model);
 
-        public Task AddCustomerAsync(AddCustomerModel customer);
+        public Task AddCustomerAsync(AddCustomerTransferModel customer);
     }
 }

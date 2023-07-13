@@ -24,7 +24,7 @@
             this.dbContext = dbContext;
         }
 
-        public async Task AddCustomerAsync(AddCustomerModel customer)
+        public async Task AddCustomerAsync(AddCustomerTransferModel customer)
         {
             var newCustomer = new Customer()
             {

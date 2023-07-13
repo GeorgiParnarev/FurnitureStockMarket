@@ -1,17 +1,32 @@
 ﻿namespace FurnitureStockMarket.Controllers
 {
+    using FurnitureStockMarket.Core.Contracts;
+    using FurnitureStockMarket.Models.Product;
     using Microsoft.AspNetCore.Mvc;
 
     public class HomeController : Controller
     {
-        public HomeController()
+        private readonly IProductService productService;
+
+        public HomeController(IProductService productService)
         {
-            
+            this.productService = productService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var tranferModel = await productService.GetAllProductsAsync();
+
+            var model = tranferModel.Select(p => new AllProductsViewModel()
+            {
+                Id = p.Id,
+                Name = p.Name,
+                Price = p.Price,
+                Quantity = p.Quantity,
+                ImageURL = p.ImageURL
+            });
+
+            return View(model);
         }
     }
 }

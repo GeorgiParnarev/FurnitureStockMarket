@@ -104,7 +104,7 @@
 
             var result = await this.signInManager.PasswordSignInAsync(user, model.Password, false, false);
 
-            AddCustomerModel customerModel = new AddCustomerModel()
+            AddCustomerTransferModel customerModel = new AddCustomerTransferModel()
             {
                 ApplicationUserId = user.Id,
                 ShippingAddress = model.ShippingAddress,
