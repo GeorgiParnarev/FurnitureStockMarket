@@ -8,13 +8,19 @@
 
 <div class="text-center row">
     <img src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg" class="img-fluid" alt="Responsive image" style="height: 400px">
-    <h2 class="block-title text-center" style="padding-top: 30px">Products with best reviews</h2>
+    <h2 class="block-title text-center" style="padding-top: 30px; padding-bottom: 15px">Products with best reviews</h2>
 
     @foreach(var p in Model)
     {
         <div class="card col-4" style="width: 20rem">
+            <div>
+                <p class="mb-0" style="margin-top: 10px">@p.Name</p>
+            </div>
             <div class="card-body">
-                <img src="@p.ImageURL" alt="Product image">
+                <img src="@p.ImageURL" alt="Product image" style="width: 250px; height: 200px; margin-right: auto; margin-left: auto; display: block">
+            </div>
+            <div>                
+                <p class="mb-0"><span class="fw-bold">Price: </span>@p.Price$</p>
             </div>
         </div>
     }
