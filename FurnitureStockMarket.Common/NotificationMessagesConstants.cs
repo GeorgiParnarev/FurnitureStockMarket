@@ -12,5 +12,12 @@
         public const string UserRegistrationFail = "User registration fail";
         public const string UsernameAlreadyExists = "Username already exists";
         public const string EmailAlreadyExists = "Email already exists";
+
+        public const string InvalidData = "Invalid data!";
+
+        public const string NoExistingCategory = "There are no existing categories!";
+        public const string NoExistingSubCategory = "There are no existing sub-categories!";
+
+        public const string SuccessfullyAddedProduct = "Successfully added product";
     }
 }

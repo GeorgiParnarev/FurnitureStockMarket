@@ -23,7 +23,7 @@
 
             if (categories.Count() == 0)
             {
-                TempData[ErrorMessage] = "There are no existing categories!";
+                TempData[ErrorMessage] = NoExistingCategory;
 
                 RedirectToAction("AddCategory");
             }
@@ -41,8 +41,8 @@
         {
             if (!ModelState.IsValid)
             {
-                ModelState.AddModelError("", "Invalid data!");
-                TempData[ErrorMessage] = "Invalid data!";
+                ModelState.AddModelError("", InvalidData);
+                TempData[ErrorMessage] = InvalidData;
 
                 var categories = await this.adminService.GetCategoriesAsync();
 
@@ -78,7 +78,7 @@
 
             if (subCategories.Count() == 0)
             {
-                TempData[ErrorMessage] = "There are no existing sub-categories!";
+                TempData[ErrorMessage] = NoExistingSubCategory;
 
                 RedirectToAction("AddSubCategory");
             }
@@ -96,7 +96,7 @@
         {
             if (!ModelState.IsValid)
             {
-                ModelState.AddModelError("", "Invalid data!");
+                ModelState.AddModelError("", InvalidData);
 
                 var subCategories = await this.adminService.GetSubCategoriesAsync(model.CategoryId);
 
@@ -120,13 +120,13 @@
 
                 await this.adminService.AddProductAsync(transferModel);
 
-                TempData[SuccessMessage] = "Successfully added product";
+                TempData[SuccessMessage] = SuccessfullyAddedProduct;
 
                 return RedirectToAction("Index", "Home");
             }
             catch (Exception)
             {
-                ModelState.AddModelError("", "Invalid data!");
+                ModelState.AddModelError("", InvalidData);
 
                 var subCategories = await this.adminService.GetSubCategoriesAsync(model.CategoryId);
 
