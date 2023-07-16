@@ -27,11 +27,10 @@
         public decimal Price { get; set; }
 
         [Required]
-        [ForeignKey(nameof(Category))]
-        public int CategoryId { get; set; }
+        [ForeignKey(nameof(SubCategory))]
+        public int SubCategoryId { get; set; }
 
-        [Required]
-        public virtual Category Category { get; set; } = null!;
+        public virtual SubCategory SubCategory { get; set; } = null!;
 
         [ForeignKey(nameof(Order))]
         public Guid? OrderId { get; set; }

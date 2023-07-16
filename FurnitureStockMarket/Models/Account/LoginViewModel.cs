@@ -4,9 +4,6 @@
 
     public class LoginViewModel
     {
-        //[Required]
-        //public string Username { get; set; } = null!;
-
         [Required]
         public string EmailOrUsername { get; set; } = null!;
 

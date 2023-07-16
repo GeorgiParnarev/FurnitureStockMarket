@@ -7,6 +7,11 @@
 
     public class SubCategory
     {
+        public SubCategory()
+        {
+            this.Products = new List<Product>();
+        }
+
         [Key]
         public int Id { get; set; }
 
@@ -19,5 +24,7 @@
         public int CategoryId { get; set; }
 
         public Category Category { get; set; } = null!;
+
+        public virtual IEnumerable<Product> Products { get; set; }
     }
 }

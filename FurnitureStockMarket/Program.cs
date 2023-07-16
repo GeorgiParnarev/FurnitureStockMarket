@@ -39,6 +39,7 @@ namespace FurnitureStockMarket
 
             builder.Services.AddScoped<IAccountService, AccountService>();
             builder.Services.AddScoped<IProductService, ProductService>();
+            //builder.Services.AddScoped<IAdminService, AdminService>();
 
             var app = builder.Build();
 
