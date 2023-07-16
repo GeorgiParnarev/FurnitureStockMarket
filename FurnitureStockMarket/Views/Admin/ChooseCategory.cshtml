@@ -1,0 +1,30 @@
+﻿@using FurnitureStockMarket.Models.Admin;
+
+@model ChooseProductCategoryViewModel
+
+@{
+    ViewBag.Title = "Choose product category";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<div class="row">
+    <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+        <form asp-action="ChooseCategory" method="post">
+            <div class="mb-3">
+                <label asp-for="CategoryId" class="form-label-add-edit">Type of event</label>
+                <select asp-for="CategoryId" class="form-control" aria-required="true">
+                    @foreach (var category in Model.Categories)
+                    {
+                        <option value="@category.Key">@category.Value</option>
+                    }
+                </select>
+                <span asp-validation-for="CategoryId" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <input class="btn btn-warning mb-2 w-100 p-3 fw-bold" type="submit" value="Choose" />
+            </div>
+        </form>
+    </div>
+</div>

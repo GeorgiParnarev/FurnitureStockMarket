@@ -26,7 +26,7 @@
                 ImageURL = p.ImageURL
             });
 
-            return View(model);
+            return this.View(model);
         }
     }
 }
