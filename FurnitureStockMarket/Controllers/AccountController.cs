@@ -70,7 +70,7 @@
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> Register(string? returnUrl = "/")
+        public IActionResult Register(string? returnUrl = "/")
         {
             var model = new RegisterViewModel();
 

@@ -6,6 +6,11 @@
 
     public class AddProductViewModel
     {
+        public AddProductViewModel()
+        {
+            this.SubCategories = new List<KeyValuePair<int, string>>();
+        }
+
         [Required]
         [StringLength(NameMaxLength, MinimumLength = NameMinLength)]
         public string Name { get; set; } = null!;
@@ -20,6 +25,11 @@
 
         [Required]
         public int CategoryId { get; set; }
+
+        [Required]
+        public int SubCategoryId { get; set; }
+
+        public IEnumerable<KeyValuePair<int, string>> SubCategories { get; set; }
 
         [Required]
         [StringLength(BrandMaxLength, MinimumLength = BrandMinLength)]
