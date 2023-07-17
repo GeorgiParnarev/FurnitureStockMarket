@@ -12,5 +12,7 @@
         Task AddProductAsync(AddProductsTransferModel model);
 
         Task AddCategoryAsync(string name);
+
+        Task AddSubCategoryAsync(AddSubCategoryTransferModel model);
     }
 }

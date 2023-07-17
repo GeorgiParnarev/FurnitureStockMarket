@@ -45,6 +45,18 @@
             await dbContext.SaveChangesAsync();
         }
 
+        public async Task AddSubCategoryAsync(AddSubCategoryTransferModel model)
+        {
+            var newSubCategory = new SubCategory()
+            {
+                CategoryId = model.CategoryId,
+                Name = model.Name
+            };
+
+            await dbContext.SubCategories.AddAsync(newSubCategory);
+            await dbContext.SaveChangesAsync();
+        }
+
         public async Task<IEnumerable<KeyValuePair<int, string>>> GetCategoriesAsync()
         {
             var Categories = await dbContext
@@ -59,7 +71,7 @@
         {
             var subCategories = await dbContext
                 .SubCategories
-                .Where(c => c.Id == categoryId)
+                .Where(c => c.CategoryId == categoryId)
                 .Select(c => new KeyValuePair<int, string>(c.Id, c.Name))
                 .ToListAsync();
 

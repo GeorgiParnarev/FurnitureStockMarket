@@ -4,7 +4,6 @@
     using FurnitureStockMarket.Core.Models.TransferModels;
     using FurnitureStockMarket.Models.Admin;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.Routing;
     using static FurnitureStockMarket.Common.NotificationMessagesConstants;
 
     public class AdminController : Controller
@@ -17,7 +16,7 @@
         }
 
         [HttpGet]
-        public async Task<IActionResult> ChooseCategory()
+        public async Task<IActionResult> ChooseCategory(string data)
         {
             var categories = await this.adminService.GetCategoriesAsync();
 
@@ -25,11 +24,12 @@
             {
                 TempData[ErrorMessage] = NoExistingCategory;
 
-                RedirectToAction("AddCategory");
+                return RedirectToAction("AddCategory");
             }
 
-            var model = new ChooseProductCategoryViewModel()
+            var model = new ChooseCategoryViewModel()
             {
+                Action = data,
                 Categories = categories!
             };
 
@@ -37,7 +37,7 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> ChooseCategory(int categoryId)
+        public async Task<IActionResult> ChooseCategory(ChooseCategoryViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -45,26 +45,20 @@
 
                 var categories = await this.adminService.GetCategoriesAsync();
 
-                var model = new ChooseProductCategoryViewModel()
-                {
-                    Categories = categories
-                };
+                model.Categories = categories;
 
                 return this.View(model);
             }
 
             try
             {
-                return RedirectToAction("AddProduct", new { categoryId });
+                return RedirectToAction(model.Action, new { model.CategoryId });
             }
             catch (Exception)
             {
                 var categories = await this.adminService.GetCategoriesAsync();
 
-                var model = new ChooseProductCategoryViewModel()
-                {
-                    Categories = categories
-                };
+                model.Categories = categories;
 
                 return this.View(model);
             }
@@ -79,7 +73,7 @@
             {
                 TempData[ErrorMessage] = NoExistingSubCategory;
 
-                RedirectToAction("AddSubCategory");
+                return RedirectToAction("AddSubCategory");
             }
 
             var model = new AddProductViewModel()
@@ -158,6 +152,49 @@
                 await this.adminService.AddCategoryAsync(model.Name);
 
                 TempData[SuccessMessage] = SuccessfullyAddedCategory;
+
+                return RedirectToAction("Index", "Home");
+            }
+            catch (Exception)
+            {
+                TempData[ErrorMessage] = InvalidData;
+
+                return this.View(model);
+            }
+        }
+
+        [HttpGet]
+        public IActionResult AddSubCategory(int categoryId)
+        {
+            var model = new AddSubCategoryViewModel()
+            {
+                CategoryId = categoryId
+            };
+
+            return this.View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddSubCategory(AddSubCategoryViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                TempData[ErrorMessage] = InvalidData;
+
+                return this.View(model);
+            }
+
+            try
+            {
+                var trasferModel = new AddSubCategoryTransferModel()
+                {
+                    CategoryId = model.CategoryId,
+                    Name = model.Name
+                };
+
+                await this.adminService.AddSubCategoryAsync(trasferModel);
+
+                TempData[SuccessMessage] = SuccessfullyAddedSubCategory;
 
                 return RedirectToAction("Index", "Home");
             }

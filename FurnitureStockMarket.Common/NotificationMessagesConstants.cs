@@ -20,5 +20,6 @@
 
         public const string SuccessfullyAddedProduct = "Successfully added product";
         public const string SuccessfullyAddedCategory= "Successfully added category";
+        public const string SuccessfullyAddedSubCategory = "Successfully added sub-category";
     }
 }
