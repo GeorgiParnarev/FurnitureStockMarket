@@ -17,6 +17,17 @@
             this.dbContext = dbContext;
         }
 
+        public async Task AddCategoryAsync(string name)
+        {
+            var newCategory = new Category()
+            {
+                Name = name
+            };
+
+            await dbContext.Categories.AddAsync(newCategory);
+            await dbContext.SaveChangesAsync();
+        }
+
         public async Task AddProductAsync(AddProductsTransferModel model)
         {
             var newProduct = new Product()

@@ -10,5 +10,7 @@
         Task<IEnumerable<KeyValuePair<int, string>>> GetSubCategoriesAsync(int categoryId);
 
         Task AddProductAsync(AddProductsTransferModel model);
+
+        Task AddCategoryAsync(string name);
     }
 }

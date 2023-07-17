@@ -19,5 +19,6 @@
         public const string NoExistingSubCategory = "There are no existing sub-categories!";
 
         public const string SuccessfullyAddedProduct = "Successfully added product";
+        public const string SuccessfullyAddedCategory= "Successfully added category";
     }
 }

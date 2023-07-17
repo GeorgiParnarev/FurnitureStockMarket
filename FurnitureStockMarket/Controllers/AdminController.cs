@@ -4,7 +4,7 @@
     using FurnitureStockMarket.Core.Models.TransferModels;
     using FurnitureStockMarket.Models.Admin;
     using Microsoft.AspNetCore.Mvc;
-
+    using Microsoft.AspNetCore.Mvc.Routing;
     using static FurnitureStockMarket.Common.NotificationMessagesConstants;
 
     public class AdminController : Controller
@@ -41,7 +41,6 @@
         {
             if (!ModelState.IsValid)
             {
-                ModelState.AddModelError("", InvalidData);
                 TempData[ErrorMessage] = InvalidData;
 
                 var categories = await this.adminService.GetCategoriesAsync();
@@ -96,7 +95,7 @@
         {
             if (!ModelState.IsValid)
             {
-                ModelState.AddModelError("", InvalidData);
+                TempData[ErrorMessage] = InvalidData;
 
                 var subCategories = await this.adminService.GetSubCategoriesAsync(model.CategoryId);
 
@@ -126,11 +125,45 @@
             }
             catch (Exception)
             {
-                ModelState.AddModelError("", InvalidData);
+                TempData[ErrorMessage] = InvalidData;
 
                 var subCategories = await this.adminService.GetSubCategoriesAsync(model.CategoryId);
 
                 model.SubCategories = subCategories;
+
+                return this.View(model);
+            }
+        }
+
+        [HttpGet]
+        public IActionResult AddCategory()
+        {
+            var model = new AddCategoryViewModel();
+
+            return this.View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddCategory(AddCategoryViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                TempData[ErrorMessage] = InvalidData;
+
+                return this.View(model);
+            }
+
+            try
+            {
+                await this.adminService.AddCategoryAsync(model.Name);
+
+                TempData[SuccessMessage] = SuccessfullyAddedCategory;
+
+                return RedirectToAction("Index", "Home");
+            }
+            catch (Exception)
+            {
+                TempData[ErrorMessage] = InvalidData;
 
                 return this.View(model);
             }
