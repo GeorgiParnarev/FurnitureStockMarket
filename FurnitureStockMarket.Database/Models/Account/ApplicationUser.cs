@@ -3,7 +3,7 @@
     using Microsoft.AspNetCore.Identity;
     using System.ComponentModel.DataAnnotations;
 
-    using static Common.EntityValidationConstants.Customer;
+    using static FurnitureStockMarket.Common.EntityValidationConstants.Customer;
 
     public class ApplicationUser : IdentityUser<Guid>
     {

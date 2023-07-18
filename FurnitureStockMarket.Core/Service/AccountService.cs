@@ -8,20 +8,21 @@
     using System.Threading.Tasks;
     using FurnitureStockMarket.Database.Models;
     using FurnitureStockMarket.Database;
+    using FurnitureStockMarket.Database.Common;
 
     using static FurnitureStockMarket.Common.NotificationMessagesConstants;
 
     public class AccountService : IAccountService
     {
         private readonly UserManager<ApplicationUser> userManager;
-        private readonly FurnitureStockMarketDbContext dbContext;
+        private readonly IRepository repo;
 
         public AccountService(
             UserManager<ApplicationUser> userManager,
-            FurnitureStockMarketDbContext dbContext)
+            IRepository repo)
         {
             this.userManager = userManager;
-            this.dbContext = dbContext;
+            this.repo = repo;
         }
 
         public async Task AddCustomerAsync(AddCustomerTransferModel customer)
@@ -33,8 +34,8 @@
                 BillingAddress = customer.BillingAddress
             };
 
-            await this.dbContext.Customers.AddAsync(newCustomer);
-            await this.dbContext.SaveChangesAsync();
+            await this.repo.AddAsync(newCustomer);
+            await this.repo.SaveChangesAsync();
         }
 
         public async Task<StatusUserModel> RegisterUserAsync(RegisterUserTransferModel model)

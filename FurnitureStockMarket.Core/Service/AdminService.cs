@@ -3,6 +3,7 @@
     using FurnitureStockMarket.Core.Contracts;
     using FurnitureStockMarket.Core.Models.TransferModels;
     using FurnitureStockMarket.Database;
+    using FurnitureStockMarket.Database.Common;
     using FurnitureStockMarket.Database.Models;
     using Microsoft.EntityFrameworkCore;
     using System.Collections.Generic;
@@ -10,11 +11,11 @@
 
     public class AdminService : IAdminService
     {
-        private readonly FurnitureStockMarketDbContext dbContext;
+        private readonly IRepository repo;
 
-        public AdminService(FurnitureStockMarketDbContext dbContext)
+        public AdminService(IRepository repo)
         {
-            this.dbContext = dbContext;
+            this.repo = repo;
         }
 
         public async Task AddCategoryAsync(string name)
@@ -24,8 +25,8 @@
                 Name = name
             };
 
-            await dbContext.Categories.AddAsync(newCategory);
-            await dbContext.SaveChangesAsync();
+            await this.repo.AddAsync(newCategory);
+            await this.repo.SaveChangesAsync();
         }
 
         public async Task AddProductAsync(AddProductsTransferModel model)
@@ -41,8 +42,8 @@
                 ImageURL = model.ImageURL
             };
 
-            await dbContext.Products.AddAsync(newProduct);
-            await dbContext.SaveChangesAsync();
+            await this.repo.AddAsync(newProduct);
+            await this.repo.SaveChangesAsync();
         }
 
         public async Task AddSubCategoryAsync(AddSubCategoryTransferModel model)
@@ -53,14 +54,14 @@
                 Name = model.Name
             };
 
-            await dbContext.SubCategories.AddAsync(newSubCategory);
-            await dbContext.SaveChangesAsync();
+            await this.repo.AddAsync(newSubCategory);
+            await this.repo.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<KeyValuePair<int, string>>> GetCategoriesAsync()
         {
-            var Categories = await dbContext
-                .Categories
+            var Categories = await this.repo
+                .AllReadonly<Category>()
                 .Select(c => new KeyValuePair<int, string>(c.Id, c.Name))
                 .ToListAsync();
 
@@ -69,8 +70,8 @@
 
         public async Task<IEnumerable<KeyValuePair<int, string>>> GetSubCategoriesAsync(int categoryId)
         {
-            var subCategories = await dbContext
-                .SubCategories
+            var subCategories = await this.repo
+                .AllReadonly<SubCategory>()
                 .Where(c => c.CategoryId == categoryId)
                 .Select(c => new KeyValuePair<int, string>(c.Id, c.Name))
                 .ToListAsync();

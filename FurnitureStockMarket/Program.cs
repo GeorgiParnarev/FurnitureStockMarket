@@ -6,6 +6,7 @@ namespace FurnitureStockMarket
     using FurnitureStockMarket.Core.Service;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.AspNetCore.Identity;
+    using FurnitureStockMarket.Database.Common;
 
     public class Program
     {
@@ -40,6 +41,7 @@ namespace FurnitureStockMarket
             builder.Services.AddScoped<IAccountService, AccountService>();
             builder.Services.AddScoped<IProductService, ProductService>();
             builder.Services.AddScoped<IAdminService, AdminService>();
+            builder.Services.AddScoped<IRepository, Repository>();
 
             var app = builder.Build();
 

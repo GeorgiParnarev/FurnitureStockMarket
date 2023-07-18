@@ -3,7 +3,8 @@
     using Models.Account;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using static Common.EntityValidationConstants.Customer;
+
+    using static FurnitureStockMarket.Common.EntityValidationConstants.Customer;
 
     public class Customer
     {

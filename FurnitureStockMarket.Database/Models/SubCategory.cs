@@ -3,7 +3,7 @@
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
-    using static Common.EntityValidationConstants.Category;
+    using static FurnitureStockMarket.Common.EntityValidationConstants.Category;
 
     public class SubCategory
     {

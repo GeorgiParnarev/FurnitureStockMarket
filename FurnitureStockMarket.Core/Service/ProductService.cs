@@ -3,23 +3,25 @@
     using FurnitureStockMarket.Core.Contracts;
     using FurnitureStockMarket.Core.Models.TransferModels;
     using FurnitureStockMarket.Database;
+    using FurnitureStockMarket.Database.Common;
+    using FurnitureStockMarket.Database.Models;
     using Microsoft.EntityFrameworkCore;
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
     public class ProductService : IProductService
     {
-        private readonly FurnitureStockMarketDbContext dbContext;
+        private readonly IRepository repo;
 
-        public ProductService(FurnitureStockMarketDbContext dbContext)
+        public ProductService(IRepository repo)
         {
-            this.dbContext = dbContext;
+            this.repo = repo;
         }
 
         public async Task<IEnumerable<AllProductsTransferModel>> GetAllProductsAsync()
         {
-            var allProducts = await this.dbContext
-                .Products
+            var allProducts = await this.repo
+                .AllReadonly<Product>()
                 .Select(p => new AllProductsTransferModel()
                 {
                     Id = p.Id,

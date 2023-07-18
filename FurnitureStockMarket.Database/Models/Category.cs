@@ -2,7 +2,7 @@
 {
     using System.ComponentModel.DataAnnotations;
 
-    using static Common.EntityValidationConstants.Category;
+    using static FurnitureStockMarket.Common.EntityValidationConstants.Category;
 
     public class Category
     {

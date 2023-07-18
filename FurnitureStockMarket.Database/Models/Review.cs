@@ -3,7 +3,7 @@
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
-    using static Common.EntityValidationConstants.Review;
+    using static FurnitureStockMarket.Common.EntityValidationConstants.Review;
 
     public class Review
     {
