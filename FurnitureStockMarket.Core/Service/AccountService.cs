@@ -3,7 +3,6 @@
     using FurnitureStockMarket.Database.Models.Account;
     using FurnitureStockMarket.Core.Contracts;
     using FurnitureStockMarket.Core.Models.StatusModels;
-    using FurnitureStockMarket.Core.Models.TransferModels;
     using Microsoft.AspNetCore.Identity;
     using System.Threading.Tasks;
     using FurnitureStockMarket.Database.Models;
@@ -11,6 +10,7 @@
     using FurnitureStockMarket.Database.Common;
 
     using static FurnitureStockMarket.Common.NotificationMessagesConstants;
+    using FurnitureStockMarket.Core.Models.TransferModels.Account;
 
     public class AccountService : IAccountService
     {

@@ -1,7 +1,7 @@
 ﻿namespace FurnitureStockMarket.Core.Contracts
 {
     using FurnitureStockMarket.Core.Models.StatusModels;
-    using FurnitureStockMarket.Core.Models.TransferModels;
+    using FurnitureStockMarket.Core.Models.TransferModels.Account;
 
     public interface IAccountService
     {

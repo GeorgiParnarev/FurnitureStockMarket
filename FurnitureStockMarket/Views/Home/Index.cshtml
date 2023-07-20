@@ -20,8 +20,9 @@
                 <img src="@p.ImageURL" alt="Product image" style="width: 250px; height: 200px; margin-right: auto; margin-left: auto; display: block">
             </div>
             <div>                
-                <p class="mb-0"><span class="fw-bold">Price: </span>@p.Price$</p>
+                <p class="mb-0" style="padding-bottom: 10px"><span class="fw-bold">Price: </span>@p.Price$</p>
             </div>
+            <a asp-controller="Admin" asp-action="EditProduct" asp-route-id="@p.Id" class="btn btn-warning mb-2 w-100 p-3 fw-bold">Edit</a>
         </div>
     }
 </div>

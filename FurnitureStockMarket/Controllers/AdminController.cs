@@ -2,6 +2,7 @@
 {
     using FurnitureStockMarket.Core.Contracts;
     using FurnitureStockMarket.Core.Models.TransferModels;
+    using FurnitureStockMarket.Core.Models.TransferModels.Admin;
     using FurnitureStockMarket.Models.Admin;
     using Microsoft.AspNetCore.Mvc;
     using static FurnitureStockMarket.Common.NotificationMessagesConstants;
@@ -201,6 +202,90 @@
             catch (Exception)
             {
                 TempData[ErrorMessage] = InvalidData;
+
+                return this.View(model);
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EditProduct(int id)
+        {
+            var editProduct=new EditProductViewModel();
+
+            try
+            {
+                var transferEditProduct = await this.adminService.GetProductAsync(id);
+
+                editProduct.Name = transferEditProduct.Name;
+                editProduct.Description = transferEditProduct.Description;
+                editProduct.Price = transferEditProduct.Price;
+                editProduct.SubCategoryId = transferEditProduct.SubCategoryId;
+                editProduct.Brand=transferEditProduct.Brand;
+                editProduct.Quantity = transferEditProduct.Quantity;
+                editProduct.ImageURL= transferEditProduct.ImageURL;
+                editProduct.CategoryId= transferEditProduct.CategoryId;
+            }
+            catch (Exception e)
+            {
+                TempData[ErrorMessage] = e.Message;
+
+                return RedirectToAction("Index", "Home");
+            }
+
+            var subCategories = await this.adminService.GetSubCategoriesAsync(editProduct.CategoryId);
+
+            editProduct.SubCategories = subCategories;
+
+            return this.View(editProduct);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditProduct(EditProductViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                TempData[ErrorMessage] = InvalidData;
+
+                var subCategories = await this.adminService.GetSubCategoriesAsync(model.CategoryId);
+
+                model.SubCategories = subCategories;
+
+                return this.View(model);
+            }
+
+            try
+            {
+                var transferModel = new EditProductTransferModel()
+                {
+                    Id = model.Id,
+                    Name = model.Name,
+                    Description = model.Description,
+                    Price = model.Price,
+                    SubCategoryId = model.SubCategoryId,
+                    Brand = model.Brand,
+                    Quantity = model.Quantity,
+                    ImageURL = model.ImageURL
+                };
+
+                await this.adminService.EditProductAsync(transferModel);
+
+                TempData[SuccessMessage] = SuccessfullyEditedProduct;
+
+                return RedirectToAction("Index", "Home");
+            }
+            catch (NullReferenceException e)
+            {
+                TempData[ErrorMessage] = e.Message;
+
+                return RedirectToAction("Index", "Home");
+            }
+            catch (Exception)
+            {
+                TempData[ErrorMessage] = InvalidData;
+
+                var subCategories = await this.adminService.GetSubCategoriesAsync(model.CategoryId);
+
+                model.SubCategories = subCategories;
 
                 return this.View(model);
             }

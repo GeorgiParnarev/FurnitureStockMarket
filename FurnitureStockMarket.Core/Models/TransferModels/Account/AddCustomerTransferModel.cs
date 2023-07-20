@@ -1,4 +1,4 @@
-﻿namespace FurnitureStockMarket.Core.Models.TransferModels
+﻿namespace FurnitureStockMarket.Core.Models.TransferModels.Account
 {
     public class AddCustomerTransferModel
     {

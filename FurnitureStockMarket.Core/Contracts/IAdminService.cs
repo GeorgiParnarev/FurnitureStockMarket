@@ -1,6 +1,7 @@
 ﻿namespace FurnitureStockMarket.Core.Contracts
 {
     using FurnitureStockMarket.Core.Models.TransferModels;
+    using FurnitureStockMarket.Core.Models.TransferModels.Admin;
     using System.Threading.Tasks;
 
     public interface IAdminService
@@ -14,5 +15,9 @@
         Task AddCategoryAsync(string name);
 
         Task AddSubCategoryAsync(AddSubCategoryTransferModel model);
+
+        Task<EditProductTransferModel> GetProductAsync(int id);
+
+        Task EditProductAsync(EditProductTransferModel model);
     }
 }
