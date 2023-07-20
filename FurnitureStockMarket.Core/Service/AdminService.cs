@@ -109,7 +109,7 @@
         {
             var newProduct = await this.dbContext
                 .Products
-                .Include(np=>np.SubCategory)
+                .Include(np => np.SubCategory)
                 .FirstOrDefaultAsync(p => p.Id == id);
 
             if (newProduct is null)

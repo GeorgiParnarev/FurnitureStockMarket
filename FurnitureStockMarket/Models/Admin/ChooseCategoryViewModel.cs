@@ -1,8 +1,5 @@
 ﻿namespace FurnitureStockMarket.Models.Admin
 {
-    using FurnitureStockMarket.Database.Models;
-
-
     public class ChooseCategoryViewModel
     {
         public ChooseCategoryViewModel()

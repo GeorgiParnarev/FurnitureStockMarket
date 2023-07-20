@@ -210,7 +210,7 @@
         [HttpGet]
         public async Task<IActionResult> EditProduct(int id)
         {
-            var editProduct=new EditProductViewModel();
+            var editProduct = new EditProductViewModel();
 
             try
             {
@@ -220,10 +220,10 @@
                 editProduct.Description = transferEditProduct.Description;
                 editProduct.Price = transferEditProduct.Price;
                 editProduct.SubCategoryId = transferEditProduct.SubCategoryId;
-                editProduct.Brand=transferEditProduct.Brand;
+                editProduct.Brand = transferEditProduct.Brand;
                 editProduct.Quantity = transferEditProduct.Quantity;
-                editProduct.ImageURL= transferEditProduct.ImageURL;
-                editProduct.CategoryId= transferEditProduct.CategoryId;
+                editProduct.ImageURL = transferEditProduct.ImageURL;
+                editProduct.CategoryId = transferEditProduct.CategoryId;
             }
             catch (Exception e)
             {

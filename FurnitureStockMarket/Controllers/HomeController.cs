@@ -13,6 +13,7 @@
             this.productService = productService;
         }
 
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             var tranferModel = await productService.GetAllProductsAsync();
@@ -25,6 +26,24 @@
                 Quantity = p.Quantity,
                 ImageURL = p.ImageURL
             });
+
+            return this.View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ProductDetails(int id)
+        {
+            var transferModel = await productService.GetProductDetailsAsync(id);
+
+            var model = new ProductDetailsViewModel()
+            {
+                Name = transferModel.Name,
+                Description = transferModel.Description,
+                Price = transferModel.Price,
+                Brand = transferModel.Brand,
+                Quantity = transferModel.Quantity,
+                ImageURL = transferModel.ImageURL
+            };
 
             return this.View(model);
         }

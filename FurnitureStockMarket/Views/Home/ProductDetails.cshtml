@@ -1,0 +1,23 @@
+﻿@using FurnitureStockMarket.Models.Product;
+
+@model ProductDetailsViewModel
+
+@{
+    ViewBag.Title = "Product Details";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<div class="row">
+    <div class="card w-100">
+        <div class="card-body">
+            <h3 class="card-title text-center">@Model.Name</h3>
+            <img src="@Model.ImageURL" alt="Product image" style="width: 250px; height: 200px; margin-right: auto; margin-left: auto; display: block">
+            <p class="mb-0"><span class="fw-bold">Description </span>@Model.Description</p>
+            <p class="mb-0"><span class="fw-bold">Price </span>@Model.Price$</p>
+            <p class="mb-0"><span class="fw-bold">Brand </span>@Model.Brand</p>
+            <p class="mb-0"><span class="fw-bold"></span>@(Model.Quantity==0? "Out of stock" : "In stock")</p>
+        </div>
+    </div>
+</div>
