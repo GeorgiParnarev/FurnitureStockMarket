@@ -25,12 +25,7 @@
                 <p class="mb-0" style="padding-bottom: 10px; padding-top: 10px"><span class="fw-bold">Price: </span>@p.Price$</p>
             </div>
             <a asp-controller="Admin" asp-action="EditProduct" asp-route-id="@p.Id" class="btn btn-warning mb-2 w-100 p-3 fw-bold">Edit</a>
+            <a asp-controller="ShopingCart" asp-action="Add" asp-route-id="@p.Id" class="btn btn-warning mb-2 w-100 p-3 fw-bold">Add to cart</a>
         </div>
     }
 </div>
-
-<script>
-    document.getElementById("clickableDiv").addEventListener("click", function () {
-        window.location.href = "/ProductDetails/{Id}"; // Replace "/SomePage" with the URL you want to navigate to.
-    });
-</script>

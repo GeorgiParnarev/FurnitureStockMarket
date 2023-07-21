@@ -42,6 +42,16 @@ namespace FurnitureStockMarket
             builder.Services.AddScoped<IProductService, ProductService>();
             builder.Services.AddScoped<IAdminService, AdminService>();
             builder.Services.AddScoped<IRepository, Repository>();
+            builder.Services.AddScoped<IShopingCartService, ShopingCartService>();
+
+            builder.Services.AddDistributedMemoryCache();
+            builder.Services.AddSession(options =>
+            {
+                // Set session timeout (optional)
+                options.IdleTimeout = TimeSpan.FromMinutes(20);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
 
             var app = builder.Build();
 
@@ -64,6 +74,8 @@ namespace FurnitureStockMarket
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseSession();
 
             app.MapControllerRoute(
                 name: "default",
