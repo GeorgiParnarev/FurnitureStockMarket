@@ -86,7 +86,7 @@
         }
 
         [HttpGet]
-        public async Task<IActionResult> AddMoreItem(int id)
+        public async Task<IActionResult> AddOneMoreItem(int id)
         {
             var cart = HttpContext.Session.GetObject<List<CartItemViewModel>>("Cart");
 
@@ -104,6 +104,46 @@
             try
             {
                 var updatedTransferCart = await this.shoppingCartService.AddOneMore(transferCart, id);
+
+                cart = updatedTransferCart.Select(i => new CartItemViewModel()
+                {
+                    Id = i.Id,
+                    Name = i.Name,
+                    Price = i.Price,
+                    Quantity = i.Quantity,
+                    ImageURL = i.ImageURL
+                })
+                .ToList();
+            }
+            catch (Exception e)
+            {
+                TempData[ErrorMessage] = e.Message;
+            }
+
+            HttpContext.Session.SetObject("Cart", cart);
+
+            return RedirectToAction("Index", "ShoppingCart");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> RemoveOneItem(int id)
+        {
+            var cart = HttpContext.Session.GetObject<List<CartItemViewModel>>("Cart");
+
+            var transferCart = cart.Select(i => new CartItemTransferModel()
+            {
+                Id = i.Id,
+                Name = i.Name,
+                Price = i.Price,
+                Quantity = i.Quantity,
+                ImageURL = i.ImageURL
+
+            })
+            .ToList();
+
+            try
+            {
+                var updatedTransferCart = this.shoppingCartService.RemoveOneItem(transferCart, id);
 
                 cart = updatedTransferCart.Select(i => new CartItemViewModel()
                 {

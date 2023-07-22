@@ -9,5 +9,7 @@
         public Task<CartItemTransferModel> GetProductAsync(int id);
 
         public Task<IEnumerable<CartItemTransferModel>> AddOneMore(List<CartItemTransferModel> cart, int id);
+
+        public IEnumerable<CartItemTransferModel> RemoveOneItem(List<CartItemTransferModel> cart, int id);
     }
 }

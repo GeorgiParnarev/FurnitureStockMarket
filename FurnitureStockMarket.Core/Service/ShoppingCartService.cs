@@ -56,7 +56,6 @@
 
             var cartItem = cart.FirstOrDefault(i => i.Id == model.Id);
 
-
             if (product.Quantity == 0)
             {
                 throw new InvalidOperationException(ProductStoredQuantityReached);
@@ -116,6 +115,25 @@
             };
 
             return result;
+        }
+
+        public IEnumerable<CartItemTransferModel> RemoveOneItem(List<CartItemTransferModel> cart, int id)
+        {
+            var product = cart.FirstOrDefault(i => i.Id == id);
+
+            if (product is null)
+            {
+                throw new NullReferenceException(ProductNotExisting);
+            }
+
+            if (product.Quantity == 1)
+            {
+                throw new InvalidOperationException(OneProductQuantityLeftInCart);
+            }
+
+            product.Quantity -= RemoveDefaultProductAmmount;
+
+            return cart;
         }
     }
 }
