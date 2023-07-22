@@ -1,7 +1,7 @@
 ﻿namespace FurnitureStockMarket.Core.Service
 {
     using FurnitureStockMarket.Core.Contracts;
-    using FurnitureStockMarket.Core.Models.TransferModels.ShopingCart;
+    using FurnitureStockMarket.Core.Models.TransferModels.ShoppingCart;
     using FurnitureStockMarket.Database.Common;
     using FurnitureStockMarket.Database.Models;
     using Microsoft.EntityFrameworkCore;
@@ -11,11 +11,11 @@
     using static FurnitureStockMarket.Common.NotificationMessagesConstants;
     using static FurnitureStockMarket.Common.DefaultValuesConstants;
 
-    public class ShopingCartService : IShopingCartService
+    public class ShoppingCartService : IShoppingCartService
     {
         private readonly IRepository repo;
 
-        public ShopingCartService(IRepository repo)
+        public ShoppingCartService(IRepository repo)
         {
             this.repo = repo;
         }

@@ -1,8 +1,8 @@
 ﻿namespace FurnitureStockMarket.Core.Contracts
 {
-    using FurnitureStockMarket.Core.Models.TransferModels.ShopingCart;
+    using FurnitureStockMarket.Core.Models.TransferModels.ShoppingCart;
 
-    public interface IShopingCartService
+    public interface IShoppingCartService
     {
         public IEnumerable<CartItemTransferModel> AddToCart(List<CartItemTransferModel> cart, CartItemTransferModel model);
 

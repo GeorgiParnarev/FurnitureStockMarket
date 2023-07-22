@@ -1,20 +1,20 @@
 ﻿namespace FurnitureStockMarket.Controllers
 {
     using FurnitureStockMarket.Core.Contracts;
-    using FurnitureStockMarket.Core.Models.TransferModels.ShopingCart;
+    using FurnitureStockMarket.Core.Models.TransferModels.ShoppingCart;
     using FurnitureStockMarket.Extensions;
-    using FurnitureStockMarket.Models.ShopingCart;
+    using FurnitureStockMarket.Models.ShoppingCart;
     using Microsoft.AspNetCore.Mvc;
 
     using static FurnitureStockMarket.Common.NotificationMessagesConstants;
 
-    public class ShopingCartController : Controller
+    public class ShoppingCartController : Controller
     {
-        private readonly IShopingCartService shopingCartService;
+        private readonly IShoppingCartService shoppingCartService;
 
-        public ShopingCartController(IShopingCartService shopingCartService)
+        public ShoppingCartController(IShoppingCartService shoppingCartService)
         {
-            this.shopingCartService = shopingCartService;
+            this.shoppingCartService = shoppingCartService;
         }
 
         [HttpGet]
@@ -34,7 +34,7 @@
 
             try
             {
-                product = await this.shopingCartService.GetProductAsync(id);
+                product = await this.shoppingCartService.GetProductAsync(id);    
             }
             catch (Exception e)
             {
@@ -61,7 +61,7 @@
             })
             .ToList();
 
-            var updatedTransferCart = shopingCartService.AddToCart(transferCart, transferModel);
+            var updatedTransferCart = shoppingCartService.AddToCart(transferCart, transferModel);
 
             cart = updatedTransferCart.Select(i => new CartItemViewModel()
             {
@@ -79,7 +79,7 @@
         }
 
         [HttpGet]
-        public async Task<IActionResult> AddMore(int id)
+        public async Task<IActionResult> AddMoreItem(int id)
         {
             var cart = HttpContext.Session.GetObject<List<CartItemViewModel>>("Cart");
 
@@ -96,7 +96,7 @@
 
             try
             {
-                var updatedTransferCart = await this.shopingCartService.AddOneMore(transferCart, id);
+                var updatedTransferCart = await this.shoppingCartService.AddOneMore(transferCart, id);
 
                 cart = updatedTransferCart.Select(i => new CartItemViewModel()
                 {
@@ -115,7 +115,7 @@
 
             HttpContext.Session.SetObject("Cart", cart);
 
-            return RedirectToAction("Index", "ShopingCart");
+            return RedirectToAction("Index", "ShoppingCart");
         }
     }
 }

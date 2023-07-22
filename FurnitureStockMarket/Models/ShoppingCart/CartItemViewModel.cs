@@ -1,6 +1,6 @@
-﻿namespace FurnitureStockMarket.Core.Models.TransferModels.ShopingCart
+﻿namespace FurnitureStockMarket.Models.ShoppingCart
 {
-    public class CartItemTransferModel
+    public class CartItemViewModel
     {
         public int Id { get; set; }
 

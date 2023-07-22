@@ -1,9 +1,9 @@
-﻿@using FurnitureStockMarket.Models.ShopingCart;
+﻿@using FurnitureStockMarket.Models.ShoppingCart;
 
 @model IEnumerable<CartItemViewModel>
 
 @{
-    ViewBag.Title = "Shoping cart";
+    ViewBag.Title = "Shopping cart";
 }
 
 <h2 class="text-center">@ViewBag.Title</h2>
@@ -31,7 +31,7 @@ else
                         Quantity: @item.Quantity
                     </div>
                 </div>
-                <a asp-controller="ShopingCart" asp-action="AddMore" asp-route-id="@item.Id" class="btn btn-success mt-2 mb-2 w-10 p-3 fw-bold d-flex" style="margin-right: 30px">+</a>
+                <a asp-controller="ShoppingCart" asp-action="AddMoreItem" asp-route-id="@item.Id" class="btn btn-success mt-2 mb-2 w-10 p-3 fw-bold d-flex" style="margin-right: 30px">+</a>
             </div>
         </div>
 
