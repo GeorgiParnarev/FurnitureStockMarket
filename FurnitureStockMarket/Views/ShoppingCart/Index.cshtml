@@ -32,6 +32,7 @@ else
                     </div>
                 </div>
                 <div class="d-flex justify-content-center">
+                    <a asp-controller="ShoppingCart" asp-action="RemoveProductFromCart" asp-route-id="@item.Id" class="btn btn-danger mt-2 mb-2 p-3 fw-bold" style="margin-right: 30px; width: 200px; height: 60px">Remove product</a>
                     <a asp-controller="ShoppingCart" asp-action="RemoveOneItem" asp-route-id="@item.Id" class="btn btn-danger mt-2 mb-2 p-3 fw-bold" style="margin-right: 30px; width: 60px; height: 60px">-</a>
                     <a asp-controller="ShoppingCart" asp-action="AddOneMoreItem" asp-route-id="@item.Id" class="btn btn-success mt-2 mb-2 p-3 fw-bold" style="margin-right: 30px; width: 60px; height: 60px">+</a>
                 </div>

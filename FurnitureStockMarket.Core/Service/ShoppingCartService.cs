@@ -135,5 +135,19 @@
 
             return cart;
         }
+
+        public IEnumerable<CartItemTransferModel> RemoveProduct(List<CartItemTransferModel> cart, int id)
+        {
+            var product = cart.FirstOrDefault(i => i.Id == id);
+
+            if (product is null)
+            {
+                throw new NullReferenceException(ProductNotExisting);
+            }
+
+            cart.Remove(product);          
+
+            return cart;
+        }
     }
 }

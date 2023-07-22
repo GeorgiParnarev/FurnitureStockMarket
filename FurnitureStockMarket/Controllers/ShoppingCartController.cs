@@ -164,5 +164,45 @@
 
             return RedirectToAction("Index", "ShoppingCart");
         }
+
+        [HttpGet]
+        public async Task<IActionResult> RemoveProductFromCart(int id)
+        {
+            var cart = HttpContext.Session.GetObject<List<CartItemViewModel>>("Cart");
+
+            var transferCart = cart.Select(i => new CartItemTransferModel()
+            {
+                Id = i.Id,
+                Name = i.Name,
+                Price = i.Price,
+                Quantity = i.Quantity,
+                ImageURL = i.ImageURL
+
+            })
+            .ToList();
+
+            try
+            {
+                var updatedTransferCart = this.shoppingCartService.RemoveProduct(transferCart, id);
+
+                cart = updatedTransferCart.Select(i => new CartItemViewModel()
+                {
+                    Id = i.Id,
+                    Name = i.Name,
+                    Price = i.Price,
+                    Quantity = i.Quantity,
+                    ImageURL = i.ImageURL
+                })
+                .ToList();
+            }
+            catch (Exception e)
+            {
+                TempData[ErrorMessage] = e.Message;
+            }
+
+            HttpContext.Session.SetObject("Cart", cart);
+
+            return RedirectToAction("Index", "ShoppingCart");
+        }
     }
 }

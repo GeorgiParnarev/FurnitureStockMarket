@@ -11,5 +11,7 @@
         public Task<IEnumerable<CartItemTransferModel>> AddOneMore(List<CartItemTransferModel> cart, int id);
 
         public IEnumerable<CartItemTransferModel> RemoveOneItem(List<CartItemTransferModel> cart, int id);
+
+        public IEnumerable<CartItemTransferModel> RemoveProduct(List<CartItemTransferModel> cart, int id);
     }
 }
