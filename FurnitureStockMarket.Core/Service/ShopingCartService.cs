@@ -9,6 +9,7 @@
     using System.Threading.Tasks;
 
     using static FurnitureStockMarket.Common.NotificationMessagesConstants;
+    using static FurnitureStockMarket.Common.DefaultValuesConstants;
 
     public class ShopingCartService : IShopingCartService
     {
@@ -17,6 +18,29 @@
         public ShopingCartService(IRepository repo)
         {
             this.repo = repo;
+        }
+
+        public async Task<IEnumerable<CartItemTransferModel>> AddOneMore(List<CartItemTransferModel> cart, int id)
+        {
+            var checkIfAvaliable = await this.repo
+                .AllReadonly<Product>()
+                .FirstOrDefaultAsync(p => p.Id == id);
+
+            var product = cart.FirstOrDefault(i => i.Id == id);            
+
+            if (product is null || checkIfAvaliable is null)
+            {
+                throw new NullReferenceException(ProductNotExisting);
+            }
+
+            if (checkIfAvaliable.Quantity == product.Quantity)
+            {
+                throw new Exception(ProductStoredQuantityReached);
+            }
+
+            product.Quantity += AddDefaultProductAmmount;
+
+            return cart;
         }
 
         public IEnumerable<CartItemTransferModel> AddToCart(List<CartItemTransferModel> cart, CartItemTransferModel model)
@@ -67,7 +91,7 @@
                 Id = id,
                 Name = product.Name,
                 Price = product.Price,
-                Quantity = 1, //should constant be added
+                Quantity = AddDefaultProductAmmount,
                 ImageURL = product.ImageURL
             };
 

@@ -24,6 +24,7 @@
 
         public const string ProductNotExisting = "This product does not exist!";
         public const string SuccessfullyEditedProduct = "Successfully edited product!";
+        public const string ProductStoredQuantityReached = "There are no units left of this product";
         //DRUGIQ PUT KATO DOIDESH TUKA FIXNI NESHTATA!!!!!
     }
 }
