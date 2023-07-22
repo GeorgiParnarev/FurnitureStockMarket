@@ -26,7 +26,7 @@
                 .AllReadonly<Product>()
                 .FirstOrDefaultAsync(p => p.Id == id);
 
-            var product = cart.FirstOrDefault(i => i.Id == id);            
+            var product = cart.FirstOrDefault(i => i.Id == id);
 
             if (product is null || checkIfAvaliable is null)
             {
@@ -35,7 +35,7 @@
 
             if (checkIfAvaliable.Quantity == product.Quantity)
             {
-                throw new Exception(ProductStoredQuantityReached);
+                throw new InvalidOperationException(ProductStoredQuantityReached);
             }
 
             product.Quantity += AddDefaultProductAmmount;
@@ -43,9 +43,24 @@
             return cart;
         }
 
-        public IEnumerable<CartItemTransferModel> AddToCart(List<CartItemTransferModel> cart, CartItemTransferModel model)
+        public async Task<IEnumerable<CartItemTransferModel>> AddToCart(List<CartItemTransferModel> cart, CartItemTransferModel model)
         {
+            var product = await this.repo
+                .AllReadonly<Product>()
+                .FirstOrDefaultAsync(p => p.Id == model.Id);
+
+            if (product is null)
+            {
+                throw new NullReferenceException(ProductNotExisting);
+            }
+
             var cartItem = cart.FirstOrDefault(i => i.Id == model.Id);
+
+
+            if (product.Quantity == 0)
+            {
+                throw new InvalidOperationException(ProductStoredQuantityReached);
+            }
 
             if (cartItem is null)
             {
@@ -54,13 +69,18 @@
                     Id = model.Id,
                     Name = model.Name,
                     Price = model.Price,
-                    Quantity = model.Quantity,
+                    Quantity = AddDefaultProductAmmount,
                     ImageURL = model.ImageURL
                 });
             }
             else
             {
-                cartItem.Quantity += model.Quantity;
+                if (product.Quantity == cartItem.Quantity)
+                {
+                    throw new InvalidOperationException(ProductStoredQuantityReached);
+                }
+
+                cartItem.Quantity += AddDefaultProductAmmount;
             }
 
             var updatedCart = cart.Select(i => new CartItemTransferModel()

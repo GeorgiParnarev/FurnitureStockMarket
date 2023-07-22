@@ -4,7 +4,7 @@
 
     public interface IShoppingCartService
     {
-        public IEnumerable<CartItemTransferModel> AddToCart(List<CartItemTransferModel> cart, CartItemTransferModel model);
+        public Task<IEnumerable<CartItemTransferModel>> AddToCart(List<CartItemTransferModel> cart, CartItemTransferModel model);
 
         public Task<CartItemTransferModel> GetProductAsync(int id);
 

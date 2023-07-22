@@ -61,17 +61,24 @@
             })
             .ToList();
 
-            var updatedTransferCart = shoppingCartService.AddToCart(transferCart, transferModel);
-
-            cart = updatedTransferCart.Select(i => new CartItemViewModel()
+            try
             {
-                Id = i.Id,
-                Name = i.Name,
-                Price = i.Price,
-                Quantity = i.Quantity,
-                ImageURL = i.ImageURL
-            })
-            .ToList();
+                var updatedTransferCart = await shoppingCartService.AddToCart(transferCart, transferModel);
+
+                cart = updatedTransferCart.Select(i => new CartItemViewModel()
+                {
+                    Id = i.Id,
+                    Name = i.Name,
+                    Price = i.Price,
+                    Quantity = i.Quantity,
+                    ImageURL = i.ImageURL
+                })
+                .ToList();
+            }
+            catch (Exception e)
+            {
+                TempData[ErrorMessage] = e.Message;
+            }            
 
             HttpContext.Session.SetObject("Cart", cart);
 
