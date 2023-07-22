@@ -5,6 +5,7 @@
     using FurnitureStockMarket.Core.Models.TransferModels.Admin;
     using FurnitureStockMarket.Models.Admin;
     using Microsoft.AspNetCore.Mvc;
+
     using static FurnitureStockMarket.Common.NotificationMessagesConstants;
 
     public class AdminController : Controller
@@ -74,7 +75,7 @@
             {
                 TempData[ErrorMessage] = NoExistingSubCategory;
 
-                return RedirectToAction("AddSubCategory");
+                return RedirectToAction("AddSubCategory", new { categoryId });
             }
 
             var model = new AddProductViewModel()
