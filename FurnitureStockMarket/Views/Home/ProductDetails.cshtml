@@ -19,5 +19,6 @@
             <p class="mb-0"><span class="fw-bold">Brand </span>@Model.Brand</p>
             <p class="mb-0"><span class="fw-bold"></span>@(Model.Quantity==0? "Out of stock" : "In stock")</p>
         </div>
+        <a asp-controller="ShoppingCart" asp-action="Add" asp-route-id="@Model.Id" class="btn btn-warning mb-2 w-100 p-3 fw-bold">Add to cart</a>
     </div>
 </div>

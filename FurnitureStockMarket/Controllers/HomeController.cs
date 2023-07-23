@@ -37,6 +37,7 @@
 
             var model = new ProductDetailsViewModel()
             {
+                Id = id,
                 Name = transferModel.Name,
                 Description = transferModel.Description,
                 Price = transferModel.Price,
