@@ -1,0 +1,60 @@
+﻿@using FurnitureStockMarket.Models.Order;
+
+@model AddOrderViewModel
+
+@{
+    ViewBag.Title = "Make order";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<div class="row">
+    <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+        @foreach(var item in Model.Cart)
+        {
+        <div class="container" style="display: flex; flex-direction: column; align-items:center">
+            <div style="width: 100%; height: 100px; background-color: #f0f0f0; margin: 10px 0; display: flex; align-items: center; justify-content: space-between;">
+                <div style="display: flex; align-items: center;">
+                    <img src="@item.ImageURL" alt="Product image" style="width: 70px; height: 70px; margin-right: 10px; margin-left: 30px">
+                    <div style="margin-right: 4px">
+                        @item.Name -
+                    </div>
+                    <div style="margin-right: 10px">
+                        Price: @(item.Price*item.Quantity)$
+                    </div>
+                    <div style="margin-right: 10px">
+                        Quantity: @item.Quantity
+                    </div>
+                </div>                
+            </div>
+        </div>        
+        }
+
+        <form asp-action="AddOrder" method="post">
+            <div class="mb-3">
+            <label asp-for="PaymentId" class="form-label-add-edit">Payment method</label>
+            <select asp-for="PaymentId" class="form-control" aria-required="true">
+                @foreach (var paymentMethod in Model.PaymentMethods)
+                {
+                    <option value="@paymentMethod.Key">@paymentMethod.Value</option>
+                }
+            </select>
+            <span asp-validation-for="PaymentId" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="ShippingId" class="form-label-add-edit">Shipping method</label>
+                <select asp-for="ShippingId" class="form-control" aria-required="true">
+                   @foreach (var shippingMethod in Model.ShippingMethods)
+                   {
+                      <option value="@shippingMethod.Key">@shippingMethod.Value</option>
+                  }
+                </select>
+                <span asp-validation-for="ShippingId" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <input class="btn btn-primary mb-2 w-100 p-3 fw-bold" type="submit" value="Order" />
+            </div>
+        </form>        
+    </div>
+</div>

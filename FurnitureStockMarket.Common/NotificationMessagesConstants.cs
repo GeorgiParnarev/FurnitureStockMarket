@@ -26,6 +26,7 @@
         public const string SuccessfullyEditedProduct = "Successfully edited product!";
         public const string ProductStoredQuantityReached = "There are no units left of this product";
         public const string OneProductQuantityLeftInCart = "You can't lower the ammount of the product! You need to remove it from the cart!";
-        //DRUGIQ PUT KATO DOIDESH TUKA FIXNI NESHTATA!!!!!
+
+        public const string AlreadyOutOfStock = "{1} is out of stock";
     }
 }

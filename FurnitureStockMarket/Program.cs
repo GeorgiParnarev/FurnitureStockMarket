@@ -41,8 +41,9 @@ namespace FurnitureStockMarket
             builder.Services.AddScoped<IAccountService, AccountService>();
             builder.Services.AddScoped<IProductService, ProductService>();
             builder.Services.AddScoped<IAdminService, AdminService>();
-            builder.Services.AddScoped<IRepository, Repository>();
             builder.Services.AddScoped<IShoppingCartService, ShoppingCartService>();
+            builder.Services.AddScoped<IOrderService, OrderService>();
+            builder.Services.AddScoped<IRepository, Repository>();
 
             builder.Services.AddDistributedMemoryCache();
             builder.Services.AddSession(options =>

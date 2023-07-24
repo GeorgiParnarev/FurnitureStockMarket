@@ -41,4 +41,6 @@ else
     }
 
     <p>Total: @Model.Sum(item => item.Price * item.Quantity)$</p>
+
+    <a asp-controller="Order" asp-action="MakeOrder" class="btn btn-primary mt-2 mb-2 p-3 fw-bold" style="margin-right: 30px; width: 200px; height: 60px">Order</a>
 }

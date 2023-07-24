@@ -14,6 +14,11 @@
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            //builder.Entity<ProductsOrders>(entity =>
+            //{
+            //    entity.HasKey(x => new { x.OrderId, x.ProductId });
+            //});
+
             builder.Entity<Product>()
                 .Property(p => p.Price)
                 .HasPrecision(18, 2);
@@ -35,5 +40,7 @@
         public DbSet<Review> Reviews { get; set; } = null!;
 
         public DbSet<SubCategory> SubCategories { get; set; } = null!;
+
+        //public DbSet<ProductsOrders> ProductsOrders { get; set; } = null!;
     }
 }

@@ -2,8 +2,8 @@
 {
     public enum ShippingMethod
     {
-        standardShipping=0,
-        expressShipping=1,
+        StandardShipping=0,
+        ExpressShipping=1,
         StorePickup=2
     }
 }
