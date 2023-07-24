@@ -2,6 +2,7 @@
 {
     using FurnitureStockMarket.Controllers.BaseControllers;
     using FurnitureStockMarket.Core.Contracts;
+    using FurnitureStockMarket.Core.Models.TransferModels.Order;
     using FurnitureStockMarket.Core.Models.TransferModels.ShoppingCart;
     using FurnitureStockMarket.Database.Enumerators;
     using FurnitureStockMarket.Extensions;
@@ -56,7 +57,7 @@
         }
 
         [HttpGet]
-        public IActionResult AddOrder()
+        public async Task<IActionResult> AddOrder()
         {
             var cart = HttpContext.Session.GetObject<List<CartItemViewModel>>("Cart") ?? new List<CartItemViewModel>();
 
@@ -78,72 +79,93 @@
             {
                 PaymentMethods = paymentMethods,
                 ShippingMethods = shippingMethods,
+                CustomerId = await this.orderService.GetCustomerIdAsync(Guid.Parse(GetUserId()!)),
                 Cart = cart
             };
 
             return this.View(model);
         }
 
-        //[HttpPost]
-        //public async Task<IActionResult> AddOrder(AddOrderViewModel model)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        TempData[ErrorMessage] = InvalidData;
+        [HttpPost]
+        public async Task<IActionResult> AddOrder(AddOrderViewModel model)
+        {
+            var cart = HttpContext.Session.GetObject<List<CartItemViewModel>>("Cart") ?? new List<CartItemViewModel>();
 
-        //        var cart = HttpContext.Session.GetObject<List<CartItemViewModel>>("Cart") ?? new List<CartItemViewModel>();
+            if (!ModelState.IsValid)
+            {
+                TempData[ErrorMessage] = InvalidData;
 
-        //        List<KeyValuePair<int, PaymentMethod>> paymentMethods = new List<KeyValuePair<int, PaymentMethod>>()
-        //        {
-        //            new KeyValuePair<int, PaymentMethod>(0, PaymentMethod.PayPal),
-        //            new KeyValuePair<int, PaymentMethod>(1, PaymentMethod.CreditCard),
-        //            new KeyValuePair<int, PaymentMethod>(2, PaymentMethod.DebitCard)
-        //        };
+                List<KeyValuePair<int, PaymentMethod>> paymentMethods = new List<KeyValuePair<int, PaymentMethod>>()
+                {
+                    new KeyValuePair<int, PaymentMethod>(0, PaymentMethod.PayPal),
+                    new KeyValuePair<int, PaymentMethod>(1, PaymentMethod.CreditCard),
+                    new KeyValuePair<int, PaymentMethod>(2, PaymentMethod.DebitCard)
+                };
 
-        //        List<KeyValuePair<int, ShippingMethod>> shippingMethods = new List<KeyValuePair<int, ShippingMethod>>()
-        //        {
-        //            new KeyValuePair<int, ShippingMethod>(0, ShippingMethod.StandardShipping),
-        //            new KeyValuePair<int, ShippingMethod>(1, ShippingMethod.ExpressShipping),
-        //            new KeyValuePair<int, ShippingMethod>(2, ShippingMethod.StorePickup)
-        //        };
+                List<KeyValuePair<int, ShippingMethod>> shippingMethods = new List<KeyValuePair<int, ShippingMethod>>()
+                {
+                    new KeyValuePair<int, ShippingMethod>(0, ShippingMethod.StandardShipping),
+                    new KeyValuePair<int, ShippingMethod>(1, ShippingMethod.ExpressShipping),
+                    new KeyValuePair<int, ShippingMethod>(2, ShippingMethod.StorePickup)
+                };
 
-        //        model.Cart = cart;
-        //        model.PaymentMethods = paymentMethods;
-        //        model.ShippingMethods = shippingMethods;
+                model.PaymentMethods = paymentMethods;
+                model.ShippingMethods = shippingMethods;
+                model.Cart = cart;
 
-        //        return this.View(model);
-        //    }
+                return this.View(model);
+            }
 
-        //    try
-        //    {
+            try
+            {
+                var transferCart = cart.Select(i => new CartItemTransferModel()
+                {
+                    Id = i.Id,
+                    Name = i.Name,
+                    Price = i.Price,
+                    Quantity = i.Quantity,
+                    ImageURL = i.ImageURL
+                })
+                .ToList();
 
-        //    }
-        //    catch (Exception)
-        //    {
-        //        TempData[ErrorMessage] = InvalidData;
+                var transferModel = new AddOrderTransferModel()
+                {
+                    CustomerId = model.CustomerId,
+                    PaymentId = model.PaymentId,
+                    ShippingId = model.ShippingId,
+                    Cart = transferCart
+                };
 
-        //        var cart = HttpContext.Session.GetObject<List<CartItemViewModel>>("Cart") ?? new List<CartItemViewModel>();
+                await this.orderService.AddOrderAsync(transferModel);
 
-        //        List<KeyValuePair<int, PaymentMethod>> paymentMethods = new List<KeyValuePair<int, PaymentMethod>>()
-        //        {
-        //            new KeyValuePair<int, PaymentMethod>(0, PaymentMethod.PayPal),
-        //            new KeyValuePair<int, PaymentMethod>(1, PaymentMethod.CreditCard),
-        //            new KeyValuePair<int, PaymentMethod>(2, PaymentMethod.DebitCard)
-        //        };
+                TempData[SuccessMessage] = SuccessfullyAddedOrder;
 
-        //        List<KeyValuePair<int, ShippingMethod>> shippingMethods = new List<KeyValuePair<int, ShippingMethod>>()
-        //        {
-        //            new KeyValuePair<int, ShippingMethod>(0, ShippingMethod.StandardShipping),
-        //            new KeyValuePair<int, ShippingMethod>(1, ShippingMethod.ExpressShipping),
-        //            new KeyValuePair<int, ShippingMethod>(2, ShippingMethod.StorePickup)
-        //        };
+                return RedirectToAction("Index", "Home");
+            }
+            catch (Exception)
+            {
+                TempData[ErrorMessage] = FailedToAddOrder;
 
-        //        model.Cart = cart;
-        //        model.PaymentMethods = paymentMethods;
-        //        model.ShippingMethods = shippingMethods;
+                List<KeyValuePair<int, PaymentMethod>> paymentMethods = new List<KeyValuePair<int, PaymentMethod>>()
+                {
+                    new KeyValuePair<int, PaymentMethod>(0, PaymentMethod.PayPal),
+                    new KeyValuePair<int, PaymentMethod>(1, PaymentMethod.CreditCard),
+                    new KeyValuePair<int, PaymentMethod>(2, PaymentMethod.DebitCard)
+                };
 
-        //        return this.View(model);
-        //    }
-        //}
+                List<KeyValuePair<int, ShippingMethod>> shippingMethods = new List<KeyValuePair<int, ShippingMethod>>()
+                {
+                    new KeyValuePair<int, ShippingMethod>(0, ShippingMethod.StandardShipping),
+                    new KeyValuePair<int, ShippingMethod>(1, ShippingMethod.ExpressShipping),
+                    new KeyValuePair<int, ShippingMethod>(2, ShippingMethod.StorePickup)
+                };
+                
+                model.PaymentMethods = paymentMethods;
+                model.ShippingMethods = shippingMethods;
+                model.Cart = cart;
+
+                return this.View(model);
+            }
+        }
     }
 }

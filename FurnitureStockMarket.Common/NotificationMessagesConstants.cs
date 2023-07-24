@@ -21,6 +21,12 @@
         public const string SuccessfullyAddedProduct = "Successfully added product!";
         public const string SuccessfullyAddedCategory= "Successfully added category!";
         public const string SuccessfullyAddedSubCategory = "Successfully added sub-category!";
+        public const string SuccessfullyAddedOrder = "Successfully added order!";
+
+        public const string FailedToAddProduct = "Failed to add product!";
+        public const string FailedToAddCategory = "Failed to add category!";
+        public const string FailedToAddSubCategory = "Failed to add sub-category!";
+        public const string FailedToAddOrder = "Failed to make order";
 
         public const string ProductNotExisting = "This product does not exist!";
         public const string SuccessfullyEditedProduct = "Successfully edited product!";
@@ -28,5 +34,7 @@
         public const string OneProductQuantityLeftInCart = "You can't lower the ammount of the product! You need to remove it from the cart!";
 
         public const string AlreadyOutOfStock = "{1} is out of stock";
+
+        public const string CustomerNotExisting = "Customer does not exist";
     }
 }

@@ -3,7 +3,6 @@
     using FurnitureStockMarket.Controllers.BaseControllers;
     using FurnitureStockMarket.Core.Contracts;
     using FurnitureStockMarket.Core.Models.StatusModels;
-    using FurnitureStockMarket.Core.Models.TransferModels;
     using FurnitureStockMarket.Core.Models.TransferModels.Account;
     using FurnitureStockMarket.Database.Models.Account;
     using FurnitureStockMarket.Models.Account;

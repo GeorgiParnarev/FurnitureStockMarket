@@ -11,7 +11,7 @@
         public Customer()
         {
             this.Id = new Guid();
-            this.Orders=new List<Order>();
+            this.Orders = new List<Order>();
         }
 
         [Key]

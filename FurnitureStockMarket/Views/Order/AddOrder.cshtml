@@ -32,6 +32,11 @@
         }
 
         <form asp-action="AddOrder" method="post">
+            <div class="visually-hidden">
+                <label asp-for="CustomerId" class="form-label-add-edit"></label>
+                <input asp-for="CustomerId" class="form-control" aria-required="true" />
+                <span asp-validation-for="CustomerId" class="text-danger"></span>
+            </div>
             <div class="mb-3">
             <label asp-for="PaymentId" class="form-label-add-edit">Payment method</label>
             <select asp-for="PaymentId" class="form-control" aria-required="true">
@@ -52,6 +57,7 @@
                 </select>
                 <span asp-validation-for="ShippingId" class="text-danger"></span>
             </div>
+            <p>Total: @Model.Cart.Sum(item => item.Price * item.Quantity)$</p>
             <div class="mb-3">
                 <input class="btn btn-primary mb-2 w-100 p-3 fw-bold" type="submit" value="Order" />
             </div>

@@ -121,7 +121,7 @@
             }
             catch (Exception)
             {
-                TempData[ErrorMessage] = InvalidData;
+                TempData[ErrorMessage] = FailedToAddProduct;
 
                 var subCategories = await this.adminService.GetSubCategoriesAsync(model.CategoryId);
 
@@ -159,7 +159,7 @@
             }
             catch (Exception)
             {
-                TempData[ErrorMessage] = InvalidData;
+                TempData[ErrorMessage] = FailedToAddCategory;
 
                 return this.View(model);
             }
@@ -202,7 +202,7 @@
             }
             catch (Exception)
             {
-                TempData[ErrorMessage] = InvalidData;
+                TempData[ErrorMessage] = FailedToAddSubCategory;
 
                 return this.View(model);
             }

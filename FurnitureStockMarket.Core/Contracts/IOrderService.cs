@@ -7,6 +7,8 @@
     {
         Task<bool> CheckIfProductsStillExist(List<CartItemTransferModel> model);
 
-        //Task AddProductAsync(AddOrderTransferModel model);
+        Task AddOrderAsync(AddOrderTransferModel model);
+
+        Task<Guid> GetCustomerIdAsync(Guid id);
     }
 }

@@ -4,6 +4,7 @@
     using System.ComponentModel.DataAnnotations.Schema;
     using System.ComponentModel.DataAnnotations;
     using FurnitureStockMarket.Database.Models;
+    using FurnitureStockMarket.Core.Models.TransferModels.ShoppingCart;
 
     public class AddOrderTransferModel
     {
@@ -11,6 +12,7 @@
         {
             this.PaymentMethods = new List<KeyValuePair<int, PaymentMethod>>();
             this.ShippingMethods = new List<KeyValuePair<int, ShippingMethod>>();
+            this.Cart = new List<CartItemTransferModel>();
         }
 
         [Required]
@@ -19,9 +21,6 @@
 
         [Required]
         public virtual Customer Customer { get; set; } = null!;
-
-        [Required]
-        public decimal TotalPrice { get; set; }
 
         public int PaymentId { get; set; }
 
@@ -32,5 +31,7 @@
 
         [Required]
         public IEnumerable<KeyValuePair<int, ShippingMethod>> ShippingMethods { get; set; }
+
+        public IEnumerable<CartItemTransferModel> Cart { get; set; }
     }
 }

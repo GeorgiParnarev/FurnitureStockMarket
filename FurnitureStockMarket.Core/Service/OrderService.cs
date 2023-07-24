@@ -4,6 +4,7 @@
     using FurnitureStockMarket.Core.Models.TransferModels.Order;
     using FurnitureStockMarket.Core.Models.TransferModels.ShoppingCart;
     using FurnitureStockMarket.Database.Common;
+    using FurnitureStockMarket.Database.Enumerators;
     using FurnitureStockMarket.Database.Models;
     using Microsoft.EntityFrameworkCore;
     using System.Collections.Generic;
@@ -20,14 +21,35 @@
             this.repo = repo;
         }
 
-        //public Task AddProductAsync(AddOrderTransferModel model)
-        //{
-        //    var newOrder = new Order()
-        //    {
-        //        CustomerId = model.CustomerId,
-        //        TotalPrice = model.TotalPrice
-        //    };
-        //}
+        public async Task AddOrderAsync(AddOrderTransferModel model)
+        {
+            var newOrder = new Order()
+            {
+                CustomerId = model.CustomerId,
+                TotalPrice = model.Cart.Sum(item => item.Price * item.Quantity),
+                OrderStatus = OrderStatus.Processing,
+                PaymentMethod = (PaymentMethod)model.PaymentId,
+                ShippingMethod = (ShippingMethod)model.ShippingId
+            };
+
+            var productOrders = new List<ProductsOrders>();
+
+            foreach (var item in model.Cart)
+            {
+                productOrders.Add(new ProductsOrders()
+                {
+                    OrderId = newOrder.Id,
+                    ProductId = item.Id,
+                    Quantity = item.Quantity
+                });
+            }
+
+            newOrder.ProductsOrders = productOrders;
+
+            await this.repo.AddRangeAsync(productOrders);
+            await this.repo.AddAsync(newOrder);
+            await this.repo.SaveChangesAsync();
+        }
 
         public async Task<bool> CheckIfProductsStillExist(List<CartItemTransferModel> cart)
         {
@@ -46,6 +68,20 @@
             }
 
             return true;
+        }
+
+        public async Task<Guid> GetCustomerIdAsync(Guid id)
+        {
+            var customer = await this.repo
+                .AllReadonly<Customer>()
+                .FirstOrDefaultAsync(c => c.ApplicationUserId == id);
+
+            if (customer is null)
+            {
+                throw new NullReferenceException(CustomerNotExisting);
+            }
+
+            return customer.Id;
         }
     }
 }
