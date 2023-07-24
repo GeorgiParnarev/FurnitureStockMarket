@@ -14,10 +14,10 @@
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            //builder.Entity<ProductsOrders>(entity =>
-            //{
-            //    entity.HasKey(x => new { x.OrderId, x.ProductId });
-            //});
+            builder.Entity<ProductsOrders>(entity =>
+            {
+                entity.HasKey(x => new { x.OrderId, x.ProductId });
+            });
 
             builder.Entity<Product>()
                 .Property(p => p.Price)
@@ -41,6 +41,6 @@
 
         public DbSet<SubCategory> SubCategories { get; set; } = null!;
 
-        //public DbSet<ProductsOrders> ProductsOrders { get; set; } = null!;
+        public DbSet<ProductsOrders> ProductsOrders { get; set; } = null!;
     }
 }

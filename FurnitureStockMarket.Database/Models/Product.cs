@@ -10,6 +10,7 @@
         public Product()
         {
             this.Reviews = new List<Review>();
+            this.ProductsOrders = new List<ProductsOrders>();
         }
 
         [Key]
@@ -32,11 +33,6 @@
 
         public virtual SubCategory SubCategory { get; set; } = null!;
 
-        [ForeignKey(nameof(Order))]
-        public Guid? OrderId { get; set; }
-
-        public virtual Order? Order { get; set; }
-
         [Required]
         [MaxLength(BrandMaxLength)]
         public string Brand { get; set; } = null!;
@@ -49,5 +45,7 @@
         public string ImageURL { get; set; } = null!;
 
         public IEnumerable<Review> Reviews { get; set; }
+
+        public IEnumerable<ProductsOrders> ProductsOrders { get; set; }
     }
 }

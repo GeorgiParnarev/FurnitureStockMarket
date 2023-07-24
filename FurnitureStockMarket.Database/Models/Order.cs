@@ -9,7 +9,7 @@
         public Order()
         {
             this.Id = new Guid();
-            this.OrderedProducts=new List<Product>();
+            this.ProductsOrders = new List<ProductsOrders>();
         }
 
         [Key]
@@ -33,6 +33,6 @@
         [Required]
         public ShippingMethod ShippingMethod { get; set; }
 
-        public virtual IEnumerable<Product> OrderedProducts { get; set; }
+        public virtual IEnumerable<ProductsOrders> ProductsOrders { get; set; }
     }
 }

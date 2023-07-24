@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FurnitureStockMarket.Database.Migrations
 {
     [DbContext(typeof(FurnitureStockMarketDbContext))]
-    [Migration("20230716000216_initTables")]
+    [Migration("20230724163031_initTables")]
     partial class initTables
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -230,9 +230,6 @@ namespace FurnitureStockMarket.Database.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<Guid?>("OrderId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<decimal>("Price")
                         .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
@@ -245,11 +242,27 @@ namespace FurnitureStockMarket.Database.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OrderId");
-
                     b.HasIndex("SubCategoryId");
 
                     b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("FurnitureStockMarket.Database.Models.ProductsOrders", b =>
+                {
+                    b.Property<Guid>("OrderId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("OrderId", "ProductId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductsOrders");
                 });
 
             modelBuilder.Entity("FurnitureStockMarket.Database.Models.Review", b =>
@@ -437,19 +450,32 @@ namespace FurnitureStockMarket.Database.Migrations
 
             modelBuilder.Entity("FurnitureStockMarket.Database.Models.Product", b =>
                 {
-                    b.HasOne("FurnitureStockMarket.Database.Models.Order", "Order")
-                        .WithMany("OrderedProducts")
-                        .HasForeignKey("OrderId");
-
                     b.HasOne("FurnitureStockMarket.Database.Models.SubCategory", "SubCategory")
                         .WithMany("Products")
                         .HasForeignKey("SubCategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("SubCategory");
+                });
+
+            modelBuilder.Entity("FurnitureStockMarket.Database.Models.ProductsOrders", b =>
+                {
+                    b.HasOne("FurnitureStockMarket.Database.Models.Order", "Order")
+                        .WithMany("ProductsOrders")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FurnitureStockMarket.Database.Models.Product", "Product")
+                        .WithMany("ProductsOrders")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Order");
 
-                    b.Navigation("SubCategory");
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("FurnitureStockMarket.Database.Models.Review", b =>
@@ -551,11 +577,13 @@ namespace FurnitureStockMarket.Database.Migrations
 
             modelBuilder.Entity("FurnitureStockMarket.Database.Models.Order", b =>
                 {
-                    b.Navigation("OrderedProducts");
+                    b.Navigation("ProductsOrders");
                 });
 
             modelBuilder.Entity("FurnitureStockMarket.Database.Models.Product", b =>
                 {
+                    b.Navigation("ProductsOrders");
+
                     b.Navigation("Reviews");
                 });
 
