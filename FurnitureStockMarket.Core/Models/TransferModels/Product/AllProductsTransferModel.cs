@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace FurnitureStockMarket.Core.Models.TransferModels.Product
+﻿namespace FurnitureStockMarket.Core.Models.TransferModels.Product
 {
     public class AllProductsTransferModel
     {

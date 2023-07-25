@@ -95,6 +95,41 @@
             await this.repo.SaveChangesAsync();
         }
 
+        public async Task<IEnumerable<AllOrdersTransferModel>> GetAllOrdersAsync()
+        {
+            var allOrders = await this.repo
+                .AllReadonly<Order>()
+                .Include(o => o.Customer)
+                .ThenInclude(c => c.User)
+                .Select(o => new AllOrdersTransferModel()
+                {
+                    Id = o.Id,
+                    CustomerId = o.CustomerId,
+                    Customer = o.Customer,
+                    TotalPrice = o.TotalPrice,
+                    OrderStatus = o.OrderStatus,
+                    PaymentMethod = o.PaymentMethod,
+                    ShippingMethod = o.ShippingMethod
+                })
+                .ToListAsync();
+
+            foreach (var order in allOrders)
+            {
+                order.ProductsOrders = await this.repo
+                    .AllReadonly<ProductsOrders>()
+                    .Where(po=>po.OrderId==order.Id)
+                    .Include(p => p.Product)
+                    .Select(o => new ProductsOrders
+                    {
+                        Product = o.Product,
+                        Quantity = o.Quantity
+                    })
+                    .ToListAsync();
+            }
+
+            return allOrders;
+        }
+
         public async Task<IEnumerable<KeyValuePair<int, string>>> GetCategoriesAsync()
         {
             var Categories = await this.repo
@@ -131,6 +166,20 @@
             };
 
             return result;
+        }
+
+        public async Task<Product> GetProductProductAsync(int id)
+        {
+            var product = await this.repo
+                .AllReadonly<Product>()
+                .FirstOrDefaultAsync(p => p.Id == id);
+
+            if (product is null)
+            {
+                throw new Exception(ProductNotExisting);
+            }
+
+            return product;
         }
 
         public async Task<IEnumerable<KeyValuePair<int, string>>> GetSubCategoriesAsync(int categoryId)

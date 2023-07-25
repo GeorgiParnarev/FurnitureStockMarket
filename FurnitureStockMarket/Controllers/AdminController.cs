@@ -291,5 +291,25 @@
                 return this.View(model);
             }
         }
+
+        [HttpGet]
+        public async Task<IActionResult> AllOrders()
+        {
+            var transferModel = await this.adminService.GetAllOrdersAsync();
+
+            var model = transferModel.Select(o => new AllOrdersViewModel()
+            {
+                Id = o.Id,
+                CustomerId = o.CustomerId,
+                Customer = o.Customer,
+                TotalPrice = o.TotalPrice,
+                OrderStatus = o.OrderStatus,
+                PaymentMethod = o.PaymentMethod,
+                ShippingMethod = o.ShippingMethod,
+                ProductsOrders = o.ProductsOrders
+            });
+
+            return this.View(model);
+        }
     }
 }

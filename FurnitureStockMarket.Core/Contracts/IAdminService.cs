@@ -2,6 +2,8 @@
 {
     using FurnitureStockMarket.Core.Models.TransferModels;
     using FurnitureStockMarket.Core.Models.TransferModels.Admin;
+    using FurnitureStockMarket.Core.Models.TransferModels.Product;
+    using FurnitureStockMarket.Database.Models;
     using System.Threading.Tasks;
 
     public interface IAdminService
@@ -19,5 +21,9 @@
         Task<EditProductTransferModel> GetProductAsync(int id);
 
         Task EditProductAsync(EditProductTransferModel model);
+
+        public Task<IEnumerable<AllOrdersTransferModel>> GetAllOrdersAsync();
+
+        Task<Product> GetProductProductAsync(int id);
     }
 }
