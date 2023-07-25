@@ -311,5 +311,21 @@
 
             return this.View(model);
         }
+
+        public async Task<IActionResult> SendOrder(Guid id)
+        {
+            try
+            {
+                await this.adminService.ShippingOrder(id);
+
+                TempData[SuccessMessage] = SuccessfullyShippingOrder;
+            }
+            catch (Exception e)
+            {
+                TempData[ErrorMessage] = e.Message;
+            }
+
+            return RedirectToAction("AllOrders", "Admin");
+        }
     }
 }

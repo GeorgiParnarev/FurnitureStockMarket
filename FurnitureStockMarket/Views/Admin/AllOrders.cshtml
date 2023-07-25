@@ -57,6 +57,7 @@
             <div style="margin-left: 20px">
                 Total price: @order.TotalPrice$
             </div>
+            <a asp-controller="Admin" asp-action="SendOrder" asp-route-id="@order.Id" class="btn btn-primary mt-2 mb-2 p-3 fw-bold" style="margin-right: 30px; width: 200px; height: 60px">Send Order</a>
         </div>
     </div>
 }

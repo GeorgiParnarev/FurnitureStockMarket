@@ -5,6 +5,7 @@
     using FurnitureStockMarket.Core.Models.TransferModels.Admin;
     using FurnitureStockMarket.Database;
     using FurnitureStockMarket.Database.Common;
+    using FurnitureStockMarket.Database.Enumerators;
     using FurnitureStockMarket.Database.Models;
     using Microsoft.EntityFrameworkCore;
     using System.Collections.Generic;
@@ -191,6 +192,32 @@
                 .ToListAsync();
 
             return subCategories;
+        }
+
+        public async Task ShippingOrder(Guid id)
+        {
+            var order = await this.repo
+                .All<Order>()
+                .FirstOrDefaultAsync(o => o.Id == id);
+
+            if (order is null)
+            {
+                throw new NullReferenceException(OrderNotExisting);
+            }
+
+            if (order.OrderStatus == OrderStatus.Shipping)
+            {
+                throw new InvalidOperationException(OrderAlreadyShipping);
+            }
+
+            if (order.OrderStatus==OrderStatus.Delivered)
+            {
+                throw new InvalidOperationException(OrderAlreadyDelivered);
+            }
+
+            order.OrderStatus = OrderStatus.Shipping;
+
+            await this.repo.SaveChangesAsync();
         }
     }
 }

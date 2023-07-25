@@ -36,5 +36,10 @@
         public const string AlreadyOutOfStock = "{1} is out of stock";
 
         public const string CustomerNotExisting = "Customer does not exist";
+
+        public const string OrderNotExisting = "Ordered is already canceled";
+        public const string SuccessfullyShippingOrder = "Successfully shipping order!";
+        public const string OrderAlreadyShipping = "Order is already shipping!";
+        public const string OrderAlreadyDelivered = "Order is alreadt delivered!";
     }
 }

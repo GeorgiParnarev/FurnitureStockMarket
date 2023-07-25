@@ -22,8 +22,10 @@
 
         Task EditProductAsync(EditProductTransferModel model);
 
-        public Task<IEnumerable<AllOrdersTransferModel>> GetAllOrdersAsync();
+        Task<IEnumerable<AllOrdersTransferModel>> GetAllOrdersAsync();
 
         Task<Product> GetProductProductAsync(int id);
+
+        Task ShippingOrder(Guid id);
     }
 }
