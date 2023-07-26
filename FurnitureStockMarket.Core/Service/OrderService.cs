@@ -1,6 +1,7 @@
 ﻿namespace FurnitureStockMarket.Core.Service
 {
     using FurnitureStockMarket.Core.Contracts;
+    using FurnitureStockMarket.Core.Models.TransferModels.Admin;
     using FurnitureStockMarket.Core.Models.TransferModels.Order;
     using FurnitureStockMarket.Core.Models.TransferModels.ShoppingCart;
     using FurnitureStockMarket.Database.Common;
@@ -82,6 +83,41 @@
             }
 
             return customer.Id;
+        }
+
+        public async Task<IEnumerable<MyOrdersTransferModel>> GetMyOrdersAsync(Guid customerId)
+        {
+            var myOrders = await this.repo
+                .AllReadonly<Order>()
+                .Where(o=>o.CustomerId==customerId)
+                .Include(o => o.Customer)
+                .Select(o => new MyOrdersTransferModel()
+                {
+                    Id = o.Id,
+                    CustomerId = o.CustomerId,
+                    Customer = o.Customer,
+                    TotalPrice = o.TotalPrice,
+                    OrderStatus = o.OrderStatus,
+                    PaymentMethod = o.PaymentMethod,
+                    ShippingMethod = o.ShippingMethod
+                })
+                .ToListAsync();
+
+            foreach (var order in myOrders)
+            {
+                order.ProductsOrders = await this.repo
+                    .AllReadonly<ProductsOrders>()
+                    .Where(po => po.OrderId == order.Id)
+                    .Include(p => p.Product)
+                    .Select(o => new ProductsOrders
+                    {
+                        Product = o.Product,
+                        Quantity = o.Quantity
+                    })
+                    .ToListAsync();
+            }
+
+            return myOrders;
         }
     }
 }

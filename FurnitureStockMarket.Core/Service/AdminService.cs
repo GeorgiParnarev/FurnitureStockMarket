@@ -118,7 +118,7 @@
             {
                 order.ProductsOrders = await this.repo
                     .AllReadonly<ProductsOrders>()
-                    .Where(po=>po.OrderId==order.Id)
+                    .Where(po => po.OrderId == order.Id)
                     .Include(p => p.Product)
                     .Select(o => new ProductsOrders
                     {
@@ -210,7 +210,7 @@
                 throw new InvalidOperationException(OrderAlreadyShipping);
             }
 
-            if (order.OrderStatus==OrderStatus.Delivered)
+            if (order.OrderStatus == OrderStatus.Delivered)
             {
                 throw new InvalidOperationException(OrderAlreadyDelivered);
             }

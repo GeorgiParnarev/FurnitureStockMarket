@@ -159,13 +159,33 @@
                     new KeyValuePair<int, ShippingMethod>(1, ShippingMethod.ExpressShipping),
                     new KeyValuePair<int, ShippingMethod>(2, ShippingMethod.StorePickup)
                 };
-                
+
                 model.PaymentMethods = paymentMethods;
                 model.ShippingMethods = shippingMethods;
                 model.Cart = cart;
 
                 return this.View(model);
             }
+        }
+
+        public async Task<IActionResult> MyOrders()
+        {
+            Guid customerId = await this.orderService.GetCustomerIdAsync(Guid.Parse(GetUserId()!));
+
+            var transferModel = await this.orderService.GetMyOrdersAsync(customerId);
+
+            var model = transferModel.Select(o => new MyOrdersViewModel()
+            {
+                Id = o.Id,
+                Customer = o.Customer,
+                TotalPrice = o.TotalPrice,
+                OrderStatus = o.OrderStatus,
+                PaymentMethod = o.PaymentMethod,
+                ShippingMethod = o.ShippingMethod,
+                ProductsOrders = o.ProductsOrders
+            });
+
+            return this.View(model);
         }
     }
 }
