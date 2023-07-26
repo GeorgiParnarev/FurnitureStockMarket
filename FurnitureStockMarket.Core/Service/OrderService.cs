@@ -1,7 +1,6 @@
 ﻿namespace FurnitureStockMarket.Core.Service
 {
     using FurnitureStockMarket.Core.Contracts;
-    using FurnitureStockMarket.Core.Models.TransferModels.Admin;
     using FurnitureStockMarket.Core.Models.TransferModels.Order;
     using FurnitureStockMarket.Core.Models.TransferModels.ShoppingCart;
     using FurnitureStockMarket.Database.Common;
@@ -52,6 +51,47 @@
             await this.repo.SaveChangesAsync();
         }
 
+        public async Task CancelOrder(Guid id)
+        {
+            var order = await this.repo
+                .All<Order>()
+                .FirstOrDefaultAsync(o => o.Id == id);
+
+            if (order is null)
+            {
+                throw new NullReferenceException(OrderNotExisting);
+            }
+
+            if (order.OrderStatus == OrderStatus.Shipping)
+            {
+                throw new InvalidOperationException(CantCancelOrderAlreadyShipping);
+            }
+
+            order.ProductsOrders = await this.repo
+                .AllReadonly<ProductsOrders>()
+                .Where(po => po.OrderId == order.Id)
+                .Select(o => new ProductsOrders
+                {
+                    Product = o.Product,
+                    ProductId = o.ProductId,
+                    Order = o.Order,
+                    OrderId = o.OrderId,
+                    Quantity = o.Quantity
+                })
+                .ToListAsync();
+
+            try
+            {
+                this.repo.Delete(order);
+                this.repo.DeleteRange(order.ProductsOrders);
+                await this.repo.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
+                throw new InvalidOperationException(FailedToCancelOrder);
+            }
+        }
+
         public async Task<bool> CheckIfProductsStillExist(List<CartItemTransferModel> cart)
         {
             foreach (var item in cart)
@@ -89,7 +129,7 @@
         {
             var myOrders = await this.repo
                 .AllReadonly<Order>()
-                .Where(o=>o.CustomerId==customerId)
+                .Where(o => o.CustomerId == customerId)
                 .Include(o => o.Customer)
                 .Select(o => new MyOrdersTransferModel()
                 {

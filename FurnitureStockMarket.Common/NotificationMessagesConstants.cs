@@ -40,6 +40,9 @@
         public const string OrderNotExisting = "Ordered is already canceled";
         public const string SuccessfullyShippingOrder = "Successfully shipping order!";
         public const string OrderAlreadyShipping = "Order is already shipping!";
-        public const string OrderAlreadyDelivered = "Order is alreadt delivered!";
+
+        public const string CantCancelOrderAlreadyShipping = "You can't cancel the order because it's already shipping!";
+        public const string SuccessfullyCanceledOrder = "Order canceled successfully!";
+        public const string FailedToCancelOrder = "Failed to cancel the order!";
     }
 }

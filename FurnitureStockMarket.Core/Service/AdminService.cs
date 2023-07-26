@@ -210,11 +210,6 @@
                 throw new InvalidOperationException(OrderAlreadyShipping);
             }
 
-            if (order.OrderStatus == OrderStatus.Delivered)
-            {
-                throw new InvalidOperationException(OrderAlreadyDelivered);
-            }
-
             order.OrderStatus = OrderStatus.Shipping;
 
             await this.repo.SaveChangesAsync();

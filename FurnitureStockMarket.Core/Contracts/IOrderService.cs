@@ -1,6 +1,5 @@
 ﻿namespace FurnitureStockMarket.Core.Contracts
 {
-    using FurnitureStockMarket.Core.Models.TransferModels.Admin;
     using FurnitureStockMarket.Core.Models.TransferModels.Order;
     using FurnitureStockMarket.Core.Models.TransferModels.ShoppingCart;
 
@@ -13,5 +12,7 @@
         Task<Guid> GetCustomerIdAsync(Guid id);
 
         Task<IEnumerable<MyOrdersTransferModel>> GetMyOrdersAsync(Guid customerId);
+
+        Task CancelOrder(Guid id);
     }
 }

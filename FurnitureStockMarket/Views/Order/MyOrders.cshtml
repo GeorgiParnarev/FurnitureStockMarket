@@ -55,7 +55,7 @@ else
             <div style="margin-left: 20px">
                 Total price: @order.TotalPrice$
             </div>
-            <a asp-controller="" asp-action="" asp-route-id="@order.Id" class="btn btn-danger mt-2 mb-2 p-3 fw-bold" style="margin-right: 30px; width: 200px; height: 60px">Cancel order</a>
+            <a asp-controller="Order" asp-action="CancelOrder" asp-route-id="@order.Id" class="btn btn-danger mt-2 mb-2 p-3 fw-bold" style="margin-right: 30px; width: 200px; height: 60px">Cancel order</a>
         </div>
     </div>
 }

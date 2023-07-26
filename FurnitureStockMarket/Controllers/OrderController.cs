@@ -170,6 +170,7 @@
             }
         }
 
+        [HttpGet]
         public async Task<IActionResult> MyOrders()
         {
             Guid customerId = await this.orderService.GetCustomerIdAsync(Guid.Parse(GetUserId()!));
@@ -188,6 +189,23 @@
             });
 
             return this.View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> CancelOrder(Guid id)
+        {
+            try
+            {
+                await this.orderService.CancelOrder(id);
+
+                TempData[SuccessMessage] = SuccessfullyCanceledOrder;
+            }
+            catch (Exception e)
+            {
+                TempData[ErrorMessage] = e.Message;
+            }
+
+            return RedirectToAction("MyOrders", "Order");
         }
     }
 }
