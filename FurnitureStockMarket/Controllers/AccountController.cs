@@ -39,6 +39,8 @@
                 return this.RedirectToAction("Index", "Home");
             }
 
+            HttpContext.Session.Clear();
+
             return this.View(model);
         }
 
