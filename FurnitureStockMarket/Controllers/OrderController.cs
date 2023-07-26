@@ -138,6 +138,8 @@
 
                 await this.orderService.AddOrderAsync(transferModel);
 
+                HttpContext.Session.SetObject("Cart", (List<CartItemViewModel>)null);
+
                 TempData[SuccessMessage] = SuccessfullyAddedOrder;
 
                 return RedirectToAction("Index", "Home");
