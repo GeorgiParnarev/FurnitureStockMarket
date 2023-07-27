@@ -36,6 +36,17 @@
 
             foreach (var item in model.Cart)
             {
+                var product = await this.repo
+                    .All<Product>()
+                    .FirstOrDefaultAsync(p => p.Id == item.Id);
+
+                if (product is null)
+                {
+                    throw new NullReferenceException(ProductNotExisting);
+                }
+
+                product.Quantity -= item.Quantity;
+
                 productOrders.Add(new ProductsOrders()
                 {
                     OrderId = newOrder.Id,
