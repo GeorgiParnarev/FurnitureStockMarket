@@ -95,6 +95,21 @@
             {
                 this.repo.Delete(order);
                 this.repo.DeleteRange(order.ProductsOrders);
+
+                foreach (var item in order.ProductsOrders)
+                {
+                    var product = await this.repo
+                        .All<Product>()
+                        .FirstOrDefaultAsync(p => p.Id == item.ProductId);
+
+                    if (product is null)
+                    {
+                        throw new NullReferenceException(ProductNotExisting);
+                    }
+
+                    product.Quantity += item.Quantity;
+                }
+
                 await this.repo.SaveChangesAsync();
             }
             catch (Exception)
