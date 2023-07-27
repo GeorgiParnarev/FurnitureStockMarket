@@ -44,5 +44,8 @@
         public const string CantCancelOrderAlreadyShipping = "You can't cancel the order because it's already shipping!";
         public const string SuccessfullyCanceledOrder = "Order canceled successfully!";
         public const string FailedToCancelOrder = "Failed to cancel the order!";
+
+        public const string FailedToAddReview = "Failed to make a review!";
+        public const string SuccessfullyAddedReview = "Successfully made review!";
     }
 }

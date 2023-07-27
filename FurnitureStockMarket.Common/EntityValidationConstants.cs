@@ -55,6 +55,9 @@
 
         public static class Review
         {
+            public const int RatingMinValue = 1;
+            public const int RatingMaxValue = 5;
+
             public const int ReviewTextMinLength = 2;
             public const int ReviewTextMaxLength = 500;
         }

@@ -1,0 +1,35 @@
+﻿@using FurnitureStockMarket.Models.Review;
+
+@model AddProductReviewViewModel
+
+@{
+    ViewBag.Title = "Leave a review!";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<div class="row">
+    <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+        <form asp-action="AddReview" method="post">
+            <div class="visually-hidden">
+                <label asp-for="ProductId" class="form-label-add-edit"></label>
+                <input asp-for="ProductId" class="form-control" aria-required="true" />
+                <span asp-validation-for="ProductId" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Rating" class="form-label-add-edit">Rating</label>
+                <input asp-for="Rating" class="form-control" aria-required="true" />
+                <span asp-validation-for="Rating" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="ReviewText" class="form-label-add-edit">Review</label>
+                <input asp-for="ReviewText" class="form-control" aria-required="true" />
+                <span asp-validation-for="ReviewText" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <input class="btn btn-success mb-2 w-100 p-3 fw-bold" type="submit" value="Add" />
+            </div>
+        </form>
+    </div>
+</div>
