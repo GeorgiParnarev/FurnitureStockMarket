@@ -24,8 +24,10 @@
                 Name = p.Name,
                 Price = p.Price,
                 Quantity = p.Quantity,
-                ImageURL = p.ImageURL
-            });
+                ImageURL = p.ImageURL,
+                ProductReviews = this.productService.GetProductReviewsAsync(p.Id)
+            })
+            .OrderByDescending(r => r.ProductReviews.Average(r => r.Rating));
 
             return this.View(model);
         }

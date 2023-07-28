@@ -1,5 +1,7 @@
 ﻿namespace FurnitureStockMarket.Core.Models.TransferModels.Product
 {
+    using FurnitureStockMarket.Database.Models;
+
     public class AllProductsTransferModel
     {
         public int Id { get; set; }
