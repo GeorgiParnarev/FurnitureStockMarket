@@ -68,5 +68,14 @@
 
             return productDetails;
         }
+
+        public IEnumerable<Review> GetProductReviewsAsync(int productId)
+        {
+            var productReviews = this.repo
+                .AllReadonly<Review>()
+                .Where(r => r.ProductId == productId);
+
+            return productReviews;
+        }
     }
 }

@@ -33,7 +33,9 @@
         [HttpGet]
         public async Task<IActionResult> ProductDetails(int id)
         {
-            var transferModel = await productService.GetProductDetailsAsync(id);
+            var transferModel = await this.productService.GetProductDetailsAsync(id);
+
+            var productReviews = this.productService.GetProductReviewsAsync(id);
 
             var model = new ProductDetailsViewModel()
             {
@@ -43,7 +45,8 @@
                 Price = transferModel.Price,
                 Brand = transferModel.Brand,
                 Quantity = transferModel.Quantity,
-                ImageURL = transferModel.ImageURL
+                ImageURL = transferModel.ImageURL,
+                ProductReviews = productReviews
             };
 
             return this.View(model);

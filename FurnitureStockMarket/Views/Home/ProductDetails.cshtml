@@ -18,8 +18,34 @@
             <p class="mb-0"><span class="fw-bold">Price: </span>@Model.Price$</p>
             <p class="mb-0"><span class="fw-bold">Brand: </span>@Model.Brand</p>
             <p class="mb-0"><span class="fw-bold"></span>@(Model.Quantity==0? "Out of stock" : "In stock")</p>
+            <p class="mb-0"><span class="fw-bold">Rating: </span>@(Model.ProductReviews.Average(r=>r.Rating))/5</p>
         </div>
         <a asp-controller="ShoppingCart" asp-action="Add" asp-route-id="@Model.Id" class="btn btn-success mb-2 w-100 p-3 fw-bold">Add to cart</a>
     </div>
     <a asp-controller="Review" asp-action="AddReview" asp-route-id="@Model.Id" class="btn btn-warning mb-2 w-100 p-3 fw-bold" style="margin-top: 20px">Leave a review</a>
+
+    <h2 class="text-center">Reviews</h2>
+
+    @if (Model.ProductReviews.Count() == 0)
+    {        
+        <p style="text-align: center">This product don't have any reviews!</p>
+    }
+    else
+    {
+        @foreach (var review in Model.ProductReviews.Where(rt=>!(rt.ReviewText is null)))
+        {
+            <div class="container" style="display: flex; flex-direction: column; align-items:center">
+            <div style="width: 100%; height: 100px; background-color: #f0f0f0; margin: 10px 0; display: flex; align-items: center; justify-content: space-between;">
+                <div style="display: flex; align-items: center;">                    
+                    <div style="margin-right: 5px; margin-left: 10px">
+                        Rating: @(review.Rating)/5 |
+                    </div>
+                    <div style="margin-right: 10px">
+                        @review.ReviewText
+                    </div>
+                </div>
+            </div>
+        </div>
+        }        
+    }
 </div>
