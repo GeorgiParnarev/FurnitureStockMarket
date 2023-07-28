@@ -21,11 +21,20 @@
         }
 
         [HttpGet]
-        public IActionResult AddReview(int id)
+        public async Task<IActionResult> AddReview(int id)
         {
             var model = new AddProductReviewViewModel();
 
             model.ProductId = id;
+
+            var customerId = await this.orderService.GetCustomerIdAsync(Guid.Parse(GetUserId()!));
+
+            if (await this.reviewService.CheckIfCustomerAlreadyGaveAReview(customerId, id))
+            {
+                TempData[ErrorMessage] = AlreadyAddedReviewToProduct;
+
+                return RedirectToAction("ProductDetails", "Home", new { id });
+            }
 
             return this.View(model);
         }
@@ -42,10 +51,13 @@
 
             try
             {
+                var customerId = await this.orderService.GetCustomerIdAsync(Guid.Parse(GetUserId()!));
+                int id = model.ProductId;
+
                 var transferModel = new AddProductReviewTransferModel()
                 {
-                    CustomerId = await this.orderService.GetCustomerIdAsync(Guid.Parse(GetUserId()!)),
-                    ProductId = model.ProductId,
+                    CustomerId = customerId,
+                    ProductId = id,
                     Rating = model.Rating,
                     ReviewText = model.ReviewText
                 };
@@ -53,8 +65,6 @@
                 await this.reviewService.AddProductReviewAsync(transferModel);
 
                 TempData[SuccessMessage] = SuccessfullyAddedReview;
-
-                int id = model.ProductId;
 
                 return RedirectToAction("ProductDetails", "Home", new { id });
             }

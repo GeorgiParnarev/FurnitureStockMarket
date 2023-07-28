@@ -39,18 +39,19 @@
             }
         }
 
-        public async Task<Guid> GetCustomerIdAsync(Guid id)
+        public async Task<bool> CheckIfCustomerAlreadyGaveAReview(Guid customerId, int productId)
         {
-            var customer = await this.repo
-                .AllReadonly<Customer>()
-                .FirstOrDefaultAsync(c => c.ApplicationUserId == id);
+            var review = await this.repo
+                .AllReadonly<Review>()
+                .Where(r => r.CustomerId == customerId)
+                .FirstOrDefaultAsync(r => r.ProductId == productId);
 
-            if (customer is null)
+            if (review is null)
             {
-                throw new NullReferenceException(CustomerNotExisting);
+                return false;
             }
-
-            return customer.Id;
+            
+            return true;
         }
     }
 }

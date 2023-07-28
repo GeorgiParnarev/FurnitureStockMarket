@@ -5,5 +5,7 @@
     public interface IReviewService
     {
         Task AddProductReviewAsync(AddProductReviewTransferModel model);
+
+        Task<bool> CheckIfCustomerAlreadyGaveAReview(Guid customerId, int productId);
     }
 }
