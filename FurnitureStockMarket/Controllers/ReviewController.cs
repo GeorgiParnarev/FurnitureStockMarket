@@ -14,7 +14,8 @@
         private readonly IOrderService orderService;
 
         public ReviewController(IReviewService reviewService,
-            IOrderService orderService)
+            IOrderService orderService,
+            IMenuSearchService menuSearchService) : base(menuSearchService)
         {
             this.reviewService = reviewService;
             this.orderService = orderService;

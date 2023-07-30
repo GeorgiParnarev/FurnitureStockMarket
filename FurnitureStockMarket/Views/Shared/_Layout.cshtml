@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using FurnitureStockMarket.Models.MenuSearch;
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -9,7 +11,19 @@
     <link rel="stylesheet" href="~/FurnitureStockMarket.styles.css" asp-append-version="true" />
     <script src="~/lib/jquery/dist/jquery.min.js"></script> 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.3/toastr.min.js" integrity="sha512-lbwH47l/tPXJYG9AcFNoJaTMhGvYWhVM9YI43CT+uteTRRaiLCui8snIgyAN8XWgNjNhCqlAUdzZptso6OCoFQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.3/toastr.min.css" integrity="sha512-6S2HWzVFxruDlZxI3sXOZZ4/eJ8AcxkQH1+JjSe/ONCEqR9L4Ysq5JdT5ipqtzU7WHalNwzwBv+iE51gNHJNqQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.3/toastr.min.css" integrity="sha512-6S2HWzVFxruDlZxI3sXOZZ4/eJ8AcxkQH1+JjSe/ONCEqR9L4Ysq5JdT5ipqtzU7WHalNwzwBv+iE51gNHJNqQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />    
+    <style>
+        /* Custom CSS for sub-dropdown to appear right of parent dropdown */
+        .dropdown-submenu {
+               position: relative;
+        }
+
+        .dropdown-submenu .dropdown-menu {
+            top: 0;
+            left: 100%;
+            margin-top: -6px;
+        }
+    </style>
 </head>
 <body>
     <partial name="_NotificationsPartial"/>
@@ -23,6 +37,26 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
+                        <li>
+                            <a class="nav-link dropdown-toggle text-dark" asp-area="" asp-controller="" asp-action="" id="menuDropdown" data-bs-toggle="dropdown">
+                            Menu
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="menuDropdown">
+                                <!-- Sub-dropdown (Child) -->
+                                @foreach (var category in ViewBag.Model)
+                                {
+                                    <li class="dropdown-submenu">
+                                        <a class="dropdown-item dropdown-toggle" asp-controller="MenuSearch" asp-action="", asp-route-id="@category.Category.Id">@category.Category.Name</a>
+                                        <ul class="dropdown-menu">
+                                            @foreach (var subCategory in category.Category.SubCategories)
+                                            {
+                                                <li><a class="dropdown-item" asp-controller="MenuSearch" asp-action="", asp-route-id="@subCategory.Id">@subCategory.Name</a></li>
+                                            }
+                                        </ul>
+                                    </li>
+                                }
+                            </ul>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="ShoppingCart" asp-action="Index">Shoping cart</a>
                         </li>
@@ -67,11 +101,21 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2023 - FurnitureStockMarket - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2023 - FurnitureStockMarket
         </div>
     </footer>       
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
+
+    <script>
+        $(document).ready(function () {
+           // Add a hover event handler for the main dropdown menu items
+            $(".dropdown-submenu").hover(function () {
+                // Show the sub-dropdown menu on hover
+                $(this).find(".dropdown-menu").toggle();
+            });
+        });
+    </script>
 </body>
 </html>

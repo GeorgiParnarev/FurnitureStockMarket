@@ -1,5 +1,6 @@
 ﻿namespace FurnitureStockMarket.Controllers
 {
+    using FurnitureStockMarket.Controllers.BaseControllers;
     using FurnitureStockMarket.Core.Contracts;
     using FurnitureStockMarket.Core.Models.TransferModels;
     using FurnitureStockMarket.Core.Models.TransferModels.Admin;
@@ -8,11 +9,12 @@
 
     using static FurnitureStockMarket.Common.NotificationMessagesConstants;
 
-    public class AdminController : Controller
+    public class AdminController : BaseController
     {
         private readonly IAdminService adminService;
 
-        public AdminController(IAdminService adminService)
+        public AdminController(IAdminService adminService,
+            IMenuSearchService menuSearchService) : base(menuSearchService)
         {
             this.adminService = adminService;
         }

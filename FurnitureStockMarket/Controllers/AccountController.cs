@@ -4,6 +4,7 @@
     using FurnitureStockMarket.Core.Contracts;
     using FurnitureStockMarket.Core.Models.StatusModels;
     using FurnitureStockMarket.Core.Models.TransferModels.Account;
+    using FurnitureStockMarket.Core.Service;
     using FurnitureStockMarket.Database.Models.Account;
     using FurnitureStockMarket.Models.Account;
     using Microsoft.AspNetCore.Authorization;
@@ -21,7 +22,8 @@
         public AccountController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
-            IAccountService accountService)
+            IAccountService accountService,
+            IMenuSearchService menuSearchService) : base(menuSearchService)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;

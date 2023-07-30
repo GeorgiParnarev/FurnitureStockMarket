@@ -1,5 +1,6 @@
 ﻿namespace FurnitureStockMarket.Controllers
 {
+    using FurnitureStockMarket.Controllers.BaseControllers;
     using FurnitureStockMarket.Core.Contracts;
     using FurnitureStockMarket.Core.Models.TransferModels.ShoppingCart;
     using FurnitureStockMarket.Extensions;
@@ -8,11 +9,12 @@
 
     using static FurnitureStockMarket.Common.NotificationMessagesConstants;
 
-    public class ShoppingCartController : Controller
+    public class ShoppingCartController : BaseController
     {
         private readonly IShoppingCartService shoppingCartService;
 
-        public ShoppingCartController(IShoppingCartService shoppingCartService)
+        public ShoppingCartController(IShoppingCartService shoppingCartService,
+            IMenuSearchService menuSearchService) : base(menuSearchService)
         {
             this.shoppingCartService = shoppingCartService;
         }
@@ -34,7 +36,7 @@
 
             try
             {
-                product = await this.shoppingCartService.GetProductAsync(id);    
+                product = await this.shoppingCartService.GetProductAsync(id);
             }
             catch (Exception e)
             {
@@ -74,6 +76,8 @@
                     ImageURL = i.ImageURL
                 })
                 .ToList();
+
+                TempData[SuccessMessage] = SuccessfullyAddedProductToCart;
             }
             catch (Exception e)
             {

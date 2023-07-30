@@ -11,4 +11,8 @@
     <ProjectReference Include="..\FurnitureStockMarket.Database\FurnitureStockMarket.Database.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\TransferModels\MenuSearch\" />
+  </ItemGroup>
+
 </Project>

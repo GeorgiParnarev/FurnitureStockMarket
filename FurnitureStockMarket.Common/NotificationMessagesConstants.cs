@@ -48,5 +48,7 @@
         public const string FailedToAddReview = "Failed to make a review!";
         public const string SuccessfullyAddedReview = "Successfully made review!";
         public const string AlreadyAddedReviewToProduct = "You already gave a review to this product!";
+
+        public const string SuccessfullyAddedProductToCart = "Successfully added product to cart!";
     }
 }

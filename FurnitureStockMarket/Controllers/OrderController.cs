@@ -6,7 +6,6 @@
     using FurnitureStockMarket.Core.Models.TransferModels.ShoppingCart;
     using FurnitureStockMarket.Database.Enumerators;
     using FurnitureStockMarket.Extensions;
-    using FurnitureStockMarket.Models.Admin;
     using FurnitureStockMarket.Models.Order;
     using FurnitureStockMarket.Models.ShoppingCart;
     using Microsoft.AspNetCore.Mvc;
@@ -17,7 +16,8 @@
     {
         private readonly IOrderService orderService;
 
-        public OrderController(IOrderService orderService)
+        public OrderController(IOrderService orderService,
+            IMenuSearchService menuSearchService) : base(menuSearchService)
         {
             this.orderService = orderService;
         }

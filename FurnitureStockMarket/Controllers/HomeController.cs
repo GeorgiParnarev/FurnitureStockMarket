@@ -1,14 +1,16 @@
 ﻿namespace FurnitureStockMarket.Controllers
 {
+    using FurnitureStockMarket.Controllers.BaseControllers;
     using FurnitureStockMarket.Core.Contracts;
     using FurnitureStockMarket.Models.Product;
     using Microsoft.AspNetCore.Mvc;
 
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         private readonly IProductService productService;
 
-        public HomeController(IProductService productService)
+        public HomeController(IProductService productService,
+            IMenuSearchService menuSearchService) : base(menuSearchService)
         {
             this.productService = productService;
         }
