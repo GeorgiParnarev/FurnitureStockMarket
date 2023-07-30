@@ -1,11 +1,12 @@
 ﻿namespace FurnitureStockMarket.Core.Contracts
 {
+    using FurnitureStockMarket.Core.Models.TransferModels.MenuSearch;
     using FurnitureStockMarket.Database.Models;
 
     public interface IMenuSearchService
     {
-        Task<IEnumerable<Category>> GetAllCategoriesAsync();
+        IEnumerable<Category> GetAllCategories();
 
-        Task<IEnumerable<SubCategory>> GetAllSubCategoriesAsync(int categoryId);
+        Task<IEnumerable<AllProductMenuTransferModel>> GetAllProductsInCategory(int id);
     }
 }

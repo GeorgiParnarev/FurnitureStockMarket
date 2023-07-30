@@ -15,7 +15,7 @@
     <style>
         /* Custom CSS for sub-dropdown to appear right of parent dropdown */
         .dropdown-submenu {
-               position: relative;
+            position: relative;
         }
 
         .dropdown-submenu .dropdown-menu {
@@ -37,7 +37,7 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li>
+                        <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-dark" asp-area="" asp-controller="" asp-action="" id="menuDropdown" data-bs-toggle="dropdown">
                             Menu
                             </a>
@@ -46,7 +46,7 @@
                                 @foreach (var category in ViewBag.Model)
                                 {
                                     <li class="dropdown-submenu">
-                                        <a class="dropdown-item dropdown-toggle" asp-controller="MenuSearch" asp-action="", asp-route-id="@category.Category.Id">@category.Category.Name</a>
+                                        <a class="dropdown-item dropdown-toggle" asp-controller="MenuSearch" asp-action="AllProductsInCategory", asp-route-id="@category.Category.Id">@category.Category.Name</a>
                                         <ul class="dropdown-menu">
                                             @foreach (var subCategory in category.Category.SubCategories)
                                             {
@@ -108,9 +108,9 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 
-    <script>
+   <script>
         $(document).ready(function () {
-           // Add a hover event handler for the main dropdown menu items
+            // Add a hover event handler for the main dropdown menu items
             $(".dropdown-submenu").hover(function () {
                 // Show the sub-dropdown menu on hover
                 $(this).find(".dropdown-menu").toggle();

@@ -1,10 +1,15 @@
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using System;
+
 namespace FurnitureStockMarket
 {
     using FurnitureStockMarket.Database;
     using FurnitureStockMarket.Database.Models.Account;
     using FurnitureStockMarket.Core.Contracts;
     using FurnitureStockMarket.Core.Service;
-    using Microsoft.EntityFrameworkCore;
     using Microsoft.AspNetCore.Identity;
     using FurnitureStockMarket.Database.Common;
 
@@ -46,7 +51,9 @@ namespace FurnitureStockMarket
             builder.Services.AddScoped<IReviewService, ReviewService>();
             builder.Services.AddScoped<IMenuSearchService, MenuSearchService>();
             builder.Services.AddScoped<IRepository, Repository>();
-            
+
+            // Add HttpContextAccessor here
+            builder.Services.AddHttpContextAccessor();
 
             builder.Services.AddDistributedMemoryCache();
             builder.Services.AddSession(options =>

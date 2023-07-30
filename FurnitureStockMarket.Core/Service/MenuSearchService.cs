@@ -1,6 +1,8 @@
 ﻿namespace FurnitureStockMarket.Core.Service
 {
     using FurnitureStockMarket.Core.Contracts;
+    using FurnitureStockMarket.Core.Models.TransferModels.MenuSearch;
+    using FurnitureStockMarket.Core.Models.TransferModels.Product;
     using FurnitureStockMarket.Database.Common;
     using FurnitureStockMarket.Database.Models;
     using Microsoft.EntityFrameworkCore;
@@ -16,27 +18,34 @@
             this.repo = repo;
         }
 
-        public async Task<IEnumerable<Category>> GetAllCategoriesAsync()
+        public IEnumerable<Category> GetAllCategories()
         {
             var categories = this.repo
-                .AllReadonly<Category>();
-
-            foreach (var category in categories)
-            {
-                category.SubCategories = await GetAllSubCategoriesAsync(category.Id);
-            }                
+                .AllReadonly<Category>()
+                .Include(sb => sb.SubCategories);
 
             return categories;
         }
 
-        public async Task<IEnumerable<SubCategory>> GetAllSubCategoriesAsync(int categoryId)
+        public async Task<IEnumerable<AllProductMenuTransferModel>> GetAllProductsInCategory(int id)
         {
-            var subCategories = await this.repo
-                .AllReadonly<SubCategory>()
-                .Where(sb => sb.CategoryId == categoryId)
+            var products = await this.repo
+                .AllReadonly<Product>()
+                .Where(p => p.Id == id)
+                .Include(p=>p.SubCategory)
+                .ThenInclude(p=>p.Category)
+                .Select(p => new AllProductMenuTransferModel()
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Price = p.Price,
+                    Quantity = p.Quantity,
+                    ImageURL = p.ImageURL,
+                    Category= p.SubCategory.Category                
+                })
                 .ToListAsync();
 
-            return subCategories;
+            return products;
         }
     }
 }

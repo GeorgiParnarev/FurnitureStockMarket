@@ -31,7 +31,7 @@
 
         public async override Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
-            var transferModel = await this.menuSearchService.GetAllCategoriesAsync();
+            var transferModel = this.menuSearchService.GetAllCategories();
 
             var model = new List<CategoriesViewModel>();
 

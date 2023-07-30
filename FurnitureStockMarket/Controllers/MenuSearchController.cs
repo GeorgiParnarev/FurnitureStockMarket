@@ -7,28 +7,32 @@
     public class MenuSearchController : Controller
     {
         private readonly IMenuSearchService menuSearchService;
+        private readonly IProductService productService;
 
-        public MenuSearchController(IMenuSearchService menuSearchService)
+        public MenuSearchController(IMenuSearchService menuSearchService,
+            IProductService productService)
         {
             this.menuSearchService = menuSearchService;
+            this.productService = productService;
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> AllProductsInCategory(int id)
         {
-            var transferModel = await this.menuSearchService.GetAllCategoriesAsync();
+            var transferModel = await this.menuSearchService.GetAllProductsInCategory(id);
 
-            var model=new List<CategoriesViewModel>();
-
-            foreach (var category in transferModel)
+            var model = transferModel.Select(p => new AllProductMenuViewModel()
             {
-                model.Add(new CategoriesViewModel()
-                {
-                    Category = category
-                });
-            }
+                Id = p.Id,
+                Name = p.Name,
+                Price = p.Price,
+                Quantity = p.Quantity,
+                ImageURL = p.ImageURL,
+                Category = p.Category,
+                ProductReviews = this.productService.GetProductReviewsAsync(p.Id)
+            });
 
-            return this.View("Index", model);
+            return this.View(model);
         }
     }
 }
