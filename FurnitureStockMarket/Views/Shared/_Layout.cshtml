@@ -1,4 +1,17 @@
 ﻿@using FurnitureStockMarket.Models.MenuSearch;
+@using System.Text.Json;
+@using System.Text.Json.Serialization;
+
+@{
+    var serializedModel = Context.Session.GetString("Categories");
+    var options = new JsonSerializerOptions
+    {
+        ReferenceHandler = ReferenceHandler.Preserve
+    };
+    var model = !string.IsNullOrEmpty(serializedModel)
+        ? JsonSerializer.Deserialize<List<CategoriesViewModel>>(serializedModel, options)
+        : new List<CategoriesViewModel>();
+}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -43,7 +56,7 @@
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="menuDropdown">
                                 <!-- Sub-dropdown (Child) -->
-                                @foreach (var category in ViewBag.Model)
+                                @foreach (var category in model)
                                 {
                                     <li class="dropdown-submenu">
                                         <a class="dropdown-item dropdown-toggle" asp-controller="MenuSearch" asp-action="AllProductsInCategory", asp-route-id="@category.Category.Id">@category.Category.Name</a>

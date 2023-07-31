@@ -6,6 +6,8 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Filters;
     using System.Security.Claims;
+    using System.Text.Json;
+    using System.Text.Json.Serialization;
 
     [Authorize]
     public class BaseController : Controller
@@ -43,7 +45,13 @@
                 });
             }
 
-            ViewBag.Model = model;
+            var options = new JsonSerializerOptions
+            {
+                ReferenceHandler = ReferenceHandler.Preserve
+            };
+
+            var serializedModel = JsonSerializer.Serialize(model, options);
+            HttpContext.Session.SetString("Categories", serializedModel);
 
             await base.OnActionExecutionAsync(context, next);
         }
