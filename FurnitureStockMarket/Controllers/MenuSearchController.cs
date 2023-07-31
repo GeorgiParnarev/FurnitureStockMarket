@@ -2,6 +2,7 @@
 {
     using FurnitureStockMarket.Core.Contracts;
     using FurnitureStockMarket.Models.MenuSearch;
+    using FurnitureStockMarket.Models.Product;
     using Microsoft.AspNetCore.Mvc;
 
     public class MenuSearchController : Controller
@@ -48,6 +49,25 @@
                 Quantity = p.Quantity,
                 ImageURL = p.ImageURL,
                 SubCategory = p.SubCategory,
+                ProductReviews = this.productService.GetProductReviewsAsync(p.Id)
+            });
+
+            return this.View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Search(string searchTerm)
+        {
+            var transferModel = await this.menuSearchService.GetAllProductsByTermAsync(searchTerm);
+
+            var model = transferModel.Select(p => new AllProductsByTermViewModel()
+            {
+                Id = p.Id,
+                Name = p.Name,
+                Price = p.Price,
+                Quantity = p.Quantity,
+                ImageURL = p.ImageURL,
+                SearchTerm = searchTerm,
                 ProductReviews = this.productService.GetProductReviewsAsync(p.Id)
             });
 

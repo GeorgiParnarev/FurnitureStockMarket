@@ -27,6 +27,26 @@
             return categories;
         }
 
+        public async Task<IEnumerable<AllProductsTransferModel>> GetAllProductsByTermAsync(string term)
+        {
+            string lowerCaseTerm=term.ToLower();
+
+            var products = await this.repo
+                .AllReadonly<Product>()
+                .Where(p => p.Name.ToLower().Contains(lowerCaseTerm))
+                .Select(p => new AllProductsTransferModel()
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Price = p.Price,
+                    Quantity = p.Quantity,
+                    ImageURL = p.ImageURL
+                })
+                .ToListAsync();
+
+            return products;
+        }
+
         public async Task<IEnumerable<AllProductMenuCategoryTransferModel>> GetAllProductsInCategory(int id)
         {
             var products = await this.repo

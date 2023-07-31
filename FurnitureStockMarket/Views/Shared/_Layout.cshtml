@@ -70,9 +70,15 @@
                                 }
                             </ul>
                         </li>
+
+                        <form class="d-flex" method="get" action="@Url.Action("Search", "MenuSearch")">
+                            <input class="form-control me-2" type="search" name="searchTerm" placeholder="Search Products..." aria-label="Search">
+                            <button class="btn btn-outline-success" type="submit">Search</button>
+                        </form>
+
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="ShoppingCart" asp-action="Index">Shoping cart</a>
-                        </li>
+                        </li>                        
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Order" asp-action="MyOrders">My orders</a>
                         </li>
