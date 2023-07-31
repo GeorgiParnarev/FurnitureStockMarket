@@ -63,7 +63,7 @@
                                         <ul class="dropdown-menu">
                                             @foreach (var subCategory in category.Category.SubCategories)
                                             {
-                                                <li><a class="dropdown-item" asp-controller="MenuSearch" asp-action="", asp-route-id="@subCategory.Id">@subCategory.Name</a></li>
+                                                <li><a class="dropdown-item" asp-controller="MenuSearch" asp-action="AllProductsInSubCategory", asp-route-id="@subCategory.Id">@subCategory.Name</a></li>
                                             }
                                         </ul>
                                     </li>

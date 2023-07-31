@@ -27,21 +27,41 @@
             return categories;
         }
 
-        public async Task<IEnumerable<AllProductMenuTransferModel>> GetAllProductsInCategory(int id)
+        public async Task<IEnumerable<AllProductMenuCategoryTransferModel>> GetAllProductsInCategory(int id)
         {
             var products = await this.repo
                 .AllReadonly<Product>()
                 .Where(p => p.Id == id)
-                .Include(p=>p.SubCategory)
-                .ThenInclude(p=>p.Category)
-                .Select(p => new AllProductMenuTransferModel()
+                .Include(p => p.SubCategory)
+                .ThenInclude(p => p.Category)
+                .Select(p => new AllProductMenuCategoryTransferModel()
                 {
                     Id = p.Id,
                     Name = p.Name,
                     Price = p.Price,
                     Quantity = p.Quantity,
                     ImageURL = p.ImageURL,
-                    Category= p.SubCategory.Category                
+                    Category = p.SubCategory.Category
+                })
+                .ToListAsync();
+
+            return products;
+        }
+
+        public async Task<IEnumerable<AllProductMenuSubCategoryTransferModel>> GetAllProductsInSubCategory(int id)
+        {
+            var products = await this.repo
+                .AllReadonly<Product>()
+                .Where(p => p.Id == id)
+                .Include(p => p.SubCategory)
+                .Select(p => new AllProductMenuSubCategoryTransferModel()
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Price = p.Price,
+                    Quantity = p.Quantity,
+                    ImageURL = p.ImageURL,
+                    SubCategory = p.SubCategory
                 })
                 .ToListAsync();
 

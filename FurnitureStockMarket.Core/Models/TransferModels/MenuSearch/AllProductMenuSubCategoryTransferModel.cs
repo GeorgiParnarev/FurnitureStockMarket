@@ -1,8 +1,8 @@
-﻿namespace FurnitureStockMarket.Core.Models.TransferModels.MenuSearch
-{
-    using FurnitureStockMarket.Database.Models;
+﻿using FurnitureStockMarket.Database.Models;
 
-    public class AllProductMenuTransferModel
+namespace FurnitureStockMarket.Core.Models.TransferModels.MenuSearch
+{
+    public class AllProductMenuSubCategoryTransferModel
     {
         public int Id { get; set; }
 
@@ -14,6 +14,6 @@
 
         public string ImageURL { get; set; } = null!;
 
-        public Category Category { get; set; } = null!;
+        public SubCategory SubCategory { get; set; } = null!;
     }
 }

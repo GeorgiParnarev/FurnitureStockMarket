@@ -7,6 +7,8 @@
     {
         IEnumerable<Category> GetAllCategories();
 
-        Task<IEnumerable<AllProductMenuTransferModel>> GetAllProductsInCategory(int id);
+        Task<IEnumerable<AllProductMenuCategoryTransferModel>> GetAllProductsInCategory(int id);
+
+        Task<IEnumerable<AllProductMenuSubCategoryTransferModel>> GetAllProductsInSubCategory(int id);
     }
 }

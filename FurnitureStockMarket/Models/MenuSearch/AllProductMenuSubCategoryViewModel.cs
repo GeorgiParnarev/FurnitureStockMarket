@@ -2,9 +2,9 @@
 {
     using FurnitureStockMarket.Database.Models;
 
-    public class AllProductMenuViewModel
+    public class AllProductMenuSubCategoryViewModel
     {
-        public AllProductMenuViewModel()
+        public AllProductMenuSubCategoryViewModel()
         {
             this.ProductReviews = new List<Review>();
         }
@@ -19,7 +19,7 @@
 
         public string ImageURL { get; set; } = null!;
 
-        public Category Category { get; set; } = null!;
+        public SubCategory SubCategory { get; set; } = null!;
 
         public IEnumerable<Review> ProductReviews { get; set; }
     }

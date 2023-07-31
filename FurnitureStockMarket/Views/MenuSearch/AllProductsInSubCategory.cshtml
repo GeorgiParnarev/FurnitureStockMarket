@@ -1,17 +1,17 @@
 ﻿@using FurnitureStockMarket.Models.MenuSearch;
 
-@model IEnumerable<AllProductMenuCategoryViewModel>
+@model IEnumerable<AllProductMenuSubCategoryViewModel>
 
 @if (Model.Count()==0)
 {
-    ViewData["Title"] = "There are no products in this category";
+    ViewData["Title"] = "There are no products in this sub-category";
 
     <h2 class="text-center">@ViewBag.Title</h2>
     <hr />
 }
 else
 {
-    ViewData["Title"] = $"Products in category: {Model.First().Category.Name}";
+    ViewData["Title"] = $"Products in sub-category: {Model.First().SubCategory.Name}";
 
     <h2 class="text-center">@ViewBag.Title</h2>
     <hr />
