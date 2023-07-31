@@ -29,7 +29,7 @@
                 ImageURL = p.ImageURL,
                 ProductReviews = this.productService.GetProductReviewsAsync(p.Id)
             })
-            .OrderByDescending(r => r.ProductReviews.Average(r => r.Rating));
+            .OrderByDescending(r => r.ProductReviews.Count().Equals(0) ? 0 : r.ProductReviews.Average(r => r.Rating));
 
             return this.View(model);
         }

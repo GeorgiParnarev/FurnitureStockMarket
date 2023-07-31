@@ -51,9 +51,9 @@
         {
             var products = await this.repo
                 .AllReadonly<Product>()
-                .Where(p => p.Id == id)
                 .Include(p => p.SubCategory)
                 .ThenInclude(p => p.Category)
+                .Where(p => p.SubCategory.CategoryId == id)
                 .Select(p => new AllProductMenuCategoryTransferModel()
                 {
                     Id = p.Id,
@@ -72,7 +72,7 @@
         {
             var products = await this.repo
                 .AllReadonly<Product>()
-                .Where(p => p.Id == id)
+                .Where(p => p.SubCategoryId == id)
                 .Include(p => p.SubCategory)
                 .Select(p => new AllProductMenuSubCategoryTransferModel()
                 {
