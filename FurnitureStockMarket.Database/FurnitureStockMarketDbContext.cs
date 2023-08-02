@@ -4,6 +4,7 @@
     using Models.Account;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
+    using FurnitureStockMarket.Database.Data.SeedData;
 
     public class FurnitureStockMarketDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, Guid>
     {
@@ -27,6 +28,14 @@
                 .Property(p => p.TotalPrice)
                 .HasPrecision(18, 2);
             base.OnModelCreating(builder);
+
+            builder.ApplyConfiguration(new ApplicationUserRoles());
+            builder.ApplyConfiguration(new ApplicationUsers());
+            builder.ApplyConfiguration(new Customers());
+            builder.ApplyConfiguration(new UsersRoles());
+            builder.ApplyConfiguration(new Categories());
+            builder.ApplyConfiguration(new SubCategories());
+            builder.ApplyConfiguration(new Products());
         }
 
         public DbSet<Category> Categories { get; set; } = null!;

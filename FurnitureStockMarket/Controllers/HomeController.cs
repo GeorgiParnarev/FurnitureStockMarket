@@ -3,8 +3,10 @@
     using FurnitureStockMarket.Controllers.BaseControllers;
     using FurnitureStockMarket.Core.Contracts;
     using FurnitureStockMarket.Models.Product;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
+    [AllowAnonymous]
     public class HomeController : BaseController
     {
         private readonly IProductService productService;

@@ -4,6 +4,7 @@ using FurnitureStockMarket.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FurnitureStockMarket.Database.Migrations
 {
     [DbContext(typeof(FurnitureStockMarketDbContext))]
-    partial class FurnitureStockMarketDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230802095035_initData")]
+    partial class initData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

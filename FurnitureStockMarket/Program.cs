@@ -1,17 +1,12 @@
-using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using System;
-
 namespace FurnitureStockMarket
 {
-    using FurnitureStockMarket.Database;
-    using FurnitureStockMarket.Database.Models.Account;
     using FurnitureStockMarket.Core.Contracts;
     using FurnitureStockMarket.Core.Service;
-    using Microsoft.AspNetCore.Identity;
+    using FurnitureStockMarket.Database;
     using FurnitureStockMarket.Database.Common;
+    using FurnitureStockMarket.Database.Models.Account;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.EntityFrameworkCore;
 
     public class Program
     {
@@ -62,6 +57,12 @@ namespace FurnitureStockMarket
                 options.IdleTimeout = TimeSpan.FromMinutes(20);
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
+            });
+
+            builder.Services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/Account/Login";
+                options.AccessDeniedPath = "/Home/Error401";
             });
 
             var app = builder.Build();

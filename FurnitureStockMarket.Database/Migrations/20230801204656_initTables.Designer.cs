@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FurnitureStockMarket.Database.Migrations
 {
     [DbContext(typeof(FurnitureStockMarketDbContext))]
-    [Migration("20230724163031_initTables")]
+    [Migration("20230801204656_initTables")]
     partial class initTables
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
