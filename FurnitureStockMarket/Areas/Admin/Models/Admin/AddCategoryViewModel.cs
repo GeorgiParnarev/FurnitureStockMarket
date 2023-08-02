@@ -1,4 +1,4 @@
-﻿namespace FurnitureStockMarket.Models.Admin
+﻿namespace FurnitureStockMarket.Areas.Admin.Models.Admin
 {
     using System.ComponentModel.DataAnnotations;
 

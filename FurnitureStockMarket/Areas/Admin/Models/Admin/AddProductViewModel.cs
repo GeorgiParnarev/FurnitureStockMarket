@@ -1,4 +1,4 @@
-﻿namespace FurnitureStockMarket.Models.Admin
+﻿namespace FurnitureStockMarket.Areas.Admin.Models.Admin
 {
     using System.ComponentModel.DataAnnotations;
 
@@ -8,7 +8,7 @@
     {
         public AddProductViewModel()
         {
-            this.SubCategories = new List<KeyValuePair<int, string>>();
+            SubCategories = new List<KeyValuePair<int, string>>();
         }
 
         [Required]

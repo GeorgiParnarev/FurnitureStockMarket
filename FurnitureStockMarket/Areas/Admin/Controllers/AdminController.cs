@@ -1,14 +1,19 @@
-﻿namespace FurnitureStockMarket.Controllers
+﻿namespace FurnitureStockMarket.Areas.Admin.Controllers
 {
     using FurnitureStockMarket.Controllers.BaseControllers;
     using FurnitureStockMarket.Core.Contracts;
     using FurnitureStockMarket.Core.Models.TransferModels;
     using FurnitureStockMarket.Core.Models.TransferModels.Admin;
-    using FurnitureStockMarket.Models.Admin;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
     using static FurnitureStockMarket.Common.NotificationMessagesConstants;
+    using static FurnitureStockMarket.Common.RoleConstants;
+    using static FurnitureStockMarket.Common.GeneralApplicationConstants;
+    using FurnitureStockMarket.Areas.Admin.Models.Admin;
 
+    [Area(AdminAreaName)]
+    [Authorize(Roles = Administrator)]
     public class AdminController : BaseController
     {
         private readonly IAdminService adminService;
@@ -22,7 +27,7 @@
         [HttpGet]
         public async Task<IActionResult> ChooseCategory(string data)
         {
-            var categories = await this.adminService.GetCategoriesAsync();
+            var categories = await adminService.GetCategoriesAsync();
 
             if (categories.Count() == 0)
             {
@@ -37,7 +42,7 @@
                 Categories = categories!
             };
 
-            return this.View(model);
+            return View(model);
         }
 
         [HttpPost]
@@ -47,11 +52,11 @@
             {
                 TempData[ErrorMessage] = InvalidData;
 
-                var categories = await this.adminService.GetCategoriesAsync();
+                var categories = await adminService.GetCategoriesAsync();
 
                 model.Categories = categories;
 
-                return this.View(model);
+                return View(model);
             }
 
             try
@@ -60,18 +65,18 @@
             }
             catch (Exception)
             {
-                var categories = await this.adminService.GetCategoriesAsync();
+                var categories = await adminService.GetCategoriesAsync();
 
                 model.Categories = categories;
 
-                return this.View(model);
+                return View(model);
             }
         }
 
         [HttpGet]
         public async Task<IActionResult> AddProduct(int categoryId)
         {
-            var subCategories = await this.adminService.GetSubCategoriesAsync(categoryId);
+            var subCategories = await adminService.GetSubCategoriesAsync(categoryId);
 
             if (subCategories.Count() == 0)
             {
@@ -85,7 +90,7 @@
                 SubCategories = subCategories!
             };
 
-            return this.View(model);
+            return View(model);
         }
 
         [HttpPost]
@@ -95,11 +100,11 @@
             {
                 TempData[ErrorMessage] = InvalidData;
 
-                var subCategories = await this.adminService.GetSubCategoriesAsync(model.CategoryId);
+                var subCategories = await adminService.GetSubCategoriesAsync(model.CategoryId);
 
                 model.SubCategories = subCategories;
 
-                return this.View(model);
+                return View(model);
             }
 
             try
@@ -115,7 +120,7 @@
                     ImageURL = model.ImageURL
                 };
 
-                await this.adminService.AddProductAsync(transferModel);
+                await adminService.AddProductAsync(transferModel);
 
                 TempData[SuccessMessage] = SuccessfullyAddedProduct;
 
@@ -125,11 +130,11 @@
             {
                 TempData[ErrorMessage] = FailedToAddProduct;
 
-                var subCategories = await this.adminService.GetSubCategoriesAsync(model.CategoryId);
+                var subCategories = await adminService.GetSubCategoriesAsync(model.CategoryId);
 
                 model.SubCategories = subCategories;
 
-                return this.View(model);
+                return View(model);
             }
         }
 
@@ -138,7 +143,7 @@
         {
             var model = new AddCategoryViewModel();
 
-            return this.View(model);
+            return View(model);
         }
 
         [HttpPost]
@@ -148,12 +153,12 @@
             {
                 TempData[ErrorMessage] = InvalidData;
 
-                return this.View(model);
+                return View(model);
             }
 
             try
             {
-                await this.adminService.AddCategoryAsync(model.Name);
+                await adminService.AddCategoryAsync(model.Name);
 
                 TempData[SuccessMessage] = SuccessfullyAddedCategory;
 
@@ -163,7 +168,7 @@
             {
                 TempData[ErrorMessage] = FailedToAddCategory;
 
-                return this.View(model);
+                return View(model);
             }
         }
 
@@ -175,7 +180,7 @@
                 CategoryId = categoryId
             };
 
-            return this.View(model);
+            return View(model);
         }
 
         [HttpPost]
@@ -185,7 +190,7 @@
             {
                 TempData[ErrorMessage] = InvalidData;
 
-                return this.View(model);
+                return View(model);
             }
 
             try
@@ -196,7 +201,7 @@
                     Name = model.Name
                 };
 
-                await this.adminService.AddSubCategoryAsync(trasferModel);
+                await adminService.AddSubCategoryAsync(trasferModel);
 
                 TempData[SuccessMessage] = SuccessfullyAddedSubCategory;
 
@@ -206,7 +211,7 @@
             {
                 TempData[ErrorMessage] = FailedToAddSubCategory;
 
-                return this.View(model);
+                return View(model);
             }
         }
 
@@ -217,7 +222,7 @@
 
             try
             {
-                var transferEditProduct = await this.adminService.GetProductAsync(id);
+                var transferEditProduct = await adminService.GetProductAsync(id);
 
                 editProduct.Name = transferEditProduct.Name;
                 editProduct.Description = transferEditProduct.Description;
@@ -235,11 +240,11 @@
                 return RedirectToAction("Index", "Home");
             }
 
-            var subCategories = await this.adminService.GetSubCategoriesAsync(editProduct.CategoryId);
+            var subCategories = await adminService.GetSubCategoriesAsync(editProduct.CategoryId);
 
             editProduct.SubCategories = subCategories;
 
-            return this.View(editProduct);
+            return View(editProduct);
         }
 
         [HttpPost]
@@ -249,11 +254,11 @@
             {
                 TempData[ErrorMessage] = InvalidData;
 
-                var subCategories = await this.adminService.GetSubCategoriesAsync(model.CategoryId);
+                var subCategories = await adminService.GetSubCategoriesAsync(model.CategoryId);
 
                 model.SubCategories = subCategories;
 
-                return this.View(model);
+                return View(model);
             }
 
             try
@@ -270,7 +275,7 @@
                     ImageURL = model.ImageURL
                 };
 
-                await this.adminService.EditProductAsync(transferModel);
+                await adminService.EditProductAsync(transferModel);
 
                 TempData[SuccessMessage] = SuccessfullyEditedProduct;
 
@@ -286,18 +291,18 @@
             {
                 TempData[ErrorMessage] = InvalidData;
 
-                var subCategories = await this.adminService.GetSubCategoriesAsync(model.CategoryId);
+                var subCategories = await adminService.GetSubCategoriesAsync(model.CategoryId);
 
                 model.SubCategories = subCategories;
 
-                return this.View(model);
+                return View(model);
             }
         }
 
         [HttpGet]
         public async Task<IActionResult> AllOrders()
         {
-            var transferModel = await this.adminService.GetAllOrdersAsync();
+            var transferModel = await adminService.GetAllOrdersAsync();
 
             var model = transferModel.Select(o => new AllOrdersViewModel()
             {
@@ -311,14 +316,14 @@
                 ProductsOrders = o.ProductsOrders
             });
 
-            return this.View(model);
+            return View(model);
         }
 
         public async Task<IActionResult> SendOrder(Guid id)
         {
             try
             {
-                await this.adminService.ShippingOrder(id);
+                await adminService.ShippingOrder(id);
 
                 TempData[SuccessMessage] = SuccessfullyShippingOrder;
             }

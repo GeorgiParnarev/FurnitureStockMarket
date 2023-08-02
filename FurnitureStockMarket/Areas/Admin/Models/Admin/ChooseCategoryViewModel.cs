@@ -1,10 +1,10 @@
-﻿namespace FurnitureStockMarket.Models.Admin
+﻿namespace FurnitureStockMarket.Areas.Admin.Models.Admin
 {
     public class ChooseCategoryViewModel
     {
         public ChooseCategoryViewModel()
         {
-            this.Categories = new List<KeyValuePair<int, string>>();
+            Categories = new List<KeyValuePair<int, string>>();
         }
 
         public int CategoryId { get; set; }

@@ -1,3 +1,11 @@
-﻿@{
-    Layout = "_Layout";
+﻿@using static FurnitureStockMarket.Common.RoleConstants;
+@{
+    if (this.User.IsInRole(Administrator))
+    {
+        Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    }
+    else
+    {
+        Layout = "_Layout";
+    }
 }

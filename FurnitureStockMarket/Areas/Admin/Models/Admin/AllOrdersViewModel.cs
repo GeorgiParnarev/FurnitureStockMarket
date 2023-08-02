@@ -1,4 +1,4 @@
-﻿namespace FurnitureStockMarket.Models.Admin
+﻿namespace FurnitureStockMarket.Areas.Admin.Models.Admin
 {
     using FurnitureStockMarket.Database.Enumerators;
     using FurnitureStockMarket.Database.Models;
@@ -8,7 +8,7 @@
     {
         public AllOrdersViewModel()
         {
-            this.ProductsOrders = new List<ProductsOrders>();
+            ProductsOrders = new List<ProductsOrders>();
         }
 
         public Guid Id { get; set; }
