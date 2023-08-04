@@ -10,11 +10,11 @@
 
     using static FurnitureStockMarket.Common.NotificationMessagesConstants;
 
-    public class ProductService : IProductService
+    public class HomeService : IHomeService
     {
         private readonly IRepository repo;
 
-        public ProductService(IRepository repo)
+        public HomeService(IRepository repo)
         {
             this.repo = repo;
         }

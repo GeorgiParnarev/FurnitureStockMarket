@@ -9,18 +9,18 @@
     [AllowAnonymous]
     public class HomeController : BaseController
     {
-        private readonly IProductService productService;
+        private readonly IHomeService homeService;
 
-        public HomeController(IProductService productService,
+        public HomeController(IHomeService homeService,
             IMenuSearchService menuSearchService) : base(menuSearchService)
         {
-            this.productService = productService;
+            this.homeService = homeService;
         }
 
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var tranferModel = await productService.GetAllProductsAsync();
+            var tranferModel = await homeService.GetAllProductsAsync();
 
             var model = tranferModel.Select(p => new AllProductsViewModel()
             {
@@ -29,7 +29,7 @@
                 Price = p.Price,
                 Quantity = p.Quantity,
                 ImageURL = p.ImageURL,
-                ProductReviews = this.productService.GetProductReviewsAsync(p.Id)
+                ProductReviews = this.homeService.GetProductReviewsAsync(p.Id)
             })
             .OrderByDescending(r => r.ProductReviews.Count().Equals(0) ? 0 : r.ProductReviews.Average(r => r.Rating));
 
@@ -39,9 +39,9 @@
         [HttpGet]
         public async Task<IActionResult> ProductDetails(int id)
         {
-            var transferModel = await this.productService.GetProductDetailsAsync(id);
+            var transferModel = await this.homeService.GetProductDetailsAsync(id);
 
-            var productReviews = this.productService.GetProductReviewsAsync(id);
+            var productReviews = this.homeService.GetProductReviewsAsync(id);
 
             var model = new ProductDetailsViewModel()
             {

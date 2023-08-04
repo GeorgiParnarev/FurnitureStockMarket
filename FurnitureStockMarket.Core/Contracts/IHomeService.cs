@@ -3,7 +3,7 @@
     using FurnitureStockMarket.Core.Models.TransferModels.Product;
     using FurnitureStockMarket.Database.Models;
 
-    public interface IProductService
+    public interface IHomeService
     {
         Task<IEnumerable<AllProductsTransferModel>> GetAllProductsAsync();
 

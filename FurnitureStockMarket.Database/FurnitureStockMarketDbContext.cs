@@ -8,9 +8,12 @@
 
     public class FurnitureStockMarketDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, Guid>
     {
-        public FurnitureStockMarketDbContext(DbContextOptions<FurnitureStockMarketDbContext> options)
+        private bool seedDb;
+
+        public FurnitureStockMarketDbContext(DbContextOptions<FurnitureStockMarketDbContext> options,bool seed=true)
         : base(options)
         {
+            this.seedDb = seed;
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -29,13 +32,16 @@
                 .HasPrecision(18, 2);
             base.OnModelCreating(builder);
 
-            builder.ApplyConfiguration(new ApplicationUserRoles());
-            builder.ApplyConfiguration(new ApplicationUsers());
-            builder.ApplyConfiguration(new Customers());
-            builder.ApplyConfiguration(new UsersRoles());
-            builder.ApplyConfiguration(new Categories());
-            builder.ApplyConfiguration(new SubCategories());
-            builder.ApplyConfiguration(new Products());
+            if (this.seedDb)
+            {
+                builder.ApplyConfiguration(new ApplicationUserRoles());
+                builder.ApplyConfiguration(new ApplicationUsers());
+                builder.ApplyConfiguration(new Customers());
+                builder.ApplyConfiguration(new UsersRoles());
+                builder.ApplyConfiguration(new Categories());
+                builder.ApplyConfiguration(new SubCategories());
+                builder.ApplyConfiguration(new Products());
+            }
         }
 
         public DbSet<Category> Categories { get; set; } = null!;

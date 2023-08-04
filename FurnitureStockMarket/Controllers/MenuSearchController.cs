@@ -8,10 +8,10 @@
     public class MenuSearchController : Controller
     {
         private readonly IMenuSearchService menuSearchService;
-        private readonly IProductService productService;
+        private readonly IHomeService productService;
 
         public MenuSearchController(IMenuSearchService menuSearchService,
-            IProductService productService)
+            IHomeService productService)
         {
             this.menuSearchService = menuSearchService;
             this.productService = productService;
