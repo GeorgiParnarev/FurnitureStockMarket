@@ -29,7 +29,7 @@
                 Price = p.Price,
                 Quantity = p.Quantity,
                 ImageURL = p.ImageURL,
-                ProductReviews = this.homeService.GetProductReviewsAsync(p.Id)
+                ProductReviews = this.homeService.GetProductReviews(p.Id)
             })
             .OrderByDescending(r => r.ProductReviews.Count().Equals(0) ? 0 : r.ProductReviews.Average(r => r.Rating));
 
@@ -41,7 +41,7 @@
         {
             var transferModel = await this.homeService.GetProductDetailsAsync(id);
 
-            var productReviews = this.homeService.GetProductReviewsAsync(id);
+            var productReviews = this.homeService.GetProductReviews(id);
 
             var model = new ProductDetailsViewModel()
             {

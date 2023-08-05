@@ -30,7 +30,7 @@
                 Quantity = p.Quantity,
                 ImageURL = p.ImageURL,
                 Category = p.Category,
-                ProductReviews = this.productService.GetProductReviewsAsync(p.Id)
+                ProductReviews = this.productService.GetProductReviews(p.Id)
             });
 
             return this.View(model);
@@ -49,7 +49,7 @@
                 Quantity = p.Quantity,
                 ImageURL = p.ImageURL,
                 SubCategory = p.SubCategory,
-                ProductReviews = this.productService.GetProductReviewsAsync(p.Id)
+                ProductReviews = this.productService.GetProductReviews(p.Id)
             });
 
             return this.View(model);
@@ -68,7 +68,7 @@
                 Quantity = p.Quantity,
                 ImageURL = p.ImageURL,
                 SearchTerm = searchTerm,
-                ProductReviews = this.productService.GetProductReviewsAsync(p.Id)
+                ProductReviews = this.productService.GetProductReviews(p.Id)
             });
 
             return this.View(model);

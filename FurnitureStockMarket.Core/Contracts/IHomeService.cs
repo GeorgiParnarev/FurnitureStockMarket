@@ -9,6 +9,6 @@
 
         Task<ProductDetailsTransferModel> GetProductDetailsAsync(int id);
 
-        IEnumerable<Review> GetProductReviewsAsync(int productId);
+        IEnumerable<Review> GetProductReviews(int productId);
     }
 }

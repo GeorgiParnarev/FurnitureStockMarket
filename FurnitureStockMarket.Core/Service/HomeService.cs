@@ -69,7 +69,7 @@
             return productDetails;
         }
 
-        public IEnumerable<Review> GetProductReviewsAsync(int productId)
+        public IEnumerable<Review> GetProductReviews(int productId)
         {
             var productReviews = this.repo
                 .AllReadonly<Review>()

@@ -27,6 +27,7 @@
             this.dbContext.Categories.AddRange(new Categories().CreateCategories());
             this.dbContext.SubCategories.AddRange(new SubCategories().CreateSubCategories());
             this.dbContext.Products.AddRange(new Products().CreateProducts());
+            this.dbContext.Reviews.AddRange(new Reviews().CreateReviews());
 
             this.dbContext.SaveChanges();
         }
