@@ -57,15 +57,6 @@
                 ImageURL = product.ImageURL
             };
 
-            var checkProductBeforeDisplaying = await this.repo
-                .AllReadonly<Product>()
-                .FirstOrDefaultAsync(p => p.Id == id);
-
-            if (checkProductBeforeDisplaying is null)
-            {
-                throw new NullReferenceException(ProductNotExisting);
-            }
-
             return productDetails;
         }
 
