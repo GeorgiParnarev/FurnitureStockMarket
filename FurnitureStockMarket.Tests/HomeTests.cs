@@ -51,7 +51,7 @@
         {
             var expectedMessage = ProductNotExisting;
 
-            var exception = Assert.Throws<NullReferenceException>(async () => await this.homeService.GetProductDetailsAsync(-1));
+            var exception = Assert.ThrowsAsync<NullReferenceException>(async () => await this.homeService.GetProductDetailsAsync(-1));
 
             Assert.That(exception.Message, Is.EqualTo(expectedMessage));
         }

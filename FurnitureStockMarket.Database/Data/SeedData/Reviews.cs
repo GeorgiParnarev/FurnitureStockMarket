@@ -8,7 +8,7 @@
     {
         public void Configure(EntityTypeBuilder<Review> builder)
         {
-            throw new NotImplementedException();
+            builder.HasData(CreateReviews());
         }
 
         public IEnumerable<Review> CreateReviews()
