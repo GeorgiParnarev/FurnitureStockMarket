@@ -58,6 +58,17 @@
                     Brand="CoolChairs",
                     Quantity=0,
                     ImageURL="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.thebrick.com%2Fproducts%2Ftalia-dining-chair&psig=AOvVaw1xRpIrpwl-F0B4IUn3ezxt&ust=1691371222915000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCPiLiPruxoADFQAAAAAdAAAAABAE"
+                },
+                new Product
+                {
+                    Id = 5,
+                    Name="Old TV",
+                    Description="Very old TV",
+                    Price=45.00m,
+                    SubCategoryId=2,
+                    Brand="OldTVs",
+                    Quantity=1,
+                    ImageURL="https://www.google.com/url?sa=i&url=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fold-tv&psig=AOvVaw2F3X0HYAW-O8MPCLRB1Wuv&ust=1691448816124000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCPilqYKQyYADFQAAAAAdAAAAABAE"
                 }
             };
         }

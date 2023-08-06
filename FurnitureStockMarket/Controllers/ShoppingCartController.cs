@@ -65,7 +65,7 @@
 
             try
             {
-                var updatedTransferCart = await shoppingCartService.AddToCart(transferCart, transferModel);
+                var updatedTransferCart = await shoppingCartService.AddToCartAsync(transferCart, transferModel);
 
                 cart = updatedTransferCart.Select(i => new CartItemViewModel()
                 {
@@ -107,7 +107,7 @@
 
             try
             {
-                var updatedTransferCart = await this.shoppingCartService.AddOneMore(transferCart, id);
+                var updatedTransferCart = await this.shoppingCartService.AddOneMoreAsync(transferCart, id);
 
                 cart = updatedTransferCart.Select(i => new CartItemViewModel()
                 {

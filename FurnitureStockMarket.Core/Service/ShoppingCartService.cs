@@ -20,7 +20,7 @@
             this.repo = repo;
         }
 
-        public async Task<IEnumerable<CartItemTransferModel>> AddOneMore(List<CartItemTransferModel> cart, int id)
+        public async Task<IEnumerable<CartItemTransferModel>> AddOneMoreAsync(List<CartItemTransferModel> cart, int id)
         {
             var checkIfAvaliable = await this.repo
                 .AllReadonly<Product>()
@@ -28,7 +28,7 @@
 
             var product = cart.FirstOrDefault(i => i.Id == id);
 
-            if (product is null || checkIfAvaliable is null)
+            if (checkIfAvaliable is null || product is null)
             {
                 throw new NullReferenceException(ProductNotExisting);
             }
@@ -43,7 +43,7 @@
             return cart;
         }
 
-        public async Task<IEnumerable<CartItemTransferModel>> AddToCart(List<CartItemTransferModel> cart, CartItemTransferModel model)
+        public async Task<IEnumerable<CartItemTransferModel>> AddToCartAsync(List<CartItemTransferModel> cart, CartItemTransferModel model)
         {
             var product = await this.repo
                 .AllReadonly<Product>()
