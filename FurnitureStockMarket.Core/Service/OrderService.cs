@@ -124,14 +124,12 @@
             {
                 var product = await this.repo
                     .All<Product>()
-                    .FirstOrDefaultAsync(p => p.Id == item.Id);
+                    .FirstAsync(p => p.Id == item.Id);
 
-                if (product is null)
+                if (product.Quantity < item.Quantity)
                 {
                     throw new InvalidOperationException(string.Format(AlreadyOutOfStock, item.Name));
                 }
-
-                product.Quantity -= item.Quantity;
             }
 
             return true;

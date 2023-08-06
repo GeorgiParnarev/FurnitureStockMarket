@@ -124,5 +124,8 @@
 
             Assert.That(actualOrderCount, Is.EqualTo(expectedOrderCount));
         }
+
+        [Test]
+        public async Task CheckIfProductsStillExist_SuccessfullyCancelsOrder()
     }
 }
