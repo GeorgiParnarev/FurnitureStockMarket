@@ -47,7 +47,7 @@
         }
 
         [Test]
-        public async Task GetProductDetailsAsync_ShouldThrownNullReferenceException()
+        public void GetProductDetailsAsync_ShouldThrownNullReferenceException()
         {
             var expectedMessage = ProductNotExisting;
 

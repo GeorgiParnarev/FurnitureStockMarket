@@ -13,6 +13,6 @@
 
         Task<IEnumerable<MyOrdersTransferModel>> GetMyOrdersAsync(Guid customerId);
 
-        Task CancelOrder(Guid id);
+        Task CancelOrderAsync(Guid id);
     }
 }

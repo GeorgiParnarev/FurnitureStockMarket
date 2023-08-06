@@ -62,7 +62,7 @@
             await this.repo.SaveChangesAsync();
         }
 
-        public async Task CancelOrder(Guid id)
+        public async Task CancelOrderAsync(Guid id)
         {
             var order = await this.repo
                 .All<Order>()

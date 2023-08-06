@@ -10,6 +10,8 @@
     using FurnitureStockMarket.Tests.UnitTests;
     using Microsoft.EntityFrameworkCore;
 
+    using static FurnitureStockMarket.Common.NotificationMessagesConstants;
+
     public class OrderTests : UnitTestsBase
     {
         private IOrderService orderService;
@@ -80,9 +82,47 @@
         }
 
         [Test]
-        public async Task CancelOrder_NullReferenceException_OrderNotExisting()
+        public void CancelOrder_NullReferenceException_OrderNotExisting()
         {
+            var expectedMessage = OrderNotExisting;
 
+            var exception = Assert.ThrowsAsync<NullReferenceException>(async () => await this.orderService.CancelOrderAsync(Guid.Parse("e2307e2c-aad0-4437-add8-d9d0c96a7b7d")));
+
+            Assert.That(exception.Message, Is.EqualTo(expectedMessage));
+        }
+
+        [Test]
+        public void CancelOrder_InvalidOperationException_CantCancelOrderAlreadyShipping()
+        {
+            var expectedMessage = CantCancelOrderAlreadyShipping;
+
+            var exception = Assert.ThrowsAsync<InvalidOperationException>(async () => await this.orderService.CancelOrderAsync(Guid.Parse("c9bb3aa5-8f65-495d-8676-3d58f4f5f5ae")));
+
+            Assert.That(exception.Message, Is.EqualTo(expectedMessage));
+        }
+
+        [Test]
+        public void CancelOrder_InvalidOperationException_FailedToCancelOrder()
+        {
+            var expectedMessage = FailedToCancelOrder;
+
+            var exception = Assert.ThrowsAsync<InvalidOperationException>(async () => await this.orderService.CancelOrderAsync(Guid.Parse("eb88cbc5-1cd2-4840-a209-32560b18271f")));
+
+            Assert.That(exception.Message, Is.EqualTo(expectedMessage));
+        }
+
+        [Test]
+        public async Task CancelOrder_SuccessfullyCancelsOrder()
+        {
+            var expectedOrderCount = new Orders().CreateOrders().Count() - 1;
+
+            await this.orderService.CancelOrderAsync(Guid.Parse("eb88cbc5-1cd2-4840-a209-32560b18271f"));
+
+            var actualOrderCount = this.repo
+                .AllReadonly<Order>()
+                .Count();
+
+            Assert.That(actualOrderCount, Is.EqualTo(expectedOrderCount));
         }
     }
 }

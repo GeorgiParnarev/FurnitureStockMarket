@@ -23,8 +23,10 @@
         }
 
         [HttpGet]
-        public async Task<IActionResult> MakeOrder(List<CartItemViewModel> cart)
+        public async Task<IActionResult> MakeOrder()
         {
+            var cart = HttpContext.Session.GetObject<List<CartItemViewModel>>("Cart") ?? new List<CartItemViewModel>();
+
             bool orderSuccess = false;
 
             var transferCart = cart.Select(i => new CartItemTransferModel()
@@ -196,7 +198,7 @@
         {
             try
             {
-                await this.orderService.CancelOrder(id);
+                await this.orderService.CancelOrderAsync(id);
 
                 TempData[SuccessMessage] = SuccessfullyCanceledOrder;
             }
