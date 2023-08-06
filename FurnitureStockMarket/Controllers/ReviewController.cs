@@ -30,7 +30,7 @@
 
             var customerId = await this.orderService.GetCustomerIdAsync(Guid.Parse(GetUserId()!));
 
-            if (await this.reviewService.CheckIfCustomerAlreadyGaveAReview(customerId, id))
+            if (await this.reviewService.CheckIfCustomerAlreadyGaveAReviewAsync(customerId, id))
             {
                 TempData[ErrorMessage] = AlreadyAddedReviewToProduct;
 

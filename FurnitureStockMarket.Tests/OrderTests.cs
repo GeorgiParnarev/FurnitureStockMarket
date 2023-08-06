@@ -197,7 +197,6 @@
             var actualResult = await this.orderService.GetMyOrdersAsync(Guid.Parse("756756FB-98B4-4E0A-9612-08DB8C661226"));
 
             Assert.That(actualResult.Count(), Is.EqualTo(expectedResult.Count()));
-        }
-        
+        }        
     }
 }

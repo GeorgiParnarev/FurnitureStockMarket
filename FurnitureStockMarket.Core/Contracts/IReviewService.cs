@@ -6,6 +6,6 @@
     {
         Task AddProductReviewAsync(AddProductReviewTransferModel model);
 
-        Task<bool> CheckIfCustomerAlreadyGaveAReview(Guid customerId, int productId);
+        Task<bool> CheckIfCustomerAlreadyGaveAReviewAsync(Guid customerId, int productId);
     }
 }

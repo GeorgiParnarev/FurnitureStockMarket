@@ -39,7 +39,7 @@
             }
         }
 
-        public async Task<bool> CheckIfCustomerAlreadyGaveAReview(Guid customerId, int productId)
+        public async Task<bool> CheckIfCustomerAlreadyGaveAReviewAsync(Guid customerId, int productId)
         {
             var review = await this.repo
                 .AllReadonly<Review>()
