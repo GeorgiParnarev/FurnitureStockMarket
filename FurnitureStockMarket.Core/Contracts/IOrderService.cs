@@ -5,7 +5,7 @@
 
     public interface IOrderService
     {
-        Task<bool> CheckIfProductsStillExist(List<CartItemTransferModel> model);
+        Task<bool> CheckIfProductsStillExistAsync(List<CartItemTransferModel> model);
 
         Task AddOrderAsync(AddOrderTransferModel model);
 

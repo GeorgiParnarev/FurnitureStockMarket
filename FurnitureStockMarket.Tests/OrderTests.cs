@@ -25,7 +25,7 @@
         [Test]
         public async Task AddOrderAsync_SuccessfullyAddsOrder()
         {
-            
+
             var expectedOrderCount = new Orders().CreateOrders().Count() + 1;
 
             string customerId = "89E27DE8-58DC-41C2-4752-08DB8C8F85F5";
@@ -37,7 +37,7 @@
             string productImageURL = "https://woodenwhaleworkshop.com/cdn/shop/products/image_492d397f-75a1-4c71-8302-406e5d2b847e_1170x.heic?v=1661569128";
 
             var AddedProduct = await this.repo.AllReadonly<Product>().FirstOrDefaultAsync(p => p.Id == productId);
-            var expectedOrderedProductQuantity = AddedProduct!.Quantity-productQuantity;
+            var expectedOrderedProductQuantity = AddedProduct!.Quantity - productQuantity;
 
             var model = new AddOrderTransferModel()
             {
@@ -126,6 +126,78 @@
         }
 
         [Test]
-        public async Task CheckIfProductsStillExist_SuccessfullyCancelsOrder()
+        public async Task CheckIfProductsStillExist_ReturnsTrue()
+        {
+            bool expectedResult = true;
+
+            var cart = new List<CartItemTransferModel>()
+            {
+                new CartItemTransferModel()
+                {
+                    Id=1
+                },
+                new CartItemTransferModel()
+                {
+                    Id=2
+                }
+            };
+
+            bool actualResult = await this.orderService.CheckIfProductsStillExistAsync(cart);
+
+            Assert.That(actualResult, Is.EqualTo(expectedResult));
+        }
+
+        [Test]
+        public void CheckIfProductsStillExist_InvalidOperationException_AlreadyOutOfStock()
+        {
+            string itemName = "Kitchen Chair";
+
+            string expectedMessage = string.Format(AlreadyOutOfStock, itemName);
+
+            var cart = new List<CartItemTransferModel>()
+            {
+                new CartItemTransferModel()
+                {
+                    Id=4,
+                    Name=itemName,
+                    Quantity=1
+                }
+            };
+
+            var exception = Assert.ThrowsAsync<InvalidOperationException>(async () => await this.orderService.CheckIfProductsStillExistAsync(cart));
+
+            Assert.That(exception.Message, Is.EqualTo(expectedMessage));
+        }
+
+        [Test]
+        public async Task GetCustomerIdAsync_SuccessfullyReturnsCustomerId()
+        {
+            var expectedId = Guid.Parse("756756FB-98B4-4E0A-9612-08DB8C661226");
+
+            var actualId = await this.orderService.GetCustomerIdAsync(Guid.Parse("BE4168B0-F7F1-4235-7063-08DB8C6611CB"));
+
+            Assert.That(actualId, Is.EqualTo(expectedId));
+        }
+
+        [Test]
+        public void GetCustomerIdAsync_NullReferenceException_CustomerNotExisting()
+        {
+            var expectedMessage = CustomerNotExisting;
+
+            var exception = Assert.ThrowsAsync<NullReferenceException>(async () => await this.orderService.GetCustomerIdAsync(Guid.Parse("f18ccb99-411b-4d90-a1ca-4e5dc8a2e3b2")));
+
+            Assert.That(exception.Message, Is.EqualTo(expectedMessage));
+        }
+
+        [Test]
+        public async Task GetMyOrdersAsync_SuccessfullyReturnsMyOrders()
+        {
+            var expectedResult = new Orders().CreateOrders().Where(o => o.CustomerId == Guid.Parse("756756FB-98B4-4E0A-9612-08DB8C661226"));
+
+            var actualResult = await this.orderService.GetMyOrdersAsync(Guid.Parse("756756FB-98B4-4E0A-9612-08DB8C661226"));
+
+            Assert.That(actualResult.Count(), Is.EqualTo(expectedResult.Count()));
+        }
+        
     }
 }

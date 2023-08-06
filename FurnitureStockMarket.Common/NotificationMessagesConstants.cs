@@ -33,7 +33,7 @@
         public const string ProductStoredQuantityReached = "There are no units left of this product";
         public const string OneProductQuantityLeftInCart = "You can't lower the ammount of the product! You need to remove it from the cart!";
 
-        public const string AlreadyOutOfStock = "{1} is out of stock";
+        public const string AlreadyOutOfStock = "{0} is out of stock";
 
         public const string CustomerNotExisting = "Customer does not exist";
 

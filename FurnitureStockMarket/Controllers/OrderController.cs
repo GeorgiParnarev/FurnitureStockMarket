@@ -41,7 +41,7 @@
 
             try
             {
-                orderSuccess = await this.orderService.CheckIfProductsStillExist(transferCart);
+                orderSuccess = await this.orderService.CheckIfProductsStillExistAsync(transferCart);
             }
             catch (Exception e)
             {

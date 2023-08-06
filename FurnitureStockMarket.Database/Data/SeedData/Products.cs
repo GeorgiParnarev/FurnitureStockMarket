@@ -47,6 +47,17 @@
                     Brand="CoolChairs",
                     Quantity=19,
                     ImageURL="https://www.ikea.com/us/en/images/products/stefan-chair-brown-black__0727320_pe735593_s5.jpg?f=s"
+                },
+                new Product
+                {
+                    Id = 4,
+                    Name="Kitchen Chair",
+                    Description="Cool kitchen chair!",
+                    Price=15.00m,
+                    SubCategoryId=3,
+                    Brand="CoolChairs",
+                    Quantity=0,
+                    ImageURL="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.thebrick.com%2Fproducts%2Ftalia-dining-chair&psig=AOvVaw1xRpIrpwl-F0B4IUn3ezxt&ust=1691371222915000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCPiLiPruxoADFQAAAAAdAAAAABAE"
                 }
             };
         }

@@ -118,7 +118,7 @@
             }
         }
 
-        public async Task<bool> CheckIfProductsStillExist(List<CartItemTransferModel> cart)
+        public async Task<bool> CheckIfProductsStillExistAsync(List<CartItemTransferModel> cart)
         {
             foreach (var item in cart)
             {
