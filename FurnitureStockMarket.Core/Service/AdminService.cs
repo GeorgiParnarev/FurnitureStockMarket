@@ -80,15 +80,6 @@
             editProduct.Quantity = model.Quantity;
             editProduct.ImageURL = model.ImageURL;
 
-            var checkProductBeforeAdding = await this.repo
-                .AllReadonly<Product>()
-                .FirstOrDefaultAsync(p => p.Id == model.Id);
-
-            if (checkProductBeforeAdding is null)
-            {
-                throw new NullReferenceException(ProductNotExisting);
-            }
-
             await this.repo.SaveChangesAsync();
         }
 
@@ -165,20 +156,6 @@
             return result;
         }
 
-        public async Task<Product> GetProductProductAsync(int id)
-        {
-            var product = await this.repo
-                .AllReadonly<Product>()
-                .FirstOrDefaultAsync(p => p.Id == id);
-
-            if (product is null)
-            {
-                throw new Exception(ProductNotExisting);
-            }
-
-            return product;
-        }
-
         public async Task<IEnumerable<KeyValuePair<int, string>>> GetSubCategoriesAsync(int categoryId)
         {
             var subCategories = await this.repo
@@ -190,7 +167,7 @@
             return subCategories;
         }
 
-        public async Task ShippingOrder(Guid id)
+        public async Task ShippingOrderAsync(Guid id)
         {
             var order = await this.repo
                 .All<Order>()

@@ -323,7 +323,7 @@
         {
             try
             {
-                await adminService.ShippingOrder(id);
+                await adminService.ShippingOrderAsync(id);
 
                 TempData[SuccessMessage] = SuccessfullyShippingOrder;
             }
