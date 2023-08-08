@@ -3,7 +3,6 @@
     using FurnitureStockMarket.Core.Contracts;
     using FurnitureStockMarket.Core.Models.TransferModels;
     using FurnitureStockMarket.Core.Models.TransferModels.Admin;
-    using FurnitureStockMarket.Database;
     using FurnitureStockMarket.Database.Common;
     using FurnitureStockMarket.Database.Enumerators;
     using FurnitureStockMarket.Database.Models;
@@ -16,13 +15,10 @@
     public class AdminService : IAdminService
     {
         private readonly IRepository repo;
-        //private readonly FurnitureStockMarketDbContext dbContext;
 
-        public AdminService(IRepository repo,
-            FurnitureStockMarketDbContext dbContext)
+        public AdminService(IRepository repo)
         {
             this.repo = repo;
-            //this.dbContext = dbContext;
         }
 
         public async Task AddCategoryAsync(string name)
