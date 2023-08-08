@@ -7,7 +7,7 @@
 }
 
 <div class="text-center row">
-    <img src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg" class="img-fluid" alt="Responsive image" style="height: 400px">
+    <img src="https://i0.wp.com/aapkapainter.com/blog/wp-content/uploads/2021/04/tropical-interior-design-living-room_269031-60.jpg?w=626&ssl=1" class="img-fluid" alt="Responsive image" style="height: 400px">
     <h2 class="block-title text-center" style="padding-top: 30px; padding-bottom: 15px">Products with best reviews</h2>
 
     @foreach(var p in Model)
@@ -27,7 +27,7 @@
             <div>                
                 <p class="mb-0" style="padding-bottom: 10px; padding-top: 10px"><span class="fw-bold">Rating: </span>@(p.ProductReviews.Count().Equals(0) ? 0 : p.ProductReviews.Average(r => r.Rating))/5</p>
             </div>
-            <a asp-controller="Admin" asp-action="EditProduct" asp-route-id="@p.Id" class="btn btn-warning mb-2 w-100 p-3 fw-bold">Edit</a>
+            <a asp-area="Admin" asp-controller="Admin" asp-action="EditProduct" asp-route-id="@p.Id" class="btn btn-warning mb-2 w-100 p-3 fw-bold">Edit</a>
             <a asp-controller="ShoppingCart" asp-action="Add" asp-route-id="@p.Id" class="btn btn-warning mb-2 w-100 p-3 fw-bold">Add to cart</a>
         </div>
     }

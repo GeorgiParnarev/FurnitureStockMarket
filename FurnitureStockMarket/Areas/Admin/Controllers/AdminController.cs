@@ -82,7 +82,7 @@
             {
                 TempData[ErrorMessage] = NoExistingSubCategory;
 
-                return RedirectToAction("AddSubCategory", new { categoryId });
+                return RedirectToAction("AddSubCategory");
             }
 
             var model = new AddProductViewModel()
@@ -124,7 +124,7 @@
 
                 TempData[SuccessMessage] = SuccessfullyAddedProduct;
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Home", new { area = "" });
             }
             catch (Exception)
             {
@@ -162,7 +162,7 @@
 
                 TempData[SuccessMessage] = SuccessfullyAddedCategory;
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Home", new { area = "" });
             }
             catch (Exception)
             {
@@ -205,7 +205,7 @@
 
                 TempData[SuccessMessage] = SuccessfullyAddedSubCategory;
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Home", new { area = "" });
             }
             catch (Exception)
             {
@@ -237,7 +237,7 @@
             {
                 TempData[ErrorMessage] = e.Message;
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Home", new { area = "" });
             }
 
             var subCategories = await adminService.GetSubCategoriesAsync(editProduct.CategoryId);
@@ -279,13 +279,13 @@
 
                 TempData[SuccessMessage] = SuccessfullyEditedProduct;
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Home", new { area = "" });
             }
             catch (NullReferenceException e)
             {
                 TempData[ErrorMessage] = e.Message;
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Home", new { area = "" });
             }
             catch (Exception)
             {

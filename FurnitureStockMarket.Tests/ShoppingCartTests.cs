@@ -355,7 +355,7 @@
                 }
             };
 
-            var exception = Assert.Throws<NullReferenceException>(() => this.shoppingCartService.RemoveProduct(cart, 5));
+            var exception = Assert.Throws<NullReferenceException>(() => this.shoppingCartService.RemoveProduct(cart, -1));
 
             Assert.That(exception.Message, Is.EqualTo(expectedMessage));
         }

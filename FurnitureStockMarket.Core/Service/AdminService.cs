@@ -16,13 +16,13 @@
     public class AdminService : IAdminService
     {
         private readonly IRepository repo;
-        private readonly FurnitureStockMarketDbContext dbContext;
+        //private readonly FurnitureStockMarketDbContext dbContext;
 
         public AdminService(IRepository repo,
             FurnitureStockMarketDbContext dbContext)
         {
             this.repo = repo;
-            this.dbContext = dbContext;
+            //this.dbContext = dbContext;
         }
 
         public async Task AddCategoryAsync(string name)
@@ -143,8 +143,8 @@
 
         public async Task<EditProductTransferModel> GetProductAsync(int id)
         {
-            var newProduct = await this.dbContext
-                .Products
+            var newProduct = await this.repo
+                .All<Product>()
                 .Include(np => np.SubCategory)
                 .FirstOrDefaultAsync(p => p.Id == id);
 
