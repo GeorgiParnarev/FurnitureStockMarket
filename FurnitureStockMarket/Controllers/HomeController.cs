@@ -2,9 +2,11 @@
 {
     using FurnitureStockMarket.Controllers.BaseControllers;
     using FurnitureStockMarket.Core.Contracts;
+    using FurnitureStockMarket.Models;
     using FurnitureStockMarket.Models.Product;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using System.Diagnostics;
 
     [AllowAnonymous]
     public class HomeController : BaseController
@@ -56,6 +58,45 @@
             };
 
             return this.View(model);
+        }
+
+        [Route("/Home/Error")]
+        public IActionResult Error(int? statusCode)
+        {
+            if (statusCode == 401)
+            {
+                return RedirectToAction("Error401", "Home");
+            }
+            else if (statusCode == 404)
+            {
+                return RedirectToAction("Error404", "Home");
+            }
+            else if (statusCode == 500)
+            {
+                return RedirectToAction("Error500", "Home");
+            }
+            else
+            {
+                return this.View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            }
+        }
+
+        [HttpGet]
+        public IActionResult Error401()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult Error404()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult Error500()
+        {
+            return View();
         }
     }
 }
