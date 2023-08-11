@@ -2,20 +2,27 @@
 {
     using FurnitureStockMarket.Controllers.BaseControllers;
     using FurnitureStockMarket.Core.Contracts;
+    using FurnitureStockMarket.Database.Models.Account;
     using FurnitureStockMarket.Models;
     using FurnitureStockMarket.Models.Product;
     using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using System.Diagnostics;
+
+    using static FurnitureStockMarket.Common.RoleConstants;
 
     [AllowAnonymous]
     public class HomeController : BaseController
     {
         private readonly IHomeService homeService;
+        private readonly UserManager<ApplicationUser> userManager;
 
-        public HomeController(IHomeService homeService,
+        public HomeController(UserManager<ApplicationUser> userManager,
+            IHomeService homeService,
             IMenuSearchService menuSearchService) : base(menuSearchService)
         {
+            this.userManager = userManager;
             this.homeService = homeService;
         }
 
@@ -24,6 +31,21 @@
         {
             var tranferModel = await homeService.GetAllProductsAsync();
 
+            bool isAdmin = false;
+
+            var id = GetUserId();
+
+            if (id is null)
+            {
+                isAdmin = false;
+            }
+            else
+            {
+                var user = this.userManager.Users.FirstOrDefault(u => u.Id == Guid.Parse(id));
+
+                isAdmin = await this.userManager.IsInRoleAsync(user, Administrator);
+            }
+
             var model = tranferModel.Select(p => new AllProductsViewModel()
             {
                 Id = p.Id,
@@ -31,7 +53,8 @@
                 Price = p.Price,
                 Quantity = p.Quantity,
                 ImageURL = p.ImageURL,
-                ProductReviews = this.homeService.GetProductReviews(p.Id)
+                ProductReviews = this.homeService.GetProductReviews(p.Id),
+                IsAdmin = isAdmin
             })
             .OrderByDescending(r => r.ProductReviews.Count().Equals(0) ? 0 : r.ProductReviews.Average(r => r.Rating));
 
