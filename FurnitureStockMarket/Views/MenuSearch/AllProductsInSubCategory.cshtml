@@ -34,7 +34,12 @@ else
             <div>                
                 <p class="mb-0" style="padding-bottom: 10px; padding-top: 10px"><span class="fw-bold">Rating: </span>@(p.ProductReviews.Count().Equals(0) ? 0 : p.ProductReviews.Average(r => r.Rating))/5</p>
             </div>
-            <a asp-controller="Admin" asp-action="EditProduct" asp-route-id="@p.Id" class="btn btn-warning mb-2 w-100 p-3 fw-bold">Edit</a>
+            
+            @if (p.IsAdmin)
+            {
+                <a asp-area="Admin" asp-controller="Admin" asp-action="EditProduct" asp-route-id="@p.Id" class="btn btn-warning mb-2 w-100 p-3 fw-bold">Edit</a>                
+            }
+            
             <a asp-controller="ShoppingCart" asp-action="Add" asp-route-id="@p.Id" class="btn btn-warning mb-2 w-100 p-3 fw-bold">Add to cart</a>
         </div>
     }

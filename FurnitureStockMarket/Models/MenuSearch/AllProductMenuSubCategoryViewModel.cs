@@ -22,5 +22,7 @@
         public SubCategory SubCategory { get; set; } = null!;
 
         public IEnumerable<Review> ProductReviews { get; set; }
+
+        public bool IsAdmin { get; set; }
     }
 }

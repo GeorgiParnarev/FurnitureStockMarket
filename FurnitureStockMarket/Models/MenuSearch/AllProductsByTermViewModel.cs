@@ -22,5 +22,7 @@
         public string SearchTerm { get; set; } = null!;
 
         public IEnumerable<Review> ProductReviews { get; set; }
+
+        public bool IsAdmin { get; set; }
     }
 }
