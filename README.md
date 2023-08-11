@@ -9,6 +9,8 @@
 ### FurnitureStockMarket.Database
 В този слой се намира модела, описващ базата данни.
 
+![image](https://github.com/GeorgiParnarev/FurnitureStockMarket/assets/131038567/dd79ab81-fb99-409e-bce1-b71686886d4a)
+
 #### Модели:
 - `Category`: Модел на категориите на различните мебели/продукти.
 - `Customer`: Модел на клиента с нелични данни.
