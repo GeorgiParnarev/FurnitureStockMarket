@@ -6,6 +6,7 @@ namespace FurnitureStockMarket
     using FurnitureStockMarket.Database.Common;
     using FurnitureStockMarket.Database.Models.Account;
     using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
 
     public class Program
@@ -53,11 +54,16 @@ namespace FurnitureStockMarket
             builder.Services.AddDistributedMemoryCache();
             builder.Services.AddSession(options =>
             {
-                // Set session timeout (optional)
-                options.IdleTimeout = TimeSpan.FromMinutes(20);
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });
+
+            builder.Services
+                .AddControllersWithViews()
+                .AddMvcOptions(options =>
+                {
+                    options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
+                });
 
             builder.Services.ConfigureApplicationCookie(options =>
             {

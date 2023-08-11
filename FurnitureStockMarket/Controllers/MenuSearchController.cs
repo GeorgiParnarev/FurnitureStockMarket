@@ -2,10 +2,10 @@
 {
     using FurnitureStockMarket.Core.Contracts;
     using FurnitureStockMarket.Models.MenuSearch;
-    using FurnitureStockMarket.Models.Product;
     using Microsoft.AspNetCore.Mvc;
     using System.Net;
 
+    [AutoValidateAntiforgeryToken]
     public class MenuSearchController : Controller
     {
         private readonly IMenuSearchService menuSearchService;

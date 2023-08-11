@@ -14,6 +14,7 @@
 
     [Area(AdminAreaName)]
     [Authorize(Roles = Administrator)]
+    [AutoValidateAntiforgeryToken]
     public class AdminController : BaseController
     {
         private readonly IAdminService adminService;

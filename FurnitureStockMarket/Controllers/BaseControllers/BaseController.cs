@@ -10,6 +10,7 @@
     using System.Text.Json.Serialization;
 
     [Authorize]
+    [AutoValidateAntiforgeryToken]
     public class BaseController : Controller
     {
         protected readonly IMenuSearchService menuSearchService;
