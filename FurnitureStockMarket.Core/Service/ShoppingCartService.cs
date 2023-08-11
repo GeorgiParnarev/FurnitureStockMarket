@@ -33,7 +33,7 @@
                 throw new NullReferenceException(ProductNotExisting);
             }
 
-            if (checkIfAvaliable.Quantity == 0)
+            if (checkIfAvaliable.Quantity == product.Quantity)
             {
                 throw new InvalidOperationException(ProductStoredQuantityReached);
             }
@@ -64,7 +64,6 @@
             if (cartItem is null)
             {
                 cart.Add(new CartItemTransferModel()
-
                 {
                     Id = model.Id,
                     Name = model.Name,
@@ -75,7 +74,7 @@
             }
             else
             {
-                if (product.Quantity == 0)
+                if (product.Quantity == cartItem.Quantity)
                 {
                     throw new InvalidOperationException(ProductStoredQuantityReached);
                 }
@@ -120,19 +119,19 @@
 
         public IEnumerable<CartItemTransferModel> RemoveOneItem(List<CartItemTransferModel> cart, int id)
         {
-            var cartItem = cart.FirstOrDefault(i => i.Id == id);
+            var product = cart.FirstOrDefault(i => i.Id == id);
 
-            if (cartItem is null)
+            if (product is null)
             {
                 throw new NullReferenceException(ProductNotExisting);
             }
 
-            if (cartItem.Quantity == 1)
+            if (product.Quantity == 1)
             {
                 throw new InvalidOperationException(OneProductQuantityLeftInCart);
             }
 
-            cartItem.Quantity -= RemoveDefaultProductAmmount;
+            product.Quantity -= RemoveDefaultProductAmmount;
 
             return cart;
         }
@@ -146,10 +145,9 @@
                 throw new NullReferenceException(ProductNotExisting);
             }
 
-            cart.Remove(product);          
+            cart.Remove(product);
 
             return cart;
         }
-
     }
 }

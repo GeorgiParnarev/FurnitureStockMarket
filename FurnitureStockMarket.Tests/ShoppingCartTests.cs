@@ -83,16 +83,16 @@
         {
             var expectedMessage = ProductStoredQuantityReached;
 
-            int id = 4;
-
             var cart = new List<CartItemTransferModel>()
             {
                 new CartItemTransferModel
                 {
-                    Id = id,
+                    Id = 2,
                     Quantity = 10,
                 }
             };
+
+            int id = 2;
 
             var exception = Assert.ThrowsAsync<InvalidOperationException>(async () => await this.shoppingCartService.AddOneMoreAsync(cart, id));
 
@@ -216,24 +216,22 @@
         {
             var expectedMessage = ProductStoredQuantityReached;
 
-            int id = 4;
-
             var cart = new List<CartItemTransferModel>()
             {
                 new CartItemTransferModel
                 {
-                    Id = id,
+                    Id = 3,
                     Quantity = 19,
                 }
             };
 
             var model = new CartItemTransferModel()
             {
-                Id = id,
+                Id = 3,
                 Quantity = 1,
-                Name = "Kitchen Chair",
-                Price = 15.00m,
-                ImageURL = "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.thebrick.com%2Fproducts%2Ftalia-dining-chair&psig=AOvVaw1xRpIrpwl-F0B4IUn3ezxt&ust=1691371222915000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCPiLiPruxoADFQAAAAAdAAAAABAE"
+                Name = "Chair",
+                Price = 9.99m,
+                ImageURL = "https://www.ikea.com/us/en/images/products/stefan-chair-brown-black__0727320_pe735593_s5.jpg?f=s"
             };
 
             var exception = Assert.ThrowsAsync<InvalidOperationException>(async () => await this.shoppingCartService.AddToCartAsync(cart, model));
