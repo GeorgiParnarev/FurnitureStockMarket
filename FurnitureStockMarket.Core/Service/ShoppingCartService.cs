@@ -125,21 +125,28 @@
             return result;
         }
 
-        public IEnumerable<CartItemTransferModel> RemoveOneItem(List<CartItemTransferModel> cart, int id)
+        public async Task<IEnumerable<CartItemTransferModel>> RemoveOneItemAsync(List<CartItemTransferModel> cart, int id)
         {
-            var product = cart.FirstOrDefault(i => i.Id == id);
+            var product = await this.repo
+                .All<Product>()
+                .FirstOrDefaultAsync(p => p.Id == id);
 
-            if (product is null)
+            var cartItem = cart.FirstOrDefault(i => i.Id == id);
+
+            if (cartItem is null || product is null)
             {
                 throw new NullReferenceException(ProductNotExisting);
             }
 
-            if (product.Quantity == 1)
+            if (cartItem.Quantity == 1)
             {
                 throw new InvalidOperationException(OneProductQuantityLeftInCart);
             }
 
-            product.Quantity -= RemoveDefaultProductAmmount;
+            cartItem.Quantity -= RemoveDefaultProductAmmount;
+            product.Quantity += AddDefaultProductAmmount;
+
+            await this.repo.SaveChangesAsync();
 
             return cart;
         }
@@ -157,5 +164,6 @@
 
             return cart;
         }
+
     }
 }

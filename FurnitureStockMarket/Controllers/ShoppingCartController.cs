@@ -147,7 +147,7 @@
 
             try
             {
-                var updatedTransferCart = this.shoppingCartService.RemoveOneItem(transferCart, id);
+                var updatedTransferCart = await this.shoppingCartService.RemoveOneItemAsync(transferCart, id);
 
                 cart = updatedTransferCart.Select(i => new CartItemViewModel()
                 {
