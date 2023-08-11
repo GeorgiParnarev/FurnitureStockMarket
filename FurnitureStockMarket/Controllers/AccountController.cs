@@ -10,7 +10,7 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
-
+    using System.Net;
     using static FurnitureStockMarket.Common.NotificationMessagesConstants;
 
     public class AccountController : BaseController
@@ -41,8 +41,6 @@
                 return this.RedirectToAction("Index", "Home");
             }
 
-            HttpContext.Session.Clear();
-
             return this.View(model);
         }
 
@@ -55,16 +53,19 @@
                 return this.View(model);
             }
 
-            var user = await this.userManager.FindByEmailAsync(model.EmailOrUsername);
+            string emailOrUsername = WebUtility.HtmlEncode(model.EmailOrUsername);
+            string password = WebUtility.HtmlEncode(model.Password);
+
+            var user = await this.userManager.FindByEmailAsync(emailOrUsername);
 
             if (user is null)
             {
-                user = await this.userManager.FindByNameAsync(model.EmailOrUsername);
+                user = await this.userManager.FindByNameAsync(emailOrUsername);
             }
 
             if (!(user is null))
             {
-                var result = await this.signInManager.PasswordSignInAsync(user, model.Password, false, false);
+                var result = await this.signInManager.PasswordSignInAsync(user, password, false, false);
 
                 return this.RedirectToAction("Index", "Home");
             }
@@ -85,14 +86,23 @@
         [AllowAnonymous]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
+            string firstName=WebUtility.HtmlEncode(model.FirstName);
+            string lastName=WebUtility.HtmlEncode(model.LastName);
+            string username=WebUtility.HtmlEncode(model.Username);
+            string email=WebUtility.HtmlEncode(model.Email);
+            string phoneNumber=WebUtility.HtmlEncode(model.PhoneNumber);
+            string password=WebUtility.HtmlEncode(model.Password);
+            string shippingAddress=WebUtility.HtmlEncode(model.ShippingAddress);
+            string billingAddress=WebUtility.HtmlEncode(model.BillingAddress);
+
             var transfer = new RegisterUserTransferModel()
             {
-                FirstName = model.FirstName,
-                LastName = model.LastName,
-                Username = model.Username,
-                Email = model.Email,
-                PhoneNumber = model.PhoneNumber,
-                Password = model.Password
+                FirstName = firstName,
+                LastName = lastName,
+                Username = username,
+                Email = email,
+                PhoneNumber = phoneNumber,
+                Password = password
             };
 
             StatusUserModel userStatus = await this.accountService.RegisterUserAsync(transfer);
@@ -106,13 +116,13 @@
 
             var user = await this.userManager.FindByNameAsync(model.Username);
 
-            var result = await this.signInManager.PasswordSignInAsync(user, model.Password, false, false);
+            var result = await this.signInManager.PasswordSignInAsync(user, password, false, false);
 
             AddCustomerTransferModel customerModel = new AddCustomerTransferModel()
             {
                 ApplicationUserId = user.Id,
-                ShippingAddress = model.ShippingAddress,
-                BillingAddress = model.BillingAddress
+                ShippingAddress = shippingAddress,
+                BillingAddress = billingAddress
             };
 
             if (userStatus.Success)
@@ -132,6 +142,8 @@
 
         public async Task<IActionResult> Logout()
         {
+            HttpContext.Session.Clear();
+
             await this.signInManager.SignOutAsync();
 
             return this.RedirectToAction("Index", "Home");

@@ -4,6 +4,7 @@
     using FurnitureStockMarket.Models.MenuSearch;
     using FurnitureStockMarket.Models.Product;
     using Microsoft.AspNetCore.Mvc;
+    using System.Net;
 
     public class MenuSearchController : Controller
     {
@@ -58,7 +59,9 @@
         [HttpGet]
         public async Task<IActionResult> Search(string searchTerm)
         {
-            var transferModel = await this.menuSearchService.GetAllProductsByTermAsync(searchTerm);
+            string searchTermEncoded = WebUtility.HtmlEncode(searchTerm);
+
+            var transferModel = await this.menuSearchService.GetAllProductsByTermAsync(searchTermEncoded);
 
             var model = transferModel.Select(p => new AllProductsByTermViewModel()
             {
@@ -67,7 +70,7 @@
                 Price = p.Price,
                 Quantity = p.Quantity,
                 ImageURL = p.ImageURL,
-                SearchTerm = searchTerm,
+                SearchTerm = searchTermEncoded,
                 ProductReviews = this.productService.GetProductReviews(p.Id)
             });
 

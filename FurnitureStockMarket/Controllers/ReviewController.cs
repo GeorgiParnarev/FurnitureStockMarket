@@ -5,7 +5,7 @@
     using FurnitureStockMarket.Core.Models.TransferModels.Review;
     using FurnitureStockMarket.Models.Review;
     using Microsoft.AspNetCore.Mvc;
-
+    using System.Net;
     using static FurnitureStockMarket.Common.NotificationMessagesConstants;
 
     public class ReviewController : BaseController
@@ -50,6 +50,8 @@
                 return this.View(model);
             }
 
+            string reviewText = WebUtility.HtmlEncode(model.ReviewText);
+
             try
             {
                 var customerId = await this.orderService.GetCustomerIdAsync(Guid.Parse(GetUserId()!));
@@ -60,7 +62,7 @@
                     CustomerId = customerId,
                     ProductId = id,
                     Rating = model.Rating,
-                    ReviewText = model.ReviewText
+                    ReviewText = reviewText
                 };
 
                 await this.reviewService.AddProductReviewAsync(transferModel);
