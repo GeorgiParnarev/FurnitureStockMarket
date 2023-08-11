@@ -23,7 +23,7 @@
         public async Task<IEnumerable<CartItemTransferModel>> AddOneMoreAsync(List<CartItemTransferModel> cart, int id)
         {
             var checkIfAvaliable = await this.repo
-                .All<Product>()
+                .AllReadonly<Product>()
                 .FirstOrDefaultAsync(p => p.Id == id);
 
             var product = cart.FirstOrDefault(i => i.Id == id);
@@ -39,9 +39,6 @@
             }
 
             product.Quantity += AddDefaultProductAmmount;
-            checkIfAvaliable.Quantity -= AddDefaultProductAmmount;
-
-            await this.repo.SaveChangesAsync();
 
             return cart;
         }
@@ -49,7 +46,7 @@
         public async Task<IEnumerable<CartItemTransferModel>> AddToCartAsync(List<CartItemTransferModel> cart, CartItemTransferModel model)
         {
             var product = await this.repo
-                .All<Product>()
+                .AllReadonly<Product>()
                 .FirstOrDefaultAsync(p => p.Id == model.Id);
 
             if (product is null)
@@ -86,10 +83,6 @@
                 cartItem.Quantity += AddDefaultProductAmmount;
             }
 
-            product.Quantity -= RemoveDefaultProductAmmount;
-
-            await this.repo.SaveChangesAsync();
-
             var updatedCart = cart.Select(i => new CartItemTransferModel()
             {
                 Id = i.Id,
@@ -125,15 +118,11 @@
             return result;
         }
 
-        public async Task<IEnumerable<CartItemTransferModel>> RemoveOneItemAsync(List<CartItemTransferModel> cart, int id)
+        public IEnumerable<CartItemTransferModel> RemoveOneItem(List<CartItemTransferModel> cart, int id)
         {
-            var product = await this.repo
-                .All<Product>()
-                .FirstOrDefaultAsync(p => p.Id == id);
-
             var cartItem = cart.FirstOrDefault(i => i.Id == id);
 
-            if (cartItem is null || product is null)
+            if (cartItem is null)
             {
                 throw new NullReferenceException(ProductNotExisting);
             }
@@ -144,9 +133,6 @@
             }
 
             cartItem.Quantity -= RemoveDefaultProductAmmount;
-            product.Quantity += AddDefaultProductAmmount;
-
-            await this.repo.SaveChangesAsync();
 
             return cart;
         }

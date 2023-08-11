@@ -130,7 +130,7 @@
         }
 
         [HttpGet]
-        public async Task<IActionResult> RemoveOneItem(int id)
+        public IActionResult RemoveOneItem(int id)
         {
             var cart = HttpContext.Session.GetObject<List<CartItemViewModel>>("Cart");
 
@@ -147,7 +147,7 @@
 
             try
             {
-                var updatedTransferCart = await this.shoppingCartService.RemoveOneItemAsync(transferCart, id);
+                var updatedTransferCart = this.shoppingCartService.RemoveOneItem(transferCart, id);
 
                 cart = updatedTransferCart.Select(i => new CartItemViewModel()
                 {
